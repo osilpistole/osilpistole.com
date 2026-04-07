@@ -110,28 +110,48 @@ function Intro() {
 /* ─── How I Help ─── */
 const helpCards = [
   {
-    num: '01', title: 'Speaking', accent: 'bg-sunrise/15', numColor: 'text-sunrise',
+    title: 'Speaking', accent: 'bg-sunrise/15', iconColor: 'text-sunrise',
     borderHover: 'hover:border-sunrise/40',
     text: 'Powerful messages on identity, purpose, destiny, breakthrough, leadership, and living with clarity and courage.',
     link: '/speaking',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+      </svg>
+    ),
   },
   {
-    num: '02', title: 'Consulting', accent: 'bg-growth/15', numColor: 'text-growth',
+    title: 'Consulting', accent: 'bg-growth/15', iconColor: 'text-growth',
     borderHover: 'hover:border-growth/40',
     text: 'Business consulting and strategic implementation from start to finish, including brainstorming, planning, branding, marketing, web development, app development, advertising, social media, and growth strategy.',
     link: '/work-with-me',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+      </svg>
+    ),
   },
   {
-    num: '03', title: 'Mentoring', accent: 'bg-morning/20', numColor: 'text-morning',
+    title: 'Mentoring', accent: 'bg-morning/20', iconColor: 'text-morning',
     borderHover: 'hover:border-morning/40',
     text: 'Helping people find their voice, get clarity, grow in confidence, hear God for themselves and others, and step into healthy leadership and prophetic maturity.',
     link: '/work-with-me',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+      </svg>
+    ),
   },
   {
-    num: '04', title: 'Coaching & Training', accent: 'bg-sunrise/15', numColor: 'text-sunrise',
+    title: 'Coaching & Training', accent: 'bg-sunrise/15', iconColor: 'text-sunrise',
     borderHover: 'hover:border-sunrise/40',
     text: 'Group coaching, team training, and high-level one-on-one coaching for leaders, ministries, businesses, and organizations ready for real movement.',
     link: '/work-with-me',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+      </svg>
+    ),
   },
 ]
 
@@ -152,8 +172,8 @@ function HowIHelp() {
                 to={card.link}
                 className={`group flex flex-col bg-parchment rounded-2xl p-8 md:p-10 border border-ink/5 ${card.borderHover} hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 w-full`}
               >
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${card.accent} mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <span className={`font-heading text-lg font-bold ${card.numColor}`}>{card.num}</span>
+                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${card.accent} mb-6 group-hover:scale-110 transition-transform duration-300 ${card.iconColor}`}>
+                  {card.icon}
                 </div>
                 <h3 className="font-heading text-2xl font-semibold text-ink mb-3">{card.title}</h3>
                 <p className="text-ink/65 leading-relaxed flex-1">{card.text}</p>
@@ -202,77 +222,6 @@ function WhoIHelp() {
             ))}
           </div>
         </RevealSection>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Testimonials ─── */
-const testimonials = [
-  {
-    quote: 'Osil helped me see what I couldn\'t see on my own. Within weeks I had a clear plan, a stronger message, and the confidence to actually move on it.',
-    name: 'Sarah M.',
-    role: 'Mentoring Client',
-    accent: 'border-morning',
-  },
-  {
-    quote: 'She doesn\'t just give you strategy — she helps you understand who you are first, and then the strategy flows from that. My business has never been more aligned.',
-    name: 'David R.',
-    role: 'Consulting Client',
-    accent: 'border-sunrise',
-  },
-  {
-    quote: 'The prophetic training was unlike anything I\'ve experienced. Osil creates a space that is safe, grounded, and deeply empowering. I finally feel confident in my gifting.',
-    name: 'Michelle T.',
-    role: 'Prophetic Training',
-    accent: 'border-growth',
-  },
-  {
-    quote: 'Osil took our scattered ideas and turned them into a real brand with a website, messaging, and a launch plan. She sees the big picture and knows how to build it.',
-    name: 'James & Toni L.',
-    role: 'Web Design & Brand Strategy',
-    accent: 'border-sunrise',
-  },
-  {
-    quote: 'Working with Osil on our project felt like having someone who truly understood the vision and could manage every moving piece. She kept us on track and ahead of schedule.',
-    name: 'Rachel K.',
-    role: 'Project Management',
-    accent: 'border-morning',
-  },
-  {
-    quote: 'I came in feeling stuck and overwhelmed. After just a few coaching sessions, I had clarity on my next steps and the courage to take them. Osil is the real deal.',
-    name: 'Andre P.',
-    role: 'Coaching Client',
-    accent: 'border-growth',
-  },
-]
-
-function Testimonials() {
-  return (
-    <section className="py-20 md:py-28 px-6 lg:px-10 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <RevealSection>
-          <div className="text-center mb-14">
-            <SectionLabel>Testimonials</SectionLabel>
-            <SectionHeading>What People Are Saying</SectionHeading>
-          </div>
-        </RevealSection>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
-            <RevealSection key={t.name} delay={i * 0.08} className="flex">
-              <div className={`flex flex-col bg-parchment rounded-2xl p-8 border-l-4 ${t.accent} hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full`}>
-                <svg className="w-8 h-8 text-sunrise/30 mb-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-                <p className="text-ink/70 leading-relaxed italic flex-1 mb-6">{t.quote}</p>
-                <div>
-                  <p className="font-semibold text-ink text-sm">{t.name}</p>
-                  <p className="text-ink/45 text-xs uppercase tracking-wider mt-0.5">{t.role}</p>
-                </div>
-              </div>
-            </RevealSection>
-          ))}
-        </div>
       </div>
     </section>
   )
@@ -357,7 +306,6 @@ export default function Home() {
       <Intro />
       <HowIHelp />
       <WhoIHelp />
-      <Testimonials />
       <Transformation />
       <FinalCTA />
     </>
