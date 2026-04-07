@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sunrise: #F5C842;
+  --color-growth: #7DBE6A;
+  --color-morning: #B8A4D8;
+  --color-parchment: #F7F4EE;
+  --color-ink: #2C2C2A;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: var(--color-parchment);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100svh;
+}
