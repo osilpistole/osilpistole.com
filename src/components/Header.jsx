@@ -48,10 +48,8 @@ export default function Header() {
             <Link
               key={link.label}
               to={link.to}
-              className={`text-sm font-medium transition-colors duration-200 ${
-                showSolid
-                  ? location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
-                  : location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
+              className={`text-sm font-medium transition-colors duration-200 animated-underline ${
+                location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
               }`}
             >
               {link.label}

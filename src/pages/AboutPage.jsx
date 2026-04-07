@@ -16,7 +16,7 @@ export default function AboutPage() {
           {/* Photo */}
           <RevealSection className="lg:col-span-2 flex justify-center lg:justify-start">
             <div className="relative">
-              <div className="w-64 h-80 md:w-80 md:h-[420px] rounded-3xl overflow-hidden border border-ink/5 shadow-xl">
+              <div className="w-64 h-80 md:w-80 md:h-[420px] rounded-3xl overflow-hidden border border-ink/5 shadow-xl image-glow">
                 <img
                   src={import.meta.env.BASE_URL + 'images/polka-wall.jpg'}
                   alt="Osil Pistole"
@@ -25,13 +25,16 @@ export default function AboutPage() {
               </div>
               {/* Color accent behind photo */}
               <div className="absolute -bottom-3 -right-3 w-64 h-80 md:w-80 md:h-[420px] rounded-3xl bg-gradient-to-br from-sunrise/20 via-morning/15 to-growth/10 -z-10" />
+              {/* Spinning decorative ring */}
+              <div className="absolute -top-6 -left-6 w-20 h-20 rounded-full border-2 border-dashed border-sunrise/25 animate-spin-slow -z-10" />
+              <div className="absolute -bottom-8 -right-8 w-14 h-14 rounded-full border-2 border-dashed border-morning/25 animate-spin-slow -z-10" style={{ animationDirection: 'reverse' }} />
             </div>
           </RevealSection>
 
           {/* Bio */}
           <RevealSection className="lg:col-span-3" delay={0.15}>
             <SectionLabel>About</SectionLabel>
-            <h1 className="font-heading text-4xl md:text-5xl font-semibold text-ink mb-8">About Osil</h1>
+            <h1 className="font-heading text-4xl md:text-5xl font-semibold text-ink mb-8">About <span className="gradient-text-animated">Osil</span></h1>
             <div className="w-20 h-1.5 color-stripe mb-8 rounded-full" />
             <div className="space-y-5 text-ink/65 leading-relaxed text-lg">
               <p>

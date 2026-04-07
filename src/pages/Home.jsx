@@ -1,10 +1,40 @@
 import { Link } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
 import SectionLabel from '../components/SectionLabel'
 import SectionHeading from '../components/SectionHeading'
 import ButtonPrimary from '../components/ButtonPrimary'
 import ButtonSecondary from '../components/ButtonSecondary'
 import ButtonDark from '../components/ButtonDark'
 import RevealSection from '../components/RevealSection'
+
+/* ─── Animated counter hook ─── */
+function useCounter(end, duration = 2000) {
+  const [count, setCount] = useState(0)
+  const ref = useRef(null)
+  const started = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true
+        const start = performance.now()
+        const tick = (now) => {
+          const progress = Math.min((now - start) / duration, 1)
+          const eased = 1 - Math.pow(1 - progress, 3)
+          setCount(Math.round(eased * end))
+          if (progress < 1) requestAnimationFrame(tick)
+        }
+        requestAnimationFrame(tick)
+      }
+    }, { threshold: 0.3 })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [end, duration])
+
+  return [ref, count]
+}
 
 /* ─── Hero with video background + lavender overlay ─── */
 function Hero() {
@@ -35,7 +65,7 @@ function Hero() {
           <span className="text-ink/70 text-sm font-semibold uppercase tracking-[0.25em]">Speaker &middot; Consultant &middot; Mentor</span>
         </div>
         <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-semibold text-ink leading-tight tracking-tight drop-shadow-sm">
-          Clarity, breakthrough, and strategy for people ready to move forward.
+          Clarity, breakthrough, and strategy for people ready to <span className="gradient-text-animated">move forward.</span>
         </h1>
         <p className="mt-6 md:mt-8 text-lg md:text-xl text-ink/70 leading-relaxed max-w-2xl mx-auto font-light">
           I help people, leaders, and organizations get clear on who they are, what they're called to do, and how to actually build it.
@@ -70,7 +100,7 @@ function Intro() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Image — full-bleed rounded, no border/frame */}
             <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
+              <div className="rounded-2xl overflow-hidden shadow-2xl image-glow">
                 <img
                   src={import.meta.env.BASE_URL + 'images/headshot-plants.jpg'}
                   alt="Osil Pistole"
@@ -105,6 +135,56 @@ function Intro() {
             </div>
           </div>
         </RevealSection>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Scrolling Marquee ─── */
+const marqueeWords = ['Clarity', 'Breakthrough', 'Identity', 'Purpose', 'Strategy', 'Growth', 'Courage', 'Destiny', 'Leadership', 'Movement']
+
+function Marquee() {
+  return (
+    <section className="py-6 overflow-hidden bg-ink">
+      <div className="flex animate-marquee whitespace-nowrap">
+        {[...marqueeWords, ...marqueeWords].map((word, i) => (
+          <span key={i} className="mx-8 md:mx-12 font-heading text-2xl md:text-3xl font-semibold text-white/15 select-none">
+            {word}
+            <span className="inline-block mx-8 md:mx-12 text-sunrise/30">&bull;</span>
+          </span>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+/* ─── Impact Stats ─── */
+function ImpactStats() {
+  const [ref1, count1] = useCounter(500)
+  const [ref2, count2] = useCounter(50)
+  const [ref3, count3] = useCounter(15)
+  const [ref4, count4] = useCounter(100)
+
+  const stats = [
+    { ref: ref1, value: count1, suffix: '+', label: 'People Impacted', color: 'text-sunrise' },
+    { ref: ref2, value: count2, suffix: '+', label: 'Speaking Events', color: 'text-growth' },
+    { ref: ref3, value: count3, suffix: '+', label: 'Years of Experience', color: 'text-morning' },
+    { ref: ref4, value: count4, suffix: '%', label: 'Heart and Soul', color: 'text-sunrise' },
+  ]
+
+  return (
+    <section className="py-16 md:py-20 px-6 lg:px-10 animate-shimmer">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
+          {stats.map((stat) => (
+            <div key={stat.label} ref={stat.ref} className="text-center group">
+              <div className={`font-heading text-4xl md:text-5xl font-bold ${stat.color} mb-2 transition-transform duration-300 group-hover:scale-110`}>
+                {stat.value}{stat.suffix}
+              </div>
+              <div className="text-ink/50 text-sm font-medium uppercase tracking-wider">{stat.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -287,6 +367,8 @@ export default function Home() {
     <>
       <Hero />
       <Intro />
+      <Marquee />
+      <ImpactStats />
       <HowIHelp />
       <WhoIHelp />
       <Transformation />
