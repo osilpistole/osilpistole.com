@@ -6,7 +6,7 @@ const interestOptions = [
   'Speaking', 'Consulting', 'Mentoring', 'Coaching', 'Team Training', 'Other',
 ]
 
-const FORMSPREE_URL = 'https://formspree.io/f/osil@osilpistole.com'
+const FORM_URL = 'https://formsubmit.co/ajax/osil@osilpistole.com'
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -25,16 +25,17 @@ export default function ContactPage() {
     setSending(true)
     setError(null)
     try {
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch(FORM_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           name: form.name,
-          _replyto: form.email,
           email: form.email,
           organization: form.organization,
           interest: form.interest,
           message: form.message,
+          _subject: `New inquiry from ${form.name} — ${form.interest}`,
+          _template: 'table',
         }),
       })
       if (res.ok) {
