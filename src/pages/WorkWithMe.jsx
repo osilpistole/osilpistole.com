@@ -144,9 +144,20 @@ function Coaching() {
                 </svg>
               </div>
               <h3 className="font-heading text-2xl font-semibold text-ink mb-4">Group Coaching and Team Training</h3>
-              <p className="text-ink/65 leading-relaxed">
-                Bring Osil in to train your team, group, ministry, or organization in identity, leadership, communication, growth, clarity, alignment, and breakthrough.
+              <p className="text-ink/65 leading-relaxed mb-4">
+                Bring Osil in to train your team, group, ministry, or organization. Group training focuses on:
               </p>
+              <div className="space-y-2">
+                {['Identity and purpose', 'Prophecy and hearing God', 'Prophetic processing and activation', 'Building healthy prophetic teams', 'Leadership from wholeness'].map((item, i) => {
+                  const colors = ['bg-growth', 'bg-morning', 'bg-sunrise']
+                  return (
+                    <div key={item} className="flex items-center gap-3">
+                      <span className={`w-1.5 h-1.5 rounded-full ${colors[i % 3]} shrink-0`} />
+                      <span className="text-ink/65 text-sm">{item}</span>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </RevealSection>
           <RevealSection delay={0.2}>

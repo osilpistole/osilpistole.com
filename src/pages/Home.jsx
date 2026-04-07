@@ -22,8 +22,8 @@ function Hero() {
         <source src={import.meta.env.BASE_URL + 'clarity-water.mp4'} type="video/mp4" />
       </video>
 
-      {/* Light lavender overlay */}
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(184, 164, 216, 0.55), rgba(184, 164, 216, 0.4), rgba(247, 244, 238, 0.45))' }} />
+      {/* Nearly opaque lavender overlay — video is just a whisper underneath */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(184, 164, 216, 0.88), rgba(184, 164, 216, 0.82), rgba(247, 244, 238, 0.85))' }} />
 
       {/* Subtle floating orbs for extra depth */}
       <div className="absolute top-20 left-[10%] w-64 h-64 rounded-full bg-white/10 blur-3xl animate-float" />
@@ -64,27 +64,44 @@ function Hero() {
 /* ─── Intro ─── */
 function Intro() {
   return (
-    <section className="py-20 md:py-28 px-6 lg:px-10">
-      <div className="max-w-5xl mx-auto">
+    <section className="relative py-24 md:py-32 px-6 lg:px-10 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
         <RevealSection>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-14 items-center">
-            <div className="md:col-span-2 flex justify-center">
-              <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-sunrise/30 shadow-xl animate-pulse-glow">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Image — full-bleed rounded, no border/frame */}
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
                 <img
                   src={import.meta.env.BASE_URL + 'images/headshot-plants.jpg'}
                   alt="Osil Pistole"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full aspect-square object-cover object-top hover:scale-105 transition-transform duration-700"
                 />
               </div>
+              {/* Subtle color accent */}
+              <div className="absolute -bottom-4 -right-4 w-full h-full rounded-2xl bg-gradient-to-br from-morning/20 to-sunrise/10 -z-10" />
             </div>
-            <div className="md:col-span-3 text-center md:text-left">
-              <div className="w-20 h-1.5 color-stripe mb-8 rounded-full mx-auto md:mx-0" />
-              <p className="text-lg md:text-xl leading-relaxed text-ink/75">
+
+            {/* Text */}
+            <div className="text-center lg:text-left">
+              <span className="text-morning text-xs font-semibold uppercase tracking-[0.2em]">Meet Osil</span>
+              <h2 className="font-heading text-3xl md:text-4xl font-semibold text-ink mt-3 mb-8">Clarity that leads to action.</h2>
+              <p className="text-lg leading-relaxed text-ink/70 mb-6">
                 Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
               </p>
-              <p className="mt-6 text-lg md:text-xl leading-relaxed text-ink/75">
+              <p className="text-lg leading-relaxed text-ink/70">
                 Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
               </p>
+              <div className="mt-8">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 text-ink font-semibold hover:text-morning transition-colors group"
+                >
+                  Learn more about Osil
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
         </RevealSection>
@@ -133,16 +150,16 @@ function HowIHelp() {
         </RevealSection>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {helpCards.map((card, i) => (
-            <RevealSection key={card.title} delay={i * 0.1}>
+            <RevealSection key={card.title} delay={i * 0.1} className="flex">
               <Link
                 to={card.link}
-                className={`group block bg-parchment rounded-2xl p-8 md:p-10 border border-ink/5 ${card.borderHover} hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400`}
+                className={`group flex flex-col bg-parchment rounded-2xl p-8 md:p-10 border border-ink/5 ${card.borderHover} hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 w-full`}
               >
                 <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${card.accent} mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   <span className={`font-heading text-lg font-bold ${card.numColor}`}>{card.num}</span>
                 </div>
                 <h3 className="font-heading text-2xl font-semibold text-ink mb-3">{card.title}</h3>
-                <p className="text-ink/65 leading-relaxed">{card.text}</p>
+                <p className="text-ink/65 leading-relaxed flex-1">{card.text}</p>
               </Link>
             </RevealSection>
           ))}
