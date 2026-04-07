@@ -14,8 +14,8 @@ export default function AboutPage() {
 
         <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Photo */}
-          <RevealSection className="flex justify-center lg:justify-start">
-            <div className="relative w-full max-w-sm mx-auto lg:mx-0">
+          <RevealSection className="flex justify-center">
+            <div className="relative w-full max-w-md">
               <div className="rounded-3xl overflow-hidden border border-ink/5 shadow-xl image-glow">
                 <img
                   src={import.meta.env.BASE_URL + 'images/polka-wall.jpg'}

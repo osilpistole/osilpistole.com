@@ -27,7 +27,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero with photo */}
-      <section className="relative pt-32 pb-8 md:pt-40 md:pb-12 px-6 lg:px-10 overflow-hidden">
+      <section className="relative pt-32 pb-2 md:pt-40 md:pb-4 px-6 lg:px-10 overflow-hidden">
         <div className="absolute top-10 right-[15%] w-48 h-48 rounded-full bg-morning/10 blur-3xl animate-float" />
         <div className="absolute bottom-0 left-[15%] w-40 h-40 rounded-full bg-sunrise/8 blur-3xl animate-float-delayed" />
 
@@ -47,7 +47,7 @@ export default function ContactPage() {
       </section>
 
       {/* Form */}
-      <section className="py-12 md:py-20 px-6 lg:px-10">
+      <section className="py-8 md:py-12 px-6 lg:px-10">
         <div className="max-w-xl mx-auto">
           <RevealSection>
             {submitted ? (
