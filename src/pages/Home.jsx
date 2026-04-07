@@ -22,8 +22,8 @@ function Hero() {
         <source src={import.meta.env.BASE_URL + 'clarity-water.mp4'} type="video/mp4" />
       </video>
 
-      {/* Nearly opaque lavender overlay — video is just a whisper underneath */}
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(184, 164, 216, 0.88), rgba(184, 164, 216, 0.82), rgba(247, 244, 238, 0.85))' }} />
+      {/* Nearly opaque white overlay — video is just a whisper underneath */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(247, 244, 238, 0.93), rgba(255, 255, 255, 0.91))' }} />
 
       {/* Subtle floating orbs for extra depth */}
       <div className="absolute top-20 left-[10%] w-64 h-64 rounded-full bg-white/10 blur-3xl animate-float" />
