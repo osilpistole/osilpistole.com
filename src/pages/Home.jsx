@@ -200,6 +200,77 @@ function WhoIHelp() {
   )
 }
 
+/* ─── Testimonials ─── */
+const testimonials = [
+  {
+    quote: 'Osil helped me see what I couldn\'t see on my own. Within weeks I had a clear plan, a stronger message, and the confidence to actually move on it.',
+    name: 'Sarah M.',
+    role: 'Mentoring Client',
+    accent: 'border-morning',
+  },
+  {
+    quote: 'She doesn\'t just give you strategy — she helps you understand who you are first, and then the strategy flows from that. My business has never been more aligned.',
+    name: 'David R.',
+    role: 'Consulting Client',
+    accent: 'border-sunrise',
+  },
+  {
+    quote: 'The prophetic training was unlike anything I\'ve experienced. Osil creates a space that is safe, grounded, and deeply empowering. I finally feel confident in my gifting.',
+    name: 'Michelle T.',
+    role: 'Prophetic Training',
+    accent: 'border-growth',
+  },
+  {
+    quote: 'Osil took our scattered ideas and turned them into a real brand with a website, messaging, and a launch plan. She sees the big picture and knows how to build it.',
+    name: 'James & Toni L.',
+    role: 'Web Design & Brand Strategy',
+    accent: 'border-sunrise',
+  },
+  {
+    quote: 'Working with Osil on our project felt like having someone who truly understood the vision and could manage every moving piece. She kept us on track and ahead of schedule.',
+    name: 'Rachel K.',
+    role: 'Project Management',
+    accent: 'border-morning',
+  },
+  {
+    quote: 'I came in feeling stuck and overwhelmed. After just a few coaching sessions, I had clarity on my next steps and the courage to take them. Osil is the real deal.',
+    name: 'Andre P.',
+    role: 'Coaching Client',
+    accent: 'border-growth',
+  },
+]
+
+function Testimonials() {
+  return (
+    <section className="py-20 md:py-28 px-6 lg:px-10 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <RevealSection>
+          <div className="text-center mb-14">
+            <SectionLabel>Testimonials</SectionLabel>
+            <SectionHeading>What People Are Saying</SectionHeading>
+          </div>
+        </RevealSection>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <RevealSection key={t.name} delay={i * 0.08} className="flex">
+              <div className={`flex flex-col bg-parchment rounded-2xl p-8 border-l-4 ${t.accent} hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full`}>
+                <svg className="w-8 h-8 text-sunrise/30 mb-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <p className="text-ink/70 leading-relaxed italic flex-1 mb-6">{t.quote}</p>
+                <div>
+                  <p className="font-semibold text-ink text-sm">{t.name}</p>
+                  <p className="text-ink/45 text-xs uppercase tracking-wider mt-0.5">{t.role}</p>
+                </div>
+              </div>
+            </RevealSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Transformation ─── */
 const transforms = [
   { from: 'confused', to: 'clear', color: 'border-sunrise/40' },
@@ -279,6 +350,7 @@ export default function Home() {
       <Intro />
       <HowIHelp />
       <WhoIHelp />
+      <Testimonials />
       <Transformation />
       <FinalCTA />
     </>
