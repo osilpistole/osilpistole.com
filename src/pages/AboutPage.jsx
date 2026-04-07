@@ -16,12 +16,13 @@ export default function AboutPage() {
           {/* Photo */}
           <RevealSection className="flex justify-center">
             <div className="relative w-full max-w-md">
-              <div className="rounded-3xl overflow-hidden border border-ink/5 shadow-xl image-glow">
+              <div className="rounded-3xl overflow-hidden border border-ink/5 shadow-xl image-glow relative group">
                 <img
                   src={import.meta.env.BASE_URL + 'images/polka-wall.jpg'}
                   alt="Osil Pistole"
                   className="w-full h-auto object-cover object-top"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-sunrise/35 via-morning/10 to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
               </div>
               <div className="absolute -bottom-3 -right-3 w-full h-full rounded-3xl bg-gradient-to-br from-sunrise/20 via-morning/15 to-growth/10 -z-10" />
               <div className="absolute -top-6 -left-6 w-20 h-20 rounded-full border-2 border-dashed border-sunrise/25 animate-spin-slow -z-10" />

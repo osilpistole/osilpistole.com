@@ -63,12 +63,13 @@ function Intro() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <RevealSection className="flex justify-center">
             <div className="relative w-full max-w-md">
-              <div className="rounded-3xl overflow-hidden shadow-xl image-glow">
+              <div className="rounded-3xl overflow-hidden shadow-xl image-glow relative group">
                 <img
                   src={import.meta.env.BASE_URL + 'images/headshot-plants.jpg'}
                   alt="Osil Pistole"
                   className="w-full h-auto object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-morning/40 via-sunrise/10 to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
               </div>
               <div className="absolute -bottom-3 -right-3 w-full h-full rounded-3xl bg-gradient-to-br from-sunrise/20 via-morning/15 to-growth/10 -z-10" />
             </div>
