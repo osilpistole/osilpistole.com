@@ -40,26 +40,6 @@ export default function SpeakingPage() {
         </div>
       </section>
 
-      {/* Atmospheric stage photo */}
-      <section className="px-6 lg:px-10 pb-12">
-        <RevealSection>
-          <div className="max-w-6xl mx-auto">
-            <div className="relative rounded-3xl overflow-hidden shadow-xl h-56 md:h-72 lg:h-80 image-glow">
-              <img
-                src={import.meta.env.BASE_URL + 'images/speaking-stage.jpg'}
-                alt="Osil speaking on stage"
-                className="w-full h-full object-cover object-top"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-10">
-                <p className="text-sunrise text-sm font-semibold uppercase tracking-widest mb-1">On Stage</p>
-                <p className="text-white/80 text-base md:text-lg font-light">Conferences, churches, retreats, and events.</p>
-              </div>
-            </div>
-          </div>
-        </RevealSection>
-      </section>
-
       {/* Topics & Availability */}
       <section className="py-20 md:py-28 px-6 lg:px-10 bg-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">

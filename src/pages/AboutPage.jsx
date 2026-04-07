@@ -91,16 +91,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Atmospheric lavender divider */}
-      <section className="relative h-48 md:h-64 overflow-hidden">
-        <img
-          src={import.meta.env.BASE_URL + 'images/stock-lavender.jpg'}
-          alt="Lavender field in soft light"
-          className="w-full h-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-parchment/60" />
-      </section>
-
       {/* CTA */}
       <section className="relative py-20 md:py-24 px-6 lg:px-10 text-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-sunrise/15 via-morning/10 to-growth/10" />

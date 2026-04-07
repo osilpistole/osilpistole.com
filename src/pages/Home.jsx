@@ -289,22 +289,6 @@ export default function Home() {
       <Intro />
       <HowIHelp />
       <WhoIHelp />
-
-      {/* Atmospheric photo divider */}
-      <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
-        <img
-          src={import.meta.env.BASE_URL + 'images/stock-path.jpg'}
-          alt="A sunlit path through trees"
-          className="w-full h-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-parchment via-transparent to-ink/80" />
-        <div className="absolute bottom-8 left-0 right-0 text-center">
-          <p className="text-white/80 font-heading text-xl md:text-2xl font-light italic tracking-wide">
-            The path forward starts with clarity.
-          </p>
-        </div>
-      </section>
-
       <Transformation />
       <FinalCTA />
     </>
