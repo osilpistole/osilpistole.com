@@ -12,30 +12,11 @@ export default function AboutPage() {
         <div className="absolute top-20 right-[5%] w-72 h-72 rounded-full bg-morning/10 blur-3xl animate-float-delayed" />
         <div className="absolute bottom-10 left-[5%] w-56 h-56 rounded-full bg-sunrise/8 blur-3xl animate-float" />
 
-        <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Photo */}
-          <RevealSection className="flex justify-center lg:justify-start">
-            <div className="relative w-full max-w-md lg:max-w-none">
-              <div className="rounded-3xl overflow-hidden border border-ink/5 shadow-xl image-glow">
-                <img
-                  src={import.meta.env.BASE_URL + 'images/polka-wall.jpg'}
-                  alt="Osil Pistole"
-                  className="w-full h-auto object-cover object-top"
-                />
-              </div>
-              {/* Color accent behind photo */}
-              <div className="absolute -bottom-3 -right-3 w-full h-full rounded-3xl bg-gradient-to-br from-sunrise/20 via-morning/15 to-growth/10 -z-10" />
-              {/* Spinning decorative ring */}
-              <div className="absolute -top-6 -left-6 w-20 h-20 rounded-full border-2 border-dashed border-sunrise/25 animate-spin-slow -z-10" />
-              <div className="absolute -bottom-8 -right-8 w-14 h-14 rounded-full border-2 border-dashed border-morning/25 animate-spin-slow -z-10" style={{ animationDirection: 'reverse' }} />
-            </div>
-          </RevealSection>
-
-          {/* Bio */}
-          <RevealSection delay={0.15}>
+        <div className="relative max-w-3xl mx-auto text-center">
+          <RevealSection>
             <SectionLabel>About</SectionLabel>
             <h1 className="font-heading text-4xl md:text-5xl font-semibold text-ink mb-8">About <span className="gradient-text-animated">Osil</span></h1>
-            <div className="w-20 h-1.5 color-stripe mb-8 rounded-full" />
+            <div className="w-20 h-1.5 color-stripe mb-8 rounded-full mx-auto" />
             <div className="space-y-5 text-ink/65 leading-relaxed text-lg">
               <p>
                 Osil Pistole is a speaker, consultant, mentor, and creative strategist with a passion for helping people and organizations move forward with clarity, confidence, and purpose.

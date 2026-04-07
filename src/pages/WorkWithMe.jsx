@@ -42,11 +42,11 @@ function Consulting() {
           <RevealSection>
             <SectionLabel>Consulting</SectionLabel>
             <SectionHeading className="mb-6 text-3xl md:text-4xl!">Strategy plus implementation</SectionHeading>
-            <div className="rounded-2xl overflow-hidden mb-6 shadow-lg image-glow">
+            <div className="rounded-2xl overflow-hidden mb-6 shadow-lg image-glow max-w-xs">
               <img
                 src={import.meta.env.BASE_URL + 'images/consulting-working.jpg'}
                 alt="Osil Pistole"
-                className="w-full object-contain hover:scale-105 transition-transform duration-700"
+                className="w-full object-cover hover:scale-105 transition-transform duration-700"
               />
             </div>
             <p className="text-ink/65 leading-relaxed text-lg mb-6">

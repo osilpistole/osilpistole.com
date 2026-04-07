@@ -65,44 +65,26 @@ function Hero() {
 function Intro() {
   return (
     <section className="relative py-24 md:py-32 px-6 lg:px-10 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-3xl mx-auto text-center">
         <RevealSection>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Image — full-bleed rounded, no border/frame */}
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl image-glow">
-                <img
-                  src={import.meta.env.BASE_URL + 'images/headshot-plants.jpg'}
-                  alt="Osil Pistole"
-                  className="w-full aspect-square object-cover object-top hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              {/* Subtle color accent */}
-              <div className="absolute -bottom-4 -right-4 w-full h-full rounded-2xl bg-gradient-to-br from-morning/20 to-sunrise/10 -z-10" />
-            </div>
-
-            {/* Text */}
-            <div className="text-center lg:text-left">
-              <span className="text-morning text-xs font-semibold uppercase tracking-[0.2em]">Meet Osil</span>
-              <h2 className="font-heading text-3xl md:text-4xl font-semibold text-ink mt-3 mb-8">Clarity that leads to action.</h2>
-              <p className="text-lg leading-relaxed text-ink/70 mb-6">
-                Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
-              </p>
-              <p className="text-lg leading-relaxed text-ink/70">
-                Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
-              </p>
-              <div className="mt-8">
-                <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 text-ink font-semibold hover:text-morning transition-colors group"
-                >
-                  Learn more about Osil
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </Link>
-              </div>
-            </div>
+          <span className="text-morning text-xs font-semibold uppercase tracking-[0.2em]">Meet Osil</span>
+          <h2 className="font-heading text-3xl md:text-4xl font-semibold text-ink mt-3 mb-8">Clarity that leads to action.</h2>
+          <p className="text-lg leading-relaxed text-ink/70 mb-6">
+            Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
+          </p>
+          <p className="text-lg leading-relaxed text-ink/70">
+            Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
+          </p>
+          <div className="mt-8">
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 text-ink font-semibold hover:text-morning transition-colors group"
+            >
+              Learn more about Osil
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
           </div>
         </RevealSection>
       </div>
