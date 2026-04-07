@@ -63,8 +63,8 @@ function Intro() {
             <div className="md:col-span-2 flex justify-center">
               <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-sunrise/30 shadow-xl animate-pulse-glow">
                 <img
-                  src={import.meta.env.BASE_URL + 'images/IMG_0229.jpg'}
-                  alt="Osil Pistole at work"
+                  src={import.meta.env.BASE_URL + 'images/headshot-plants.jpg'}
+                  alt="Osil Pistole"
                   className="w-full h-full object-cover object-top"
                 />
               </div>

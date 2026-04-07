@@ -26,20 +26,33 @@ export default function ContactPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative pt-32 pb-8 md:pt-40 md:pb-12 px-6 lg:px-10 text-center overflow-hidden">
+      {/* Hero with photo */}
+      <section className="relative pt-32 pb-8 md:pt-40 md:pb-12 px-6 lg:px-10 overflow-hidden">
         <div className="absolute top-10 right-[15%] w-48 h-48 rounded-full bg-morning/10 blur-3xl animate-float" />
         <div className="absolute bottom-0 left-[15%] w-40 h-40 rounded-full bg-sunrise/8 blur-3xl animate-float-delayed" />
 
-        <div className="relative max-w-2xl mx-auto">
+        <div className="relative max-w-4xl mx-auto">
           <RevealSection>
-            <SectionLabel>Contact</SectionLabel>
-            <h1 className="font-heading text-4xl md:text-5xl font-semibold text-ink mb-4">
-              Let's <span className="gradient-text">connect</span>
-            </h1>
-            <p className="text-ink/65 text-lg">
-              To inquire about speaking, consulting, coaching, mentoring, or training, reach out below.
-            </p>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-center">
+              <div className="md:col-span-2 flex justify-center">
+                <div className="w-48 h-48 md:w-56 md:h-56 rounded-3xl overflow-hidden shadow-lg border border-ink/5">
+                  <img
+                    src={import.meta.env.BASE_URL + 'images/fun-orange.jpg'}
+                    alt="Osil Pistole"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              </div>
+              <div className="md:col-span-3 text-center md:text-left">
+                <SectionLabel>Contact</SectionLabel>
+                <h1 className="font-heading text-4xl md:text-5xl font-semibold text-ink mb-4">
+                  Let's <span className="gradient-text">connect</span>
+                </h1>
+                <p className="text-ink/65 text-lg">
+                  To inquire about speaking, consulting, coaching, mentoring, or training, reach out below.
+                </p>
+              </div>
+            </div>
           </RevealSection>
         </div>
       </section>

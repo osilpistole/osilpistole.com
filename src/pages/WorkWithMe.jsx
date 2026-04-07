@@ -44,9 +44,9 @@ function Consulting() {
             <SectionHeading className="mb-6 text-3xl md:text-4xl!">Strategy plus implementation</SectionHeading>
             <div className="rounded-2xl overflow-hidden mb-6 shadow-lg">
               <img
-                src={import.meta.env.BASE_URL + 'images/IMG_1691.jpg'}
-                alt="Osil working with a client"
-                className="w-full h-56 md:h-64 object-cover object-top hover:scale-105 transition-transform duration-700"
+                src={import.meta.env.BASE_URL + 'images/standing-studio.jpg'}
+                alt="Osil Pistole"
+                className="w-full h-56 md:h-72 object-cover object-top hover:scale-105 transition-transform duration-700"
               />
             </div>
             <p className="text-ink/65 leading-relaxed text-lg mb-6">

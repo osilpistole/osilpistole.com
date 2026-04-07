@@ -38,20 +38,34 @@ export default function SpeakingPage() {
         </div>
       </section>
 
-      {/* Photo banner */}
+      {/* Photo banner - two speaking photos */}
       <section className="px-6 lg:px-10 pb-12">
         <RevealSection>
-          <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-xl">
-            <div className="relative h-64 md:h-80 bg-gradient-to-br from-ink via-ink/95 to-ink/90">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Color speaking photo */}
+            <div className="relative rounded-3xl overflow-hidden shadow-xl h-72 md:h-96">
               <img
-                src={import.meta.env.BASE_URL + 'images/IMG_0229.jpg'}
-                alt="Osil speaking"
-                className="w-full h-full object-cover object-top opacity-50"
+                src={import.meta.env.BASE_URL + 'images/speaking-stage.jpg'}
+                alt="Osil speaking on stage"
+                className="w-full h-full object-cover object-top"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/40 to-transparent" />
-              <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12">
-                <p className="text-sunrise text-sm font-semibold uppercase tracking-widest mb-2">On Stage</p>
-                <p className="text-white/80 text-lg md:text-xl font-light max-w-md">Bringing warmth, authority, and practical wisdom to every event.</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
+                <p className="text-sunrise text-sm font-semibold uppercase tracking-widest mb-1">On Stage</p>
+                <p className="text-white/80 text-base font-light">Conferences, churches, and events.</p>
+              </div>
+            </div>
+            {/* B&W speaking photo */}
+            <div className="relative rounded-3xl overflow-hidden shadow-xl h-72 md:h-96">
+              <img
+                src={import.meta.env.BASE_URL + 'images/speaking-bw.jpg'}
+                alt="Osil speaking with microphone"
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8">
+                <p className="text-morning text-sm font-semibold uppercase tracking-widest mb-1">Intimate Settings</p>
+                <p className="text-white/80 text-base font-light">Retreats, panels, and podcasts.</p>
               </div>
             </div>
           </div>
@@ -96,8 +110,16 @@ export default function SpeakingPage() {
         </div>
       </section>
 
-      {/* Testimonial-style quote */}
-      <section className="relative py-16 md:py-20 px-6 lg:px-10 bg-ink text-white overflow-hidden">
+      {/* Testimonial-style quote with background photo */}
+      <section className="relative py-16 md:py-24 px-6 lg:px-10 text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={import.meta.env.BASE_URL + 'images/speaking-dark.jpg'}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-ink/85" />
+        </div>
         <div className="absolute top-5 right-[10%] w-40 h-40 rounded-full bg-sunrise/10 blur-3xl animate-float" />
         <div className="absolute bottom-5 left-[10%] w-32 h-32 rounded-full bg-morning/10 blur-3xl animate-float-delayed" />
         <div className="relative max-w-3xl mx-auto text-center">

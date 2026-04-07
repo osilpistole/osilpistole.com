@@ -18,7 +18,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="w-64 h-80 md:w-80 md:h-[420px] rounded-3xl overflow-hidden border border-ink/5 shadow-xl">
                 <img
-                  src={import.meta.env.BASE_URL + 'images/IMG_0233.jpg'}
+                  src={import.meta.env.BASE_URL + 'images/polka-wall.jpg'}
                   alt="Osil Pistole"
                   className="w-full h-full object-cover object-top"
                 />
