@@ -5,6 +5,7 @@ const KIT_FORM_URL = 'https://prodigious-mover-1024.kit.com/4edb810d28'
 export default function EmailSlideIn() {
   const [visible, setVisible] = useState(false)
   const [dismissed, setDismissed] = useState(false)
+  const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
   const [sending, setSending] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -41,7 +42,7 @@ export default function EmailSlideIn() {
       const res = await fetch(`https://app.kit.com/forms/4edb810d28/subscriptions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ email_address: email }),
+        body: JSON.stringify({ email_address: email, first_name: firstName }),
       })
       if (res.ok) {
         setSuccess(true)
@@ -102,21 +103,29 @@ export default function EmailSlideIn() {
               <p className="text-ink/55 text-sm mb-4">
                 Get updates on new resources, events, and encouragement straight to your inbox.
               </p>
-              <form onSubmit={handleSubmit} className="flex gap-2">
+              <form onSubmit={handleSubmit} className="space-y-2.5">
+                <input
+                  type="text"
+                  required
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-ink/10 bg-parchment text-ink text-sm placeholder-ink/30 focus:outline-none focus:ring-2 focus:ring-sunrise/50 focus:border-sunrise transition-all"
+                />
                 <input
                   type="email"
                   required
                   placeholder="Your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 px-3.5 py-2.5 rounded-xl border border-ink/10 bg-parchment text-ink text-sm placeholder-ink/30 focus:outline-none focus:ring-2 focus:ring-sunrise/50 focus:border-sunrise transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-ink/10 bg-parchment text-ink text-sm placeholder-ink/30 focus:outline-none focus:ring-2 focus:ring-sunrise/50 focus:border-sunrise transition-all"
                 />
                 <button
                   type="submit"
                   disabled={sending}
-                  className="bg-sunrise text-ink font-semibold text-sm px-4 py-2.5 rounded-xl hover:bg-sunrise/85 transition-all btn-glow cursor-pointer disabled:opacity-60"
+                  className="w-full bg-sunrise text-ink font-semibold text-sm py-2.5 rounded-xl hover:bg-sunrise/85 transition-all btn-glow cursor-pointer disabled:opacity-60"
                 >
-                  {sending ? '...' : 'Join'}
+                  {sending ? 'Joining...' : 'Join'}
                 </button>
               </form>
               <p className="text-ink/30 text-xs mt-3">No spam. Unsubscribe anytime.</p>
