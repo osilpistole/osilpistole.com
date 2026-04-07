@@ -65,28 +65,42 @@ function Hero() {
 function Intro() {
   return (
     <section className="relative py-24 md:py-32 px-6 lg:px-10 overflow-hidden">
-      <div className="max-w-3xl mx-auto text-center">
-        <RevealSection>
-          <span className="text-morning text-xs font-semibold uppercase tracking-[0.2em]">Meet Osil</span>
-          <h2 className="font-heading text-3xl md:text-4xl font-semibold text-ink mt-3 mb-8">Clarity that leads to action.</h2>
-          <p className="text-lg leading-relaxed text-ink/70 mb-6">
-            Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
-          </p>
-          <p className="text-lg leading-relaxed text-ink/70">
-            Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
-          </p>
-          <div className="mt-8">
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 text-ink font-semibold hover:text-morning transition-colors group"
-            >
-              Learn more about Osil
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </Link>
-          </div>
-        </RevealSection>
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <RevealSection>
+            <div className="relative w-full max-w-sm mx-auto lg:mx-0">
+              <div className="rounded-3xl overflow-hidden shadow-xl image-glow">
+                <img
+                  src={import.meta.env.BASE_URL + 'images/headshot-plants.jpg'}
+                  alt="Osil Pistole"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-3 -right-3 w-full h-full rounded-3xl bg-gradient-to-br from-sunrise/20 via-morning/15 to-growth/10 -z-10" />
+            </div>
+          </RevealSection>
+          <RevealSection delay={0.15}>
+            <span className="text-morning text-xs font-semibold uppercase tracking-[0.2em]">Meet Osil</span>
+            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-ink mt-3 mb-8">Clarity that leads to action.</h2>
+            <p className="text-lg leading-relaxed text-ink/70 mb-6">
+              Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
+            </p>
+            <p className="text-lg leading-relaxed text-ink/70">
+              Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
+            </p>
+            <div className="mt-8">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 text-ink font-semibold hover:text-morning transition-colors group"
+              >
+                Learn more about Osil
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+          </RevealSection>
+        </div>
       </div>
     </section>
   )

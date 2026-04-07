@@ -78,8 +78,16 @@ export default function SpeakingPage() {
         </div>
       </section>
 
-      {/* Testimonial-style quote */}
-      <section className="relative py-16 md:py-24 px-6 lg:px-10 text-white overflow-hidden bg-ink">
+      {/* Testimonial-style quote with background photo */}
+      <section className="relative py-16 md:py-24 px-6 lg:px-10 text-white overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={import.meta.env.BASE_URL + 'images/speaking-bw.jpg'}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-ink/85" />
+        </div>
         <div className="absolute top-5 right-[10%] w-40 h-40 rounded-full bg-sunrise/10 blur-3xl animate-float" />
         <div className="absolute bottom-5 left-[10%] w-32 h-32 rounded-full bg-morning/10 blur-3xl animate-float-delayed" />
         <div className="relative max-w-3xl mx-auto text-center">
