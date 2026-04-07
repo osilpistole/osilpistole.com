@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import BackToTop from './components/BackToTop'
+import EmailSlideIn from './components/EmailSlideIn'
 import Home from './pages/Home'
 import WorkWithMe from './pages/WorkWithMe'
 import SpeakingPage from './pages/SpeakingPage'
@@ -25,6 +26,7 @@ function App() {
       </main>
       <Footer />
       <BackToTop />
+      <EmailSlideIn />
     </div>
   )
 }
