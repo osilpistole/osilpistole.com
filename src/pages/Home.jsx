@@ -29,14 +29,27 @@ function Hero() {
 function Intro() {
   return (
     <section className="py-20 md:py-28 px-6 lg:px-10">
-      <div className="max-w-3xl mx-auto text-center">
-        <div className="w-16 h-1 bg-sunrise mx-auto mb-10 rounded-full" />
-        <p className="text-lg md:text-xl leading-relaxed text-ink/75">
-          Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
-        </p>
-        <p className="mt-6 text-lg md:text-xl leading-relaxed text-ink/75">
-          Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
-        </p>
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-14 items-center">
+          <div className="md:col-span-2 flex justify-center">
+            <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-sunrise/20 shadow-lg">
+              <img
+                src={import.meta.env.BASE_URL + 'images/IMG_0229.jpg'}
+                alt="Osil Pistole at work"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+          </div>
+          <div className="md:col-span-3 text-center md:text-left">
+            <div className="w-16 h-1 bg-sunrise mb-8 rounded-full mx-auto md:mx-0" />
+            <p className="text-lg md:text-xl leading-relaxed text-ink/75">
+              Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
+            </p>
+            <p className="mt-6 text-lg md:text-xl leading-relaxed text-ink/75">
+              Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   )

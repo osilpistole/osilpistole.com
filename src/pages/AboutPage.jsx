@@ -8,16 +8,14 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28 px-6 lg:px-10">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
-          {/* Photo placeholder */}
+          {/* Photo */}
           <div className="lg:col-span-2 flex justify-center lg:justify-start">
-            <div className="w-64 h-80 md:w-80 md:h-[420px] bg-gradient-to-br from-sunrise/20 via-morning/20 to-growth/20 rounded-3xl flex items-end justify-center overflow-hidden border border-ink/5">
-              <div className="text-center pb-10">
-                <div className="w-24 h-24 mx-auto rounded-full bg-sunrise/30 flex items-center justify-center mb-4">
-                  <span className="font-heading text-4xl font-bold text-ink">OP</span>
-                </div>
-                <p className="font-heading text-xl font-semibold text-ink">Osil Pistole</p>
-                <p className="text-sm text-ink/50 mt-1">Speaker &bull; Consultant &bull; Mentor</p>
-              </div>
+            <div className="w-64 h-80 md:w-80 md:h-[420px] rounded-3xl overflow-hidden border border-ink/5 shadow-lg">
+              <img
+                src={import.meta.env.BASE_URL + 'images/IMG_0233.jpg'}
+                alt="Osil Pistole"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
           </div>
 

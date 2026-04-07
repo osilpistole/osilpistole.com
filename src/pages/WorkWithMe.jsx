@@ -36,6 +36,13 @@ function Consulting() {
           <div>
             <SectionLabel>Consulting</SectionLabel>
             <SectionHeading className="mb-6 text-3xl md:text-4xl!">Strategy plus implementation</SectionHeading>
+            <div className="rounded-2xl overflow-hidden mb-6 shadow-md">
+              <img
+                src={import.meta.env.BASE_URL + 'images/IMG_1691.jpg'}
+                alt="Osil working with a client"
+                className="w-full h-56 md:h-64 object-cover object-top"
+              />
+            </div>
             <p className="text-ink/65 leading-relaxed text-lg mb-6">
               Osil helps take ideas from concept to execution. She brings both vision and practical strategy, helping leaders, brands, ministries, and organizations create momentum and build something real.
             </p>
