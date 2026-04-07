@@ -43,7 +43,7 @@ function Hero() {
         <div className="mt-10 md:mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <ButtonPrimary to="/work-with-me">Work With Me</ButtonPrimary>
           <Link
-            to="/speaking"
+            to="/contact"
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold border-2 border-ink/25 text-ink hover:bg-ink/5 hover:border-ink/40 transition-all duration-300 backdrop-blur-sm"
           >
             Book Me to Speak
