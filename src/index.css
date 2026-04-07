@@ -26,3 +26,83 @@ body {
 #root {
   min-height: 100svh;
 }
+
+/* ─── Animated gradient hero background ─── */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+.hero-gradient {
+  background: linear-gradient(
+    -45deg,
+    #F5C842,
+    #F5C842cc,
+    #B8A4D8,
+    #7DBE6A,
+    #B8A4D8cc,
+    #F5C842
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 12s ease infinite;
+}
+
+/* ─── Floating orb animation ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-15px) scale(1.03); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite;
+}
+
+/* ─── Scroll-triggered fade-in ─── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out forwards;
+}
+
+/* ─── Pulse glow ─── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(245, 200, 66, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(245, 200, 66, 0.4); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ─── Color stripe decoration ─── */
+.color-stripe {
+  background: linear-gradient(90deg, #F5C842, #7DBE6A, #B8A4D8);
+}
+
+/* ─── Gradient text ─── */
+.gradient-text {
+  background: linear-gradient(135deg, #F5C842, #B8A4D8, #7DBE6A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

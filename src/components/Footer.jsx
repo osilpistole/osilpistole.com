@@ -33,8 +33,8 @@ export default function Footer() {
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-white/30 mb-4">Get in Touch</p>
-            <a href="mailto:hello@osilpistole.com" className="block text-white/50 hover:text-sunrise transition-colors text-sm mb-4">
-              hello@osilpistole.com
+            <a href="mailto:osil@osilpistole.com" className="block text-white/50 hover:text-sunrise transition-colors text-sm mb-4">
+              osil@osilpistole.com
             </a>
             <div className="flex gap-4">
               <a

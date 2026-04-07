@@ -4,21 +4,49 @@ import SectionHeading from '../components/SectionHeading'
 import ButtonPrimary from '../components/ButtonPrimary'
 import ButtonSecondary from '../components/ButtonSecondary'
 import ButtonDark from '../components/ButtonDark'
+import RevealSection from '../components/RevealSection'
 
-/* ─── Hero ─── */
+/* ─── Hero with animated gradient background ─── */
 function Hero() {
   return (
-    <section className="pt-32 pb-20 md:pt-44 md:pb-32 px-6 lg:px-10">
-      <div className="max-w-4xl mx-auto text-center">
-        <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-semibold text-ink leading-tight tracking-tight">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 hero-gradient" />
+
+      {/* Heavy overlay for text readability */}
+      <div className="absolute inset-0 bg-ink/70" />
+
+      {/* Floating decorative orbs */}
+      <div className="absolute top-20 left-[10%] w-64 h-64 rounded-full bg-sunrise/20 blur-3xl animate-float" />
+      <div className="absolute bottom-20 right-[10%] w-80 h-80 rounded-full bg-morning/20 blur-3xl animate-float-delayed" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-growth/10 blur-3xl animate-float" />
+
+      {/* Content */}
+      <div className="relative z-10 max-w-4xl mx-auto text-center px-6 lg:px-10 py-32">
+        <div className="inline-block mb-6">
+          <span className="text-sunrise text-sm font-semibold uppercase tracking-[0.25em]">Speaker &middot; Consultant &middot; Mentor</span>
+        </div>
+        <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-semibold text-white leading-tight tracking-tight">
           Clarity, breakthrough, and strategy for people ready to move forward.
         </h1>
-        <p className="mt-6 md:mt-8 text-lg md:text-xl text-ink/65 leading-relaxed max-w-2xl mx-auto font-light">
+        <p className="mt-6 md:mt-8 text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto font-light">
           I help people, leaders, and organizations get clear on who they are, what they're called to do, and how to actually build it.
         </p>
         <div className="mt-10 md:mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <ButtonPrimary to="/work-with-me">Work With Me</ButtonPrimary>
-          <ButtonSecondary to="/speaking">Book Me to Speak</ButtonSecondary>
+          <Link
+            to="/speaking"
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+          >
+            Book Me to Speak
+          </Link>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="mt-16 md:mt-20 flex justify-center">
+          <div className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2">
+            <div className="w-1.5 h-3 rounded-full bg-sunrise animate-bounce" />
+          </div>
         </div>
       </div>
     </section>
@@ -30,26 +58,28 @@ function Intro() {
   return (
     <section className="py-20 md:py-28 px-6 lg:px-10">
       <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-14 items-center">
-          <div className="md:col-span-2 flex justify-center">
-            <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-sunrise/20 shadow-lg">
-              <img
-                src={import.meta.env.BASE_URL + 'images/IMG_0229.jpg'}
-                alt="Osil Pistole at work"
-                className="w-full h-full object-cover object-top"
-              />
+        <RevealSection>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-14 items-center">
+            <div className="md:col-span-2 flex justify-center">
+              <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-sunrise/30 shadow-xl animate-pulse-glow">
+                <img
+                  src={import.meta.env.BASE_URL + 'images/IMG_0229.jpg'}
+                  alt="Osil Pistole at work"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+            </div>
+            <div className="md:col-span-3 text-center md:text-left">
+              <div className="w-20 h-1.5 color-stripe mb-8 rounded-full mx-auto md:mx-0" />
+              <p className="text-lg md:text-xl leading-relaxed text-ink/75">
+                Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
+              </p>
+              <p className="mt-6 text-lg md:text-xl leading-relaxed text-ink/75">
+                Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
+              </p>
             </div>
           </div>
-          <div className="md:col-span-3 text-center md:text-left">
-            <div className="w-16 h-1 bg-sunrise mb-8 rounded-full mx-auto md:mx-0" />
-            <p className="text-lg md:text-xl leading-relaxed text-ink/75">
-              Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
-            </p>
-            <p className="mt-6 text-lg md:text-xl leading-relaxed text-ink/75">
-              Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether she is speaking to a room, mentoring a leader, or helping build a brand from the ground up, her goal is the same: clarity that leads to action.
-            </p>
-          </div>
-        </div>
+        </RevealSection>
       </div>
     </section>
   )
@@ -59,21 +89,25 @@ function Intro() {
 const helpCards = [
   {
     num: '01', title: 'Speaking', accent: 'bg-sunrise/15', numColor: 'text-sunrise',
+    borderHover: 'hover:border-sunrise/40',
     text: 'Powerful messages on identity, purpose, destiny, breakthrough, leadership, and living with clarity and courage.',
     link: '/speaking',
   },
   {
     num: '02', title: 'Consulting', accent: 'bg-growth/15', numColor: 'text-growth',
+    borderHover: 'hover:border-growth/40',
     text: 'Business consulting and strategic implementation from start to finish, including brainstorming, planning, branding, marketing, web development, app development, advertising, social media, and growth strategy.',
     link: '/work-with-me',
   },
   {
     num: '03', title: 'Mentoring', accent: 'bg-morning/20', numColor: 'text-morning',
+    borderHover: 'hover:border-morning/40',
     text: 'Helping people find their voice, get clarity, grow in confidence, hear God for themselves and others, and step into healthy leadership and prophetic maturity.',
     link: '/work-with-me',
   },
   {
     num: '04', title: 'Coaching & Training', accent: 'bg-sunrise/15', numColor: 'text-sunrise',
+    borderHover: 'hover:border-sunrise/40',
     text: 'Group coaching, team training, and high-level one-on-one coaching for leaders, ministries, businesses, and organizations ready for real movement.',
     link: '/work-with-me',
   },
@@ -83,23 +117,26 @@ function HowIHelp() {
   return (
     <section className="py-20 md:py-28 px-6 lg:px-10 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14">
-          <SectionLabel>What I Do</SectionLabel>
-          <SectionHeading>How I Help</SectionHeading>
-        </div>
+        <RevealSection>
+          <div className="text-center mb-14">
+            <SectionLabel>What I Do</SectionLabel>
+            <SectionHeading>How I Help</SectionHeading>
+          </div>
+        </RevealSection>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {helpCards.map((card) => (
-            <Link
-              key={card.title}
-              to={card.link}
-              className="group bg-parchment rounded-2xl p-8 md:p-10 border border-ink/5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${card.accent} mb-6`}>
-                <span className={`font-heading text-lg font-bold ${card.numColor}`}>{card.num}</span>
-              </div>
-              <h3 className="font-heading text-2xl font-semibold text-ink mb-3">{card.title}</h3>
-              <p className="text-ink/65 leading-relaxed">{card.text}</p>
-            </Link>
+          {helpCards.map((card, i) => (
+            <RevealSection key={card.title} delay={i * 0.1}>
+              <Link
+                to={card.link}
+                className={`group block bg-parchment rounded-2xl p-8 md:p-10 border border-ink/5 ${card.borderHover} hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400`}
+              >
+                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${card.accent} mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <span className={`font-heading text-lg font-bold ${card.numColor}`}>{card.num}</span>
+                </div>
+                <h3 className="font-heading text-2xl font-semibold text-ink mb-3">{card.title}</h3>
+                <p className="text-ink/65 leading-relaxed">{card.text}</p>
+              </Link>
+            </RevealSection>
           ))}
         </div>
       </div>
@@ -109,30 +146,40 @@ function HowIHelp() {
 
 /* ─── Who I Help ─── */
 const audiences = [
-  'Leaders', 'Entrepreneurs', 'Ministries', 'Founders',
-  'Teams and organizations', "Women's groups", 'Churches',
-  'Creative visionaries', 'People who feel stuck, unclear, or ready for their next level',
+  { label: 'Leaders', color: 'hover:border-sunrise hover:bg-sunrise/8' },
+  { label: 'Entrepreneurs', color: 'hover:border-growth hover:bg-growth/8' },
+  { label: 'Ministries', color: 'hover:border-morning hover:bg-morning/15' },
+  { label: 'Founders', color: 'hover:border-sunrise hover:bg-sunrise/8' },
+  { label: 'Teams and organizations', color: 'hover:border-growth hover:bg-growth/8' },
+  { label: "Women's groups", color: 'hover:border-morning hover:bg-morning/15' },
+  { label: 'Churches', color: 'hover:border-sunrise hover:bg-sunrise/8' },
+  { label: 'Creative visionaries', color: 'hover:border-growth hover:bg-growth/8' },
+  { label: 'People who feel stuck, unclear, or ready for their next level', color: 'hover:border-morning hover:bg-morning/15' },
 ]
 
 function WhoIHelp() {
   return (
     <section className="py-20 md:py-28 px-6 lg:px-10">
       <div className="max-w-4xl mx-auto text-center">
-        <SectionLabel>Who This Is For</SectionLabel>
-        <SectionHeading className="mb-6">Who I Work With</SectionHeading>
-        <p className="text-lg text-ink/65 mb-12 max-w-2xl mx-auto">
-          This work is for people and teams who know they are made for more and are ready to move with clarity and conviction.
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
-          {audiences.map((item) => (
-            <span
-              key={item}
-              className="bg-white border border-ink/8 text-ink/75 px-5 py-2.5 rounded-full text-sm font-medium hover:border-sunrise hover:bg-sunrise/5 transition-all duration-200"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
+        <RevealSection>
+          <SectionLabel>Who This Is For</SectionLabel>
+          <SectionHeading className="mb-6">Who I Work With</SectionHeading>
+          <p className="text-lg text-ink/65 mb-12 max-w-2xl mx-auto">
+            This work is for people and teams who know they are made for more and are ready to move with clarity and conviction.
+          </p>
+        </RevealSection>
+        <RevealSection delay={0.2}>
+          <div className="flex flex-wrap justify-center gap-3">
+            {audiences.map((item) => (
+              <span
+                key={item.label}
+                className={`bg-white border border-ink/8 text-ink/75 px-5 py-2.5 rounded-full text-sm font-medium ${item.color} transition-all duration-300 cursor-default`}
+              >
+                {item.label}
+              </span>
+            ))}
+          </div>
+        </RevealSection>
       </div>
     </section>
   )
@@ -140,37 +187,46 @@ function WhoIHelp() {
 
 /* ─── Transformation ─── */
 const transforms = [
-  { from: 'confused', to: 'clear' },
-  { from: 'overthinking', to: 'action' },
-  { from: 'hidden', to: 'confident' },
-  { from: 'stalled', to: 'moving' },
-  { from: 'scattered ideas', to: 'strong direction' },
-  { from: 'self-doubt', to: 'aligned leadership' },
+  { from: 'confused', to: 'clear', color: 'border-sunrise/40' },
+  { from: 'overthinking', to: 'action', color: 'border-growth/40' },
+  { from: 'hidden', to: 'confident', color: 'border-morning/40' },
+  { from: 'stalled', to: 'moving', color: 'border-sunrise/40' },
+  { from: 'scattered ideas', to: 'strong direction', color: 'border-growth/40' },
+  { from: 'self-doubt', to: 'aligned leadership', color: 'border-morning/40' },
 ]
 
 function Transformation() {
   return (
-    <section className="py-20 md:py-28 px-6 lg:px-10 bg-ink text-white">
-      <div className="max-w-4xl mx-auto text-center">
-        <SectionLabel color="text-sunrise">The Shift</SectionLabel>
-        <h2 className="font-heading text-3xl md:text-5xl font-semibold mb-14 text-white">Real Transformation</h2>
+    <section className="relative py-20 md:py-28 px-6 lg:px-10 bg-ink text-white overflow-hidden">
+      {/* Decorative gradient orbs */}
+      <div className="absolute top-10 right-[5%] w-48 h-48 rounded-full bg-sunrise/10 blur-3xl animate-float" />
+      <div className="absolute bottom-10 left-[5%] w-56 h-56 rounded-full bg-morning/10 blur-3xl animate-float-delayed" />
+
+      <div className="relative max-w-4xl mx-auto text-center">
+        <RevealSection>
+          <SectionLabel color="text-sunrise">The Shift</SectionLabel>
+          <h2 className="font-heading text-3xl md:text-5xl font-semibold mb-14 text-white">Real Transformation</h2>
+        </RevealSection>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {transforms.map((t) => (
-            <div
-              key={t.from}
-              className="flex items-center justify-center gap-4 bg-white/5 rounded-2xl px-6 py-5 border border-white/10 hover:border-sunrise/40 transition-all duration-300"
-            >
-              <span className="text-white/50 font-light">From {t.from}</span>
-              <svg className="w-5 h-5 text-sunrise shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-              <span className="text-white font-semibold">to {t.to}</span>
-            </div>
+          {transforms.map((t, i) => (
+            <RevealSection key={t.from} delay={i * 0.08}>
+              <div
+                className={`flex items-center justify-center gap-4 bg-white/5 rounded-2xl px-6 py-5 border border-white/10 hover:${t.color} hover:bg-white/8 transition-all duration-300`}
+              >
+                <span className="text-white/50 font-light">From {t.from}</span>
+                <svg className="w-5 h-5 text-sunrise shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+                <span className="text-white font-semibold">to {t.to}</span>
+              </div>
+            </RevealSection>
           ))}
         </div>
-        <p className="text-lg text-white/60 max-w-2xl mx-auto mt-14">
-          Real breakthrough happens when clarity, identity, and strategy come together.
-        </p>
+        <RevealSection delay={0.5}>
+          <p className="text-lg text-white/60 max-w-2xl mx-auto mt-14">
+            Real breakthrough happens when clarity, identity, and strategy come together.
+          </p>
+        </RevealSection>
       </div>
     </section>
   )
@@ -179,16 +235,22 @@ function Transformation() {
 /* ─── Final CTA ─── */
 function FinalCTA() {
   return (
-    <section className="py-20 md:py-28 px-6 lg:px-10 bg-sunrise/10">
-      <div className="max-w-3xl mx-auto text-center">
-        <SectionHeading className="mb-6">Let's build something meaningful.</SectionHeading>
-        <p className="text-lg text-ink/65 leading-relaxed mb-10 max-w-2xl mx-auto">
-          Whether you are looking for a speaker, a consultant, a mentor, or a trainer for your team, this is a space for clarity, breakthrough, and real movement.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <ButtonPrimary to="/work-with-me">Work With Osil</ButtonPrimary>
-          <ButtonDark to="/contact">Contact Osil</ButtonDark>
-        </div>
+    <section className="relative py-20 md:py-28 px-6 lg:px-10 overflow-hidden">
+      {/* Multi-color gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-sunrise/15 via-morning/10 to-growth/10" />
+      <div className="absolute top-0 left-0 right-0 h-1.5 color-stripe" />
+
+      <div className="relative max-w-3xl mx-auto text-center">
+        <RevealSection>
+          <SectionHeading className="mb-6">Let's build something meaningful.</SectionHeading>
+          <p className="text-lg text-ink/65 leading-relaxed mb-10 max-w-2xl mx-auto">
+            Whether you are looking for a speaker, a consultant, a mentor, or a trainer for your team, this is a space for clarity, breakthrough, and real movement.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <ButtonPrimary to="/work-with-me">Work With Osil</ButtonPrimary>
+            <ButtonDark to="/contact">Contact Osil</ButtonDark>
+          </div>
+        </RevealSection>
       </div>
     </section>
   )

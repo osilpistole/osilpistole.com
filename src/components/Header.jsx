@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 const navLinks = [
@@ -11,12 +11,34 @@ const navLinks = [
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+  const isHome = location.pathname === '/'
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const showSolid = scrolled || !isHome || open
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-ink/5">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        showSolid
+          ? 'bg-white/90 backdrop-blur-md border-b border-ink/5'
+          : 'bg-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-18">
-        <Link to="/" className="font-heading text-2xl font-semibold text-ink tracking-tight hover:opacity-80 transition-opacity">
+        <Link
+          to="/"
+          className={`font-heading text-2xl font-semibold tracking-tight hover:opacity-80 transition-all duration-300 ${
+            showSolid ? 'text-ink' : 'text-white'
+          }`}
+        >
           Osil Pistole
         </Link>
 
@@ -27,7 +49,9 @@ export default function Header() {
               key={link.label}
               to={link.to}
               className={`text-sm font-medium transition-colors duration-200 ${
-                location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
+                showSolid
+                  ? location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
+                  : location.pathname === link.to ? 'text-white' : 'text-white/70 hover:text-white'
               }`}
             >
               {link.label}
@@ -47,9 +71,9 @@ export default function Header() {
           className="md:hidden flex flex-col gap-1.5 p-2"
           aria-label="Toggle menu"
         >
-          <span className={`block w-6 h-0.5 bg-ink transition-all duration-300 ${open ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`block w-6 h-0.5 bg-ink transition-all duration-300 ${open ? 'opacity-0' : ''}`} />
-          <span className={`block w-6 h-0.5 bg-ink transition-all duration-300 ${open ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-white'} ${open ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-white'} ${open ? 'opacity-0' : ''}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-white'} ${open ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
 
