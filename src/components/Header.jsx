@@ -49,7 +49,7 @@ export default function Header() {
               key={link.label}
               to={link.to}
               className={`text-sm font-medium transition-colors duration-200 animated-underline ${
-                location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
+                location.pathname === link.to ? 'text-ink active-underline' : 'text-ink/60 hover:text-ink'
               }`}
             >
               {link.label}
@@ -57,7 +57,7 @@ export default function Header() {
           ))}
           <Link
             to="/contact"
-            className="bg-sunrise text-ink text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-sunrise/85 transition-all duration-200 shadow-sm hover:shadow-md"
+            className="bg-sunrise text-ink text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-sunrise/85 transition-all duration-200 shadow-sm hover:shadow-md btn-glow"
           >
             Book Osil
           </Link>

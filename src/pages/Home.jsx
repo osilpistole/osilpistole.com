@@ -9,7 +9,7 @@ import RevealSection from '../components/RevealSection'
 /* ─── Hero with video background + lavender overlay ─── */
 function Hero() {
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden texture-overlay">
       {/* Video background */}
       <video
         autoPlay

@@ -27,6 +27,42 @@ body {
   min-height: 100svh;
 }
 
+/* ─── Custom text selection ─── */
+::selection {
+  background: rgba(184, 164, 216, 0.3);
+  color: var(--color-ink);
+}
+
+/* ─── Focus-visible for accessibility ─── */
+:focus-visible {
+  outline: 2px solid var(--color-morning);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Smooth image loading ─── */
+img {
+  transition: opacity 0.4s ease;
+}
+
+/* ─── Subtle scrollbar styling ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-parchment);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(44, 44, 42, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 44, 42, 0.3);
+}
+
 /* ─── Animated gradient hero background ─── */
 @keyframes gradient-shift {
   0%, 100% { background-position: 0% 50%; }
@@ -173,7 +209,8 @@ body {
   transition: width 0.4s ease;
 }
 
-.animated-underline:hover::after {
+.animated-underline:hover::after,
+.animated-underline.active-underline::after {
   width: 100%;
 }
 
@@ -195,4 +232,65 @@ body {
 
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
+}
+
+/* ─── Button glow on hover ─── */
+.btn-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  box-shadow: 0 0 20px rgba(245, 200, 66, 0.4), 0 0 40px rgba(245, 200, 66, 0.15);
+  transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::after {
+  opacity: 1;
+}
+
+/* ─── Glassmorphism card ─── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Subtle noise texture overlay ─── */
+.texture-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Animated gradient border ─── */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #F5C842, #B8A4D8, #7DBE6A, #F5C842);
+  background-size: 300% 300%;
+  animation: gradient-text-flow 6s ease infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
 }
