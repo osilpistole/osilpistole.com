@@ -50,12 +50,6 @@ function Hero() {
           </Link>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="mt-16 md:mt-20 flex justify-center">
-          <div className="w-6 h-10 rounded-full border-2 border-ink/25 flex justify-center pt-2">
-            <div className="w-1.5 h-3 rounded-full bg-morning animate-bounce" />
-          </div>
-        </div>
       </div>
     </section>
   )
