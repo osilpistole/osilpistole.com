@@ -67,8 +67,8 @@ export default function EmailSlideIn() {
 
   return (
     <div
-      className={`fixed bottom-6 left-6 z-50 w-80 max-w-[calc(100vw-3rem)] transition-all duration-500 ${
-        visible && !dismissed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
+      className={`fixed bottom-6 left-6 z-50 w-80 max-w-[calc(100vw-3rem)] ${
+        visible && !dismissed ? 'animate-slide-in-bounce' : 'opacity-0 translate-x-[-120%] pointer-events-none'
       }`}
     >
       <div className="bg-white rounded-2xl shadow-2xl border border-ink/5 overflow-hidden">
