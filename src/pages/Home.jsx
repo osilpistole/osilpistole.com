@@ -1,40 +1,10 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect, useRef } from 'react'
 import SectionLabel from '../components/SectionLabel'
 import SectionHeading from '../components/SectionHeading'
 import ButtonPrimary from '../components/ButtonPrimary'
 import ButtonSecondary from '../components/ButtonSecondary'
 import ButtonDark from '../components/ButtonDark'
 import RevealSection from '../components/RevealSection'
-
-/* ─── Animated counter hook ─── */
-function useCounter(end, duration = 2000) {
-  const [count, setCount] = useState(0)
-  const ref = useRef(null)
-  const started = useRef(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
-        started.current = true
-        const start = performance.now()
-        const tick = (now) => {
-          const progress = Math.min((now - start) / duration, 1)
-          const eased = 1 - Math.pow(1 - progress, 3)
-          setCount(Math.round(eased * end))
-          if (progress < 1) requestAnimationFrame(tick)
-        }
-        requestAnimationFrame(tick)
-      }
-    }, { threshold: 0.3 })
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [end, duration])
-
-  return [ref, count]
-}
 
 /* ─── Hero with video background + lavender overlay ─── */
 function Hero() {
@@ -135,56 +105,6 @@ function Intro() {
             </div>
           </div>
         </RevealSection>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Scrolling Marquee ─── */
-const marqueeWords = ['Clarity', 'Breakthrough', 'Identity', 'Purpose', 'Strategy', 'Growth', 'Courage', 'Destiny', 'Leadership', 'Movement']
-
-function Marquee() {
-  return (
-    <section className="py-6 overflow-hidden bg-ink">
-      <div className="flex animate-marquee whitespace-nowrap">
-        {[...marqueeWords, ...marqueeWords].map((word, i) => (
-          <span key={i} className="mx-8 md:mx-12 font-heading text-2xl md:text-3xl font-semibold text-white/15 select-none">
-            {word}
-            <span className="inline-block mx-8 md:mx-12 text-sunrise/30">&bull;</span>
-          </span>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-/* ─── Impact Stats ─── */
-function ImpactStats() {
-  const [ref1, count1] = useCounter(500)
-  const [ref2, count2] = useCounter(50)
-  const [ref3, count3] = useCounter(15)
-  const [ref4, count4] = useCounter(100)
-
-  const stats = [
-    { ref: ref1, value: count1, suffix: '+', label: 'People Impacted', color: 'text-sunrise' },
-    { ref: ref2, value: count2, suffix: '+', label: 'Speaking Events', color: 'text-growth' },
-    { ref: ref3, value: count3, suffix: '+', label: 'Years of Experience', color: 'text-morning' },
-    { ref: ref4, value: count4, suffix: '%', label: 'Heart and Soul', color: 'text-sunrise' },
-  ]
-
-  return (
-    <section className="py-16 md:py-20 px-6 lg:px-10 animate-shimmer">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
-          {stats.map((stat) => (
-            <div key={stat.label} ref={stat.ref} className="text-center group">
-              <div className={`font-heading text-4xl md:text-5xl font-bold ${stat.color} mb-2 transition-transform duration-300 group-hover:scale-110`}>
-                {stat.value}{stat.suffix}
-              </div>
-              <div className="text-ink/50 text-sm font-medium uppercase tracking-wider">{stat.label}</div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )
@@ -367,10 +287,24 @@ export default function Home() {
     <>
       <Hero />
       <Intro />
-      <Marquee />
-      <ImpactStats />
       <HowIHelp />
       <WhoIHelp />
+
+      {/* Atmospheric photo divider */}
+      <section className="relative h-64 md:h-80 lg:h-96 overflow-hidden">
+        <img
+          src={import.meta.env.BASE_URL + 'images/stock-path.jpg'}
+          alt="A sunlit path through trees"
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-parchment via-transparent to-ink/80" />
+        <div className="absolute bottom-8 left-0 right-0 text-center">
+          <p className="text-white/80 font-heading text-xl md:text-2xl font-light italic tracking-wide">
+            The path forward starts with clarity.
+          </p>
+        </div>
+      </section>
+
       <Transformation />
       <FinalCTA />
     </>

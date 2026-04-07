@@ -46,7 +46,7 @@ function Consulting() {
               <img
                 src={import.meta.env.BASE_URL + 'images/consulting-working.jpg'}
                 alt="Osil Pistole"
-                className="w-full h-56 md:h-72 object-cover object-top hover:scale-105 transition-transform duration-700"
+                className="w-full object-contain hover:scale-105 transition-transform duration-700"
               />
             </div>
             <p className="text-ink/65 leading-relaxed text-lg mb-6">
@@ -111,6 +111,13 @@ function Mentoring() {
           <RevealSection className="order-1 lg:order-2" delay={0.15}>
             <SectionLabel color="text-morning">Mentoring</SectionLabel>
             <SectionHeading className="mb-6 text-3xl md:text-4xl!">Mentoring for voice, calling, and clarity</SectionHeading>
+            <div className="rounded-2xl overflow-hidden mb-6 shadow-lg image-glow">
+              <img
+                src={import.meta.env.BASE_URL + 'images/stock-growth.jpg'}
+                alt="New growth"
+                className="w-full h-48 md:h-56 object-cover object-center hover:scale-105 transition-transform duration-700"
+              />
+            </div>
             <p className="text-ink/65 leading-relaxed text-lg mb-6">
               For those who are ready to stop second-guessing themselves and step fully into who they are, Osil offers mentoring that is grounded, clear, and transformational.
             </p>
