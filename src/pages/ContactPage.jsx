@@ -6,20 +6,48 @@ const interestOptions = [
   'Speaking', 'Consulting', 'Mentoring', 'Coaching', 'Team Training', 'Other',
 ]
 
+const FORMSPREE_URL = 'https://formspree.io/f/osil@osilpistole.com'
+
 export default function ContactPage() {
   const [form, setForm] = useState({
     name: '', email: '', organization: '', interest: '', message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState(null)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setForm({ name: '', email: '', organization: '', interest: '', message: '' })
+    setSending(true)
+    setError(null)
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          _replyto: form.email,
+          email: form.email,
+          organization: form.organization,
+          interest: form.interest,
+          message: form.message,
+        }),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+        setForm({ name: '', email: '', organization: '', interest: '', message: '' })
+      } else {
+        setError('Something went wrong. Please try again or email directly.')
+      }
+    } catch {
+      setError('Something went wrong. Please try again or email directly.')
+    } finally {
+      setSending(false)
+    }
   }
 
   const inputClass = 'w-full px-4 py-3 rounded-xl border border-ink/10 bg-parchment text-ink placeholder-ink/30 focus:outline-none focus:ring-2 focus:ring-sunrise/50 focus:border-sunrise transition-all'
@@ -113,11 +141,15 @@ export default function ContactPage() {
                     className={`${inputClass} resize-none`}
                   />
                 </div>
+                {error && (
+                  <p className="text-red-500 text-sm text-center">{error}</p>
+                )}
                 <button
                   type="submit"
-                  className="w-full bg-sunrise text-ink font-semibold py-3.5 rounded-full hover:bg-sunrise/85 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+                  disabled={sending}
+                  className="w-full bg-sunrise text-ink font-semibold py-3.5 rounded-full hover:bg-sunrise/85 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {sending ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             )}

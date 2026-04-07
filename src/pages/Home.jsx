@@ -31,8 +31,14 @@ function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center px-6 lg:px-10 py-32">
-        <div className="inline-block mb-6">
+        <div className="inline-block mb-4">
           <span className="text-ink/70 text-sm font-semibold uppercase tracking-[0.25em]">Speaker &middot; Consultant &middot; Mentor</span>
+        </div>
+        <div className="flex justify-center mb-6">
+          <span className="inline-flex items-center gap-2 bg-growth/12 text-growth px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-growth animate-pulse" />
+            Currently booking for 2026
+          </span>
         </div>
         <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-semibold text-ink leading-tight tracking-tight drop-shadow-sm">
           Clarity, breakthrough, and strategy for people ready to <span className="gradient-text-animated">move forward.</span>

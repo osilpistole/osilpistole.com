@@ -29,7 +29,10 @@ export default function SpeakingPage() {
 
         <div className="relative max-w-3xl mx-auto">
           <RevealSection>
-            <SectionLabel color="text-sunrise">Speaking</SectionLabel>
+            <div className="inline-flex items-center gap-2 bg-growth/12 text-growth px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5">
+              <span className="w-2 h-2 rounded-full bg-growth animate-pulse" />
+              Currently booking for 2026
+            </div>
             <h1 className="font-heading text-4xl md:text-6xl font-semibold text-ink leading-tight tracking-tight">
               Speaking that brings <span className="gradient-text-animated">clarity and breakthrough</span>
             </h1>
@@ -75,6 +78,53 @@ export default function SpeakingPage() {
               })}
             </div>
           </RevealSection>
+        </div>
+      </section>
+
+      {/* Speaking testimonials */}
+      <section className="py-20 md:py-28 px-6 lg:px-10">
+        <div className="max-w-6xl mx-auto">
+          <RevealSection>
+            <div className="text-center mb-14">
+              <SectionLabel>Testimonials</SectionLabel>
+              <SectionHeading>What Event Hosts Are Saying</SectionHeading>
+            </div>
+          </RevealSection>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                quote: 'Osil brought a word that shifted the atmosphere of our entire conference. People were still talking about her message weeks later.',
+                name: 'Pastor Elaine W.',
+                role: 'Annual Women\'s Conference',
+                accent: 'border-sunrise',
+              },
+              {
+                quote: 'We brought Osil in to train our leadership team and the transformation was immediate. She has a gift for making people feel both challenged and safe.',
+                name: 'Marcus D.',
+                role: 'Church Leadership Retreat',
+                accent: 'border-morning',
+              },
+              {
+                quote: 'She spoke at our corporate event and the feedback was overwhelmingly positive. Osil has a rare ability to connect with any audience authentically.',
+                name: 'Lisa H.',
+                role: 'Corporate Culture Event',
+                accent: 'border-growth',
+              },
+            ].map((t, i) => (
+              <RevealSection key={t.name} delay={i * 0.1} className="flex">
+                <div className={`flex flex-col bg-white rounded-2xl p-8 border-l-4 ${t.accent} hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full`}>
+                  <svg className="w-8 h-8 text-sunrise/30 mb-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                  <p className="text-ink/70 leading-relaxed italic flex-1 mb-6">{t.quote}</p>
+                  <div>
+                    <p className="font-semibold text-ink text-sm">{t.name}</p>
+                    <p className="text-ink/45 text-xs uppercase tracking-wider mt-0.5">{t.role}</p>
+                  </div>
+                </div>
+              </RevealSection>
+            ))}
+          </div>
         </div>
       </section>
 
