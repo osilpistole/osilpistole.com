@@ -169,7 +169,7 @@ export default function ContactPage() {
           </p>
           <div className="flex justify-center gap-5 mt-6">
             <a
-              href="https://www.linkedin.com/in/osilpistole/"
+              href="https://www.linkedin.com/in/osil-pistole/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-ink/30 hover:text-sunrise transition-colors duration-300 hover:scale-110"

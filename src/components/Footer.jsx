@@ -39,7 +39,7 @@ export default function Footer() {
             </a>
             <div className="flex gap-4">
               <a
-                href="https://www.linkedin.com/in/osilpistole/"
+                href="https://www.linkedin.com/in/osil-pistole/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/40 hover:text-sunrise transition-colors"
