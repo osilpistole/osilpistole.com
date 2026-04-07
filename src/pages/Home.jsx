@@ -6,37 +6,45 @@ import ButtonSecondary from '../components/ButtonSecondary'
 import ButtonDark from '../components/ButtonDark'
 import RevealSection from '../components/RevealSection'
 
-/* ─── Hero with animated gradient background ─── */
+/* ─── Hero with video background + lavender overlay ─── */
 function Hero() {
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 hero-gradient" />
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        poster=""
+      >
+        <source src={import.meta.env.BASE_URL + 'clarity-water.mp4'} type="video/mp4" />
+      </video>
 
-      {/* Heavy overlay for text readability */}
-      <div className="absolute inset-0 bg-ink/70" />
+      {/* Light lavender overlay */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(184, 164, 216, 0.55), rgba(184, 164, 216, 0.4), rgba(247, 244, 238, 0.45))' }} />
 
-      {/* Floating decorative orbs */}
-      <div className="absolute top-20 left-[10%] w-64 h-64 rounded-full bg-sunrise/20 blur-3xl animate-float" />
-      <div className="absolute bottom-20 right-[10%] w-80 h-80 rounded-full bg-morning/20 blur-3xl animate-float-delayed" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-growth/10 blur-3xl animate-float" />
+      {/* Subtle floating orbs for extra depth */}
+      <div className="absolute top-20 left-[10%] w-64 h-64 rounded-full bg-white/10 blur-3xl animate-float" />
+      <div className="absolute bottom-20 right-[10%] w-80 h-80 rounded-full bg-morning/15 blur-3xl animate-float-delayed" />
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center px-6 lg:px-10 py-32">
         <div className="inline-block mb-6">
-          <span className="text-sunrise text-sm font-semibold uppercase tracking-[0.25em]">Speaker &middot; Consultant &middot; Mentor</span>
+          <span className="text-ink/70 text-sm font-semibold uppercase tracking-[0.25em]">Speaker &middot; Consultant &middot; Mentor</span>
         </div>
-        <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-semibold text-white leading-tight tracking-tight">
+        <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-semibold text-ink leading-tight tracking-tight drop-shadow-sm">
           Clarity, breakthrough, and strategy for people ready to move forward.
         </h1>
-        <p className="mt-6 md:mt-8 text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto font-light">
+        <p className="mt-6 md:mt-8 text-lg md:text-xl text-ink/70 leading-relaxed max-w-2xl mx-auto font-light">
           I help people, leaders, and organizations get clear on who they are, what they're called to do, and how to actually build it.
         </p>
         <div className="mt-10 md:mt-12 flex flex-col sm:flex-row gap-4 justify-center">
           <ButtonPrimary to="/work-with-me">Work With Me</ButtonPrimary>
           <Link
             to="/speaking"
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold border-2 border-ink/25 text-ink hover:bg-ink/5 hover:border-ink/40 transition-all duration-300 backdrop-blur-sm"
           >
             Book Me to Speak
           </Link>
@@ -44,8 +52,8 @@ function Hero() {
 
         {/* Scroll indicator */}
         <div className="mt-16 md:mt-20 flex justify-center">
-          <div className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2">
-            <div className="w-1.5 h-3 rounded-full bg-sunrise animate-bounce" />
+          <div className="w-6 h-10 rounded-full border-2 border-ink/25 flex justify-center pt-2">
+            <div className="w-1.5 h-3 rounded-full bg-morning animate-bounce" />
           </div>
         </div>
       </div>

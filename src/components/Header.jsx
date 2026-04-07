@@ -36,7 +36,7 @@ export default function Header() {
         <Link
           to="/"
           className={`font-heading text-2xl font-semibold tracking-tight hover:opacity-80 transition-all duration-300 ${
-            showSolid ? 'text-ink' : 'text-white'
+            showSolid ? 'text-ink' : 'text-ink'
           }`}
         >
           Osil Pistole
@@ -51,7 +51,7 @@ export default function Header() {
               className={`text-sm font-medium transition-colors duration-200 ${
                 showSolid
                   ? location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
-                  : location.pathname === link.to ? 'text-white' : 'text-white/70 hover:text-white'
+                  : location.pathname === link.to ? 'text-ink' : 'text-ink/60 hover:text-ink'
               }`}
             >
               {link.label}
@@ -71,9 +71,9 @@ export default function Header() {
           className="md:hidden flex flex-col gap-1.5 p-2"
           aria-label="Toggle menu"
         >
-          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-white'} ${open ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-white'} ${open ? 'opacity-0' : ''}`} />
-          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-white'} ${open ? '-rotate-45 -translate-y-2' : ''}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-ink'} ${open ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-ink'} ${open ? 'opacity-0' : ''}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-ink'} ${open ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
 
