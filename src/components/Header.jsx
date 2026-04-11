@@ -28,16 +28,14 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         showSolid
-          ? 'bg-white/90 backdrop-blur-md border-b border-ink/5'
+          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-ink/6'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-18">
         <Link
           to="/"
-          className={`font-heading text-2xl font-semibold tracking-tight hover:opacity-80 transition-all duration-300 ${
-            showSolid ? 'text-ink' : 'text-ink'
-          }`}
+          className="font-heading text-xl font-bold tracking-tight text-ink hover:opacity-75 transition-all duration-300"
         >
           Osil Pistole
         </Link>
@@ -49,7 +47,9 @@ export default function Header() {
               key={link.label}
               to={link.to}
               className={`text-sm font-medium transition-colors duration-200 animated-underline ${
-                location.pathname === link.to ? 'text-ink active-underline' : 'text-ink/60 hover:text-ink'
+                location.pathname === link.to
+                  ? 'text-ink active-underline'
+                  : 'text-ink/55 hover:text-ink'
               }`}
             >
               {link.label}
@@ -57,7 +57,7 @@ export default function Header() {
           ))}
           <Link
             to="/contact"
-            className="bg-sunrise text-ink text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-sunrise/85 transition-all duration-200 shadow-sm hover:shadow-md btn-glow"
+            className="bg-sunrise text-ink text-sm font-bold px-6 py-2.5 rounded-full hover:bg-sunrise/85 transition-all duration-200 shadow-sm hover:shadow-lg hover:-translate-y-0.5 btn-glow"
           >
             Book Osil
           </Link>
