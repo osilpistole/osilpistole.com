@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import RevealSection from '../components/RevealSection'
 import PageCTA from '../components/PageCTA'
 
@@ -85,14 +84,6 @@ function ExpertiseCard({ item }) {
 }
 
 function InstagramFeed() {
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://cdn.lightwidget.com/widgets/lightwidget.js'
-    script.async = true
-    document.body.appendChild(script)
-    return () => document.body.removeChild(script)
-  }, [])
-
   return (
     <section className="py-20 md:py-24 px-6 lg:px-14 bg-parchment">
       <div className="max-w-7xl mx-auto">
@@ -119,7 +110,7 @@ function InstagramFeed() {
         <RevealSection delay={0.1}>
           {/* LightWidget embed — replace the src URL with your own from lightwidget.com */}
           <iframe
-            src="//lightwidget.com/widgets/904f90c9c642584881f0d70c45a82caf.html"
+            src="https://cdn.lightwidget.com/widgets/904f90c9c642584881f0d70c45a82caf.html"
             allowTransparency="true"
             className="lightwidget-widget w-full"
             style={{ border: 0, overflow: 'hidden', display: 'block' }}
