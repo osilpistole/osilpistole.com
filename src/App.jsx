@@ -20,6 +20,8 @@ import ProgramsPage from './pages/ProgramsPage'
 import ProductPage from './pages/ProductPage'
 import SpiritualGiftsPage from './pages/SpiritualGiftsPage'
 import FivefoldPage from './pages/FivefoldPage'
+import QuizLandingPage from './pages/QuizLandingPage'
+import QuizChat from './components/QuizChat'
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
           <Route path="/programs/:slug" element={<ProductPage />} />
           <Route path="/spiritual-gifts" element={<SpiritualGiftsPage />} />
           <Route path="/fivefold" element={<FivefoldPage />} />
+          <Route path="/quiz" element={<QuizLandingPage />} />
+          <Route path="/quiz/start" element={<QuizChat />} />
         </Routes>
       </main>
       <Footer />
