@@ -7,6 +7,14 @@ export const freeResources = [
     link: '/spiritual-gifts',
     cta: 'Take the Free Test',
   },
+  {
+    slug: 'fivefold',
+    title: '5-Fold Ministry Assessment',
+    tagline: 'Find out which of the five leadership callings God wired into you — Apostle, Prophet, Evangelist, Pastor, or Teacher.',
+    icon: '👁️',
+    link: '/fivefold',
+    cta: 'Discover My Calling',
+  },
 ]
 
 export const programs = [

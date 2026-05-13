@@ -19,6 +19,7 @@ import AwakenAndAlignPage from './pages/AwakenAndAlignPage'
 import ProgramsPage from './pages/ProgramsPage'
 import ProductPage from './pages/ProductPage'
 import SpiritualGiftsPage from './pages/SpiritualGiftsPage'
+import FivefoldPage from './pages/FivefoldPage'
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/programs" element={<ProgramsPage />} />
           <Route path="/programs/:slug" element={<ProductPage />} />
           <Route path="/spiritual-gifts" element={<SpiritualGiftsPage />} />
+          <Route path="/fivefold" element={<FivefoldPage />} />
         </Routes>
       </main>
       <Footer />
