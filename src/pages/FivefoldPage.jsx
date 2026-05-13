@@ -99,7 +99,7 @@ export default function FivefoldPage() {
             >
               Discover my calling →
             </a>
-            <p className="text-sm mt-4" style={{ color: 'rgba(255,255,255,0.3)' }}>20 questions · 5 minutes · completely free</p>
+            <p className="text-sm mt-4" style={{ color: 'rgba(255,255,255,0.3)' }}>40 questions · 8 minutes · completely free</p>
           </Reveal>
         </div>
       </section>
@@ -112,15 +112,15 @@ export default function FivefoldPage() {
               <div className="flex items-start gap-4">
                 <div className="text-2xl shrink-0 mt-1">📌</div>
                 <div>
-                  <h3 className="font-heading font-bold text-ink text-lg mb-3">Not every believer is a 5-fold minister — and that&apos;s by design.</h3>
+                  <h3 className="font-heading font-bold text-ink text-lg mb-3">Not every believer holds a 5-fold office — but you might lean toward one.</h3>
                   <p className="font-body text-ink/60 text-sm leading-relaxed mb-3">
-                    The 5-fold offices — apostle, prophet, evangelist, pastor, and teacher — are specific leadership gifts given to certain members of the body to <strong className="text-ink/80">equip everyone else</strong>. They&apos;re not a hierarchy. They&apos;re a function.
+                    The 5-fold offices — apostle, prophet, evangelist, pastor, and teacher — are specific leadership gifts given to certain members of the body to <strong className="text-ink/80">equip everyone else</strong>. They&apos;re not a hierarchy. They&apos;re a function. Not all believers carry them.
                   </p>
                   <p className="font-body text-ink/60 text-sm leading-relaxed mb-3">
-                    Every believer is gifted and called. You may have the gift of mercy, giving, faith, or service — and those gifts are just as essential and Spirit-given. But the 5-fold offices are a distinct set of leadership callings designed to build up and release the whole body.
+                    But many people have natural tendencies, wiring, and passions that <em>lean</em> toward one of these callings — even if they haven&apos;t stepped into a formal role. This assessment surfaces that lean. Whether you&apos;re in full-time ministry or simply trying to understand how God made you, knowing which direction you lean gives you something to work with.
                   </p>
                   <p className="font-body text-ink/70 text-sm leading-relaxed font-medium">
-                    If you take this assessment and your scores feel scattered or low across all five — that&apos;s not a problem. It may simply mean your gifting runs through the Romans 12 or 1 Corinthians 12 gifts instead. Take the <a href="/spiritual-gifts" className="underline underline-offset-2 hover:text-ink transition-colors" style={{ color: '#d4a800' }}>Spiritual Gifts Assessment</a> next.
+                    If your scores feel scattered or low across all five — that&apos;s not a problem. It may mean your primary gifting runs through the Romans 12 or 1 Corinthians 12 gifts instead. Take the <a href="/spiritual-gifts" className="underline underline-offset-2 hover:text-ink transition-colors" style={{ color: '#d4a800' }}>Spiritual Gifts Assessment</a> to find out.
                   </p>
                 </div>
               </div>
@@ -169,7 +169,7 @@ export default function FivefoldPage() {
           </Reveal>
           <div className="flex flex-col gap-6">
             {[
-              { step: '01', title: 'Answer 20 honest questions', body: 'Rate each statement from Never to Always. Answer as you are today — not as who you aspire to be.' },
+              { step: '01', title: 'Answer 40 honest questions', body: 'Rate each statement from Never to Always. Answer as you are today — not as who you aspire to be.' },
               { step: '02', title: 'Enter your name and email', body: 'Your results are emailed to you so you can come back to them. No account needed.' },
               { step: '03', title: 'See your primary calling', body: 'Get a ranked breakdown of all five offices, with a full description of your top calling and how to walk in it.' },
             ].map(({ step, title, body }, i) => (
@@ -199,7 +199,7 @@ export default function FivefoldPage() {
               Your calling is already in you.<br />Let&apos;s name it.
             </h2>
             <p className="text-sm leading-relaxed mb-8 max-w-sm mx-auto" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              20 questions. 5 minutes. Free. No credit card, no catch — just clarity on how God wired you to serve.
+              40 questions. 8 minutes. Free. No credit card, no catch — just clarity on how God wired you to serve.
             </p>
             <a
               href={TEST_URL}
