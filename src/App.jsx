@@ -15,6 +15,10 @@ import ContactPage from './pages/ContactPage'
 import SpeakingTopicsPage from './pages/SpeakingTopicsPage'
 import ConsultingServicesPage from './pages/ConsultingServicesPage'
 import MentoringAreasPage from './pages/MentoringAreasPage'
+import AwakenAndAlignPage from './pages/AwakenAndAlignPage'
+import ProgramsPage from './pages/ProgramsPage'
+import ProductPage from './pages/ProductPage'
+import SpiritualGiftsPage from './pages/SpiritualGiftsPage'
 
 function App() {
   return (
@@ -34,6 +38,10 @@ function App() {
           <Route path="/speaking/topics" element={<SpeakingTopicsPage />} />
           <Route path="/consulting/services" element={<ConsultingServicesPage />} />
           <Route path="/mentoring/areas" element={<MentoringAreasPage />} />
+          <Route path="/awaken-and-align" element={<AwakenAndAlignPage />} />
+          <Route path="/programs" element={<ProgramsPage />} />
+          <Route path="/programs/:slug" element={<ProductPage />} />
+          <Route path="/spiritual-gifts" element={<SpiritualGiftsPage />} />
         </Routes>
       </main>
       <Footer />
