@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-
-const TEST_URL = 'https://members.osilpistole.com/spiritual-gifts'
+import SpiritualGiftsQuiz from '../components/SpiritualGiftsQuiz'
 
 const GIFTS = [
   { icon: '📖', name: 'Teaching',      desc: 'Making God\'s Word come alive for others.' },
@@ -43,6 +42,10 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 export default function SpiritualGiftsPage() {
+  const [quizStarted, setQuizStarted] = useState(false)
+
+  if (quizStarted) return <SpiritualGiftsQuiz skipIntro={true} />
+
   return (
     <div className="bg-parchment text-ink">
 
@@ -75,12 +78,12 @@ export default function SpiritualGiftsPage() {
 
           <Reveal delay={0.3}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              <a
-                href={TEST_URL}
+              <button
+                onClick={() => setQuizStarted(true)}
                 className="inline-flex items-center justify-center gap-2 bg-gold text-ink font-heading font-bold tracking-wide rounded-full px-10 py-4 text-base hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shadow-[0_8px_24px_rgba(245,200,66,0.35)]"
               >
                 Take the Free Test →
-              </a>
+              </button>
             </div>
             <p className="text-ink/35 text-sm font-body">36 questions · 5 minutes · completely free</p>
           </Reveal>
@@ -158,12 +161,12 @@ export default function SpiritualGiftsPage() {
             <p className="text-white/60 text-sm leading-relaxed mb-8 max-w-sm mx-auto">
               It takes 5 minutes and it&apos;s completely free. No catch, no credit card, no pressure.
             </p>
-            <a
-              href={TEST_URL}
+            <button
+              onClick={() => setQuizStarted(true)}
               className="inline-flex items-center justify-center gap-2 bg-gold text-ink font-heading font-bold tracking-wide rounded-full px-10 py-4 text-base hover:-translate-y-0.5 transition-all duration-200 shadow-[0_8px_24px_rgba(245,200,66,0.3)]"
             >
               Take the Free Test →
-            </a>
+            </button>
           </div>
         </Reveal>
       </section>

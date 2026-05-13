@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-
-const TEST_URL = 'https://members.osilpistole.com/fivefold'
+import FivefoldQuiz from '../components/FivefoldQuiz'
 
 const ROLES = [
   { icon: '🌍', name: 'Apostle',    tagline: 'The Pioneer',  desc: 'Sent to break new ground and build what doesn\'t exist yet.' },
@@ -39,6 +38,10 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 export default function FivefoldPage() {
+  const [quizStarted, setQuizStarted] = useState(false)
+
+  if (quizStarted) return <FivefoldQuiz skipIntro={true} />
+
   return (
     <div className="bg-parchment text-ink">
 
@@ -92,13 +95,13 @@ export default function FivefoldPage() {
           </Reveal>
 
           <Reveal delay={0.36}>
-            <a
-              href={TEST_URL}
+            <button
+              onClick={() => setQuizStarted(true)}
               className="inline-flex items-center justify-center gap-2 font-heading font-bold tracking-wide rounded-full px-10 py-4 text-base hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
               style={{ background: '#B8A4D8', color: '#1C1A2E', boxShadow: '0 8px 32px rgba(184,164,216,0.35)' }}
             >
               Discover my calling →
-            </a>
+            </button>
             <p className="text-sm mt-4" style={{ color: 'rgba(255,255,255,0.3)' }}>40 questions · 8 minutes · completely free</p>
           </Reveal>
         </div>
@@ -201,13 +204,13 @@ export default function FivefoldPage() {
             <p className="text-sm leading-relaxed mb-8 max-w-sm mx-auto" style={{ color: 'rgba(255,255,255,0.5)' }}>
               40 questions. 8 minutes. Free. No credit card, no catch — just clarity on how God wired you to serve.
             </p>
-            <a
-              href={TEST_URL}
+            <button
+              onClick={() => setQuizStarted(true)}
               className="inline-flex items-center justify-center gap-2 font-heading font-bold tracking-wide rounded-full px-10 py-4 text-base hover:-translate-y-0.5 transition-all duration-200"
               style={{ background: '#B8A4D8', color: '#1C1A2E', boxShadow: '0 8px 24px rgba(184,164,216,0.3)' }}
             >
               Take the Free Assessment →
-            </a>
+            </button>
           </div>
         </Reveal>
       </section>
