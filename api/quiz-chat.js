@@ -59,7 +59,7 @@ const RESPONSE_TOOL = {
   },
 }
 
-async function callClaude(messages, retries = 1) {
+async function callClaude(messages, retries = 3) {
   const apiKey = process.env.ANTHROPIC_API_KEY
   const seed = { role: 'user', content: "I'm ready to start." }
   const messagesToSend = [seed, ...messages]
@@ -84,7 +84,8 @@ async function callClaude(messages, retries = 1) {
   if (!response.ok) {
     const err = await response.text()
     if (retries > 0 && (response.status === 529 || response.status === 500)) {
-      await new Promise(r => setTimeout(r, 1500))
+      const delay = (4 - retries) * 2000
+      await new Promise(r => setTimeout(r, delay))
       return callClaude(messages, retries - 1)
     }
     throw new Error(`Anthropic ${response.status}: ${err}`)
