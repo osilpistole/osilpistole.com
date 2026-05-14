@@ -1,32 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-function useReveal(threshold = 0.1) {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVisible(true); obs.disconnect() }
-    }, { threshold })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-  return [ref, visible]
-}
+import RevealSection from '../components/RevealSection'
 
 function Reveal({ children, delay = 0, className = '' }) {
-  const [ref, visible] = useReveal()
-  return (
-    <div ref={ref} className={className} style={{
-      opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : 'translateY(22px)',
-      transition: `opacity 0.9s cubic-bezier(0.22,1,0.36,1) ${delay}s, transform 0.9s cubic-bezier(0.22,1,0.36,1) ${delay}s`,
-    }}>
-      {children}
-    </div>
-  )
+  return <RevealSection delay={delay} className={className}>{children}</RevealSection>
 }
 
 export default function QuizLandingPage() {
