@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import BuilderCharacter from './BuilderCharacter'
 
 const BOOKING_URL = 'https://osilpistole.thrivecart.com/prophetic-strategy-session/'
 
@@ -10,15 +9,46 @@ const INK = '#2C2C2A'
 const PARCHMENT = '#FDFAF5'
 
 const styles = `
-  @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
   @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes bar-wave { from{transform:scaleY(0.25)} to{transform:scaleY(1)} }
+  @keyframes ring-pulse { 0%{transform:scale(1);opacity:0.7} 80%{transform:scale(1.6);opacity:0} 100%{transform:scale(1.6);opacity:0} }
   @keyframes pulse-ring { 0%{transform:scale(0.9);opacity:0.7} 70%{transform:scale(1.25);opacity:0} 100%{transform:scale(1.3);opacity:0} }
+  @keyframes mic-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(184,164,216,0.5)} 50%{box-shadow:0 0 0 8px rgba(184,164,216,0)} }
 `
 
-function Avatar() {
+function AnimatedAvatar({ active = false }) {
+  const bars = [
+    { delay: '0s',    minScale: active ? 0.2 : 0.3, dur: active ? '0.5s' : '1.3s' },
+    { delay: '0.12s', minScale: active ? 0.15 : 0.4, dur: active ? '0.65s' : '1.0s' },
+    { delay: '0.06s', minScale: active ? 0.25 : 0.35, dur: active ? '0.55s' : '1.5s' },
+    { delay: '0.18s', minScale: active ? 0.2 : 0.3, dur: active ? '0.7s' : '1.2s' },
+  ]
   return (
-    <div style={{ width: 44, height: 44, flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(245,200,66,0.35))' }}>
-      <BuilderCharacter size={44} />
+    <div style={{ position: 'relative', width: 44, height: 44, flexShrink: 0 }}>
+      {active && (
+        <div style={{
+          position: 'absolute', inset: -5, borderRadius: '50%',
+          border: `1.5px solid ${SUNRISE}`,
+          animation: 'ring-pulse 1.4s ease-out infinite',
+          pointerEvents: 'none',
+        }} />
+      )}
+      <div style={{
+        width: 44, height: 44, borderRadius: '50%',
+        background: `linear-gradient(135deg, ${SUNRISE} 0%, ${MORNING} 100%)`,
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3,
+        boxShadow: active ? '0 4px 20px rgba(245,200,66,0.55)' : '0 2px 10px rgba(245,200,66,0.35)',
+        transition: 'box-shadow 0.3s ease',
+      }}>
+        {bars.map((b, i) => (
+          <div key={i} style={{
+            width: 3, height: 22, borderRadius: 2,
+            background: 'rgba(255,255,255,0.88)',
+            transformOrigin: 'bottom center',
+            animation: `bar-wave ${b.dur} ${b.delay} ease-in-out infinite alternate`,
+          }} />
+        ))}
+      </div>
     </div>
   )
 }
@@ -26,19 +56,12 @@ function Avatar() {
 function TypingIndicator() {
   return (
     <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', animation: 'fadeUp 0.3s ease-out' }}>
-      <Avatar />
+      <AnimatedAvatar active={true} />
       <div style={{
-        background: 'white', borderRadius: '0 16px 16px 16px', padding: '0.85rem 1.1rem',
-        boxShadow: '0 2px 8px rgba(44,44,42,0.06)', border: '1px solid rgba(44,44,42,0.06)',
+        background: 'white', borderRadius: '0 16px 16px 16px', padding: '1rem 1.25rem',
+        boxShadow: '0 2px 12px rgba(44,44,42,0.07)', border: '1px solid rgba(44,44,42,0.07)',
       }}>
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-          {[0, 1, 2].map(i => (
-            <div key={i} style={{
-              width: 7, height: 7, borderRadius: '50%', background: MORNING,
-              animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
-            }} />
-          ))}
-        </div>
+        <p style={{ fontSize: '0.85rem', color: 'rgba(44,44,42,0.45)', margin: 0, fontStyle: 'italic' }}>Thinking…</p>
       </div>
     </div>
   )
@@ -52,17 +75,17 @@ function ChatBubble({ role, content }) {
       gap: '0.75rem', alignItems: 'flex-start',
       animation: 'fadeUp 0.35s ease-out',
     }}>
-      {isAI && <Avatar />}
+      {isAI && <AnimatedAvatar active={false} />}
       <div style={{
-        background: isAI ? 'white' : 'rgba(245,200,66,0.18)',
+        background: isAI ? 'white' : `rgba(245,200,66,0.14)`,
         color: INK,
         borderRadius: isAI ? '0 16px 16px 16px' : '16px 0 16px 16px',
-        padding: '0.85rem 1.1rem',
-        maxWidth: '80%',
-        fontSize: '0.92rem',
-        lineHeight: 1.65,
-        boxShadow: isAI ? '0 2px 8px rgba(44,44,42,0.06)' : 'none',
-        border: isAI ? '1px solid rgba(44,44,42,0.06)' : '1.5px solid rgba(245,200,66,0.35)',
+        padding: '0.9rem 1.15rem',
+        maxWidth: '78%',
+        fontSize: '0.93rem',
+        lineHeight: 1.7,
+        boxShadow: isAI ? '0 2px 12px rgba(44,44,42,0.07)' : 'none',
+        border: isAI ? '1px solid rgba(44,44,42,0.07)' : '1.5px solid rgba(245,200,66,0.4)',
         whiteSpace: 'pre-wrap',
       }}>
         {content}
@@ -234,18 +257,44 @@ export default function QuizChat() {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [isListeningVoice, setIsListeningVoice] = useState(false)
   const [screen, setScreen] = useState('chat')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [result, setResult] = useState(null)
   const [progress, setProgress] = useState(0)
   const bottomRef = useRef(null)
+  const recognitionRef = useRef(null)
 
   useEffect(() => { fetchNextQuestion([]) }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isTyping])
+
+  const voiceSupported = typeof window !== 'undefined' && (window.SpeechRecognition || window.webkitSpeechRecognition)
+
+  function startVoice() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SR) return
+    if (!recognitionRef.current) {
+      const r = new SR()
+      r.continuous = false
+      r.interimResults = false
+      r.lang = 'en-US'
+      r.onresult = (e) => setInput(prev => (prev + ' ' + e.results[0][0].transcript).trim())
+      r.onend = () => setIsListeningVoice(false)
+      r.onerror = () => setIsListeningVoice(false)
+      recognitionRef.current = r
+    }
+    setIsListeningVoice(true)
+    recognitionRef.current.start()
+  }
+
+  function stopVoice() {
+    recognitionRef.current?.stop()
+    setIsListeningVoice(false)
+  }
 
   async function fetchNextQuestion(history) {
     setIsTyping(true)
@@ -327,11 +376,7 @@ export default function QuizChat() {
       }}>
         <style>{styles}</style>
         <div style={{ position: 'relative', width: 64, height: 64 }}>
-          <div style={{
-            width: 64, height: 64, borderRadius: '50%',
-            background: `linear-gradient(135deg, ${SUNRISE} 0%, ${MORNING} 100%)`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem',
-          }}>✨</div>
+          <AnimatedAvatar active={true} />
           <div style={{
             position: 'absolute', inset: -6, borderRadius: '50%',
             border: `2px solid ${SUNRISE}`,
@@ -419,12 +464,14 @@ export default function QuizChat() {
   }
 
   // Main chat screen
+  const canSend = input.trim() && !isTyping
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: PARCHMENT }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', background: PARCHMENT }}>
       <style>{styles}</style>
 
       {/* Progress bar */}
-      <div style={{ height: 4, background: 'rgba(44,44,42,0.08)', flexShrink: 0 }}>
+      <div style={{ height: 3, background: 'rgba(44,44,42,0.07)', flexShrink: 0 }}>
         <div style={{
           width: `${progress}%`, height: '100%',
           background: `linear-gradient(90deg, ${SUNRISE}, ${MORNING}, ${GROWTH})`,
@@ -434,16 +481,14 @@ export default function QuizChat() {
 
       {/* Header */}
       <div style={{
-        padding: '0.75rem 1.25rem', borderBottom: '1px solid rgba(44,44,42,0.08)',
+        padding: '0.65rem 1.25rem', borderBottom: '1px solid rgba(44,44,42,0.08)',
         background: 'white', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ filter: 'drop-shadow(0 2px 6px rgba(245,200,66,0.35))' }}>
-            <BuilderCharacter size={44} />
-          </div>
+          <AnimatedAvatar active={isTyping} />
           <div>
-            <p style={{ fontSize: '0.8rem', fontWeight: 700, color: INK, fontFamily: 'var(--font-heading)', margin: 0 }}>AI Build Quiz</p>
+            <p style={{ fontSize: '0.82rem', fontWeight: 700, color: INK, fontFamily: 'var(--font-heading)', margin: 0 }}>AI Build Quiz</p>
             <p style={{ fontSize: '0.7rem', color: 'rgba(44,44,42,0.4)', margin: 0 }}>by Osil Pistole</p>
           </div>
         </div>
@@ -456,49 +501,92 @@ export default function QuizChat() {
 
       {/* Messages */}
       <div style={{
-        flex: 1, overflowY: 'auto', padding: '1.5rem 1rem',
-        display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '1rem',
+        flex: 1, overflowY: 'auto', padding: '1.5rem 1rem 1rem',
+        display: 'flex', flexDirection: 'column',
         maxWidth: 640, margin: '0 auto', width: '100%',
       }}>
-        {messages.map((msg, i) => (
-          <ChatBubble key={i} role={msg.role} content={msg.content} />
-        ))}
-        {isTyping && <TypingIndicator />}
+        <div style={{ flex: 1 }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {messages.map((msg, i) => (
+            <ChatBubble key={i} role={msg.role} content={msg.content} />
+          ))}
+          {isTyping && <TypingIndicator />}
+        </div>
         <div ref={bottomRef} />
       </div>
 
-      {/* Input */}
-      <div style={{ padding: '1rem', borderTop: '1px solid rgba(44,44,42,0.08)', background: 'white', flexShrink: 0 }}>
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-end', maxWidth: 640, margin: '0 auto' }}>
+      {/* Input area */}
+      <div style={{
+        padding: '0.85rem 1rem 1rem',
+        borderTop: '1px solid rgba(44,44,42,0.09)',
+        background: 'white',
+        flexShrink: 0,
+        boxShadow: '0 -4px 20px rgba(44,44,42,0.05)',
+      }}>
+        <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-end', maxWidth: 640, margin: '0 auto' }}>
           <textarea
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type your answer… (Enter to send)"
+            placeholder={isListeningVoice ? 'Listening…' : 'Type your answer…'}
             rows={1}
             style={{
-              flex: 1, border: '1.5px solid rgba(44,44,42,0.12)', borderRadius: 16,
-              padding: '0.65rem 1rem', fontSize: '0.9rem', resize: 'none',
-              fontFamily: 'inherit', outline: 'none', lineHeight: 1.5,
-              background: PARCHMENT, color: INK,
+              flex: 1,
+              border: `2px solid ${input.trim() ? 'rgba(245,200,66,0.6)' : 'rgba(44,44,42,0.15)'}`,
+              borderRadius: 16,
+              padding: '0.75rem 1rem',
+              fontSize: '0.95rem',
+              resize: 'none',
+              fontFamily: 'inherit',
+              outline: 'none',
+              lineHeight: 1.5,
+              background: 'white',
+              color: INK,
+              boxShadow: input.trim() ? '0 0 0 3px rgba(245,200,66,0.12)' : 'none',
+              transition: 'border-color 0.2s, box-shadow 0.2s',
             }}
           />
+
+          {voiceSupported && (
+            <button
+              onClick={isListeningVoice ? stopVoice : startVoice}
+              title={isListeningVoice ? 'Stop listening' : 'Speak your answer'}
+              style={{
+                width: 44, height: 44, borderRadius: '50%', border: 'none', cursor: 'pointer', flexShrink: 0,
+                background: isListeningVoice ? MORNING : 'rgba(184,164,216,0.15)',
+                color: isListeningVoice ? 'white' : MORNING,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '1.1rem',
+                animation: isListeningVoice ? 'mic-pulse 1.2s ease-in-out infinite' : 'none',
+                transition: 'background 0.2s, color 0.2s',
+              }}
+              aria-label={isListeningVoice ? 'Stop voice input' : 'Start voice input'}
+            >
+              🎙
+            </button>
+          )}
+
           <button
             onClick={handleSend}
-            disabled={isTyping || !input.trim()}
+            disabled={!canSend}
             style={{
-              background: input.trim() && !isTyping ? SUNRISE : 'rgba(44,44,42,0.08)',
+              background: canSend ? SUNRISE : 'rgba(44,44,42,0.08)',
               color: INK, border: 'none', borderRadius: 999,
-              padding: '0.65rem 1.25rem', fontWeight: 700, fontSize: '0.9rem',
-              cursor: input.trim() && !isTyping ? 'pointer' : 'default',
+              padding: '0 1.25rem', height: 44, fontWeight: 700, fontSize: '0.9rem',
+              cursor: canSend ? 'pointer' : 'default',
               transition: 'background 0.2s, box-shadow 0.2s', flexShrink: 0,
-              boxShadow: input.trim() && !isTyping ? '0 4px 16px rgba(245,200,66,0.35)' : 'none',
+              boxShadow: canSend ? '0 4px 16px rgba(245,200,66,0.4)' : 'none',
               fontFamily: 'var(--font-heading)',
             }}
           >
             Send →
           </button>
         </div>
+        {voiceSupported && (
+          <p style={{ textAlign: 'center', fontSize: '0.7rem', color: 'rgba(44,44,42,0.3)', margin: '0.5rem 0 0' }}>
+            Press Enter to send · Tap 🎙 to speak your answer
+          </p>
+        )}
       </div>
     </div>
   )

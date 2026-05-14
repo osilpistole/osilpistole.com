@@ -23,7 +23,7 @@ import FivefoldPage from './pages/FivefoldPage'
 import QuizLandingPage from './pages/QuizLandingPage'
 import QuizChat from './components/QuizChat'
 
-function App() {
+function SiteLayout() {
   return (
     <div className="bg-parchment text-ink font-body min-h-screen">
       <ScrollToTop />
@@ -47,13 +47,23 @@ function App() {
           <Route path="/spiritual-gifts" element={<SpiritualGiftsPage />} />
           <Route path="/fivefold" element={<FivefoldPage />} />
           <Route path="/quiz" element={<QuizLandingPage />} />
-          <Route path="/quiz/start" element={<QuizChat />} />
         </Routes>
       </main>
       <Footer />
       <BackToTop />
       <EmailSlideIn />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      {/* Full-screen — no site header/footer */}
+      <Route path="/quiz/start" element={<QuizChat />} />
+      {/* All other pages with site layout */}
+      <Route path="/*" element={<SiteLayout />} />
+    </Routes>
   )
 }
 
