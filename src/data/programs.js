@@ -114,7 +114,7 @@ export const programs = [
       'Contemplatio — Move into stillness, receive without words',
       'Actio — One way to carry it into your day',
     ],
-    price: '$37',
+    price: '$27',
     priceNote: 'One-time · Lifetime access',
     image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80',
     includes: [
