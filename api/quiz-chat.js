@@ -19,31 +19,25 @@ Rules:
 - Keep responses short: 1–2 warm sentences acknowledging what they said, then one clear question
 - Never ask two questions at once
 - React specifically to their answer — reference what they said
-- After covering all 9 topic areas (around exchange 10–12), set done to true with a warm closing message
+- After covering all 9 topic areas (around exchange 10–12), set done to true with a warm closing message`
 
-IMPORTANT: Always respond with valid JSON and nothing else. No markdown. No explanation outside the JSON.
-
-Format for every response:
-{"message": "your response text here", "done": false}
-
-When you have covered all topic areas:
-{"message": "your warm closing message here", "done": true}`
-
-function extractJSON(text) {
-  // 1. Direct parse
-  try { return JSON.parse(text) } catch {}
-
-  // 2. Strip markdown fences
-  const stripped = text.replace(/```json?\n?/gi, '').replace(/```/g, '').trim()
-  try { return JSON.parse(stripped) } catch {}
-
-  // 3. Find first {...} block anywhere in the text
-  const match = stripped.match(/\{[\s\S]*\}/)
-  if (match) {
-    try { return JSON.parse(match[0]) } catch {}
-  }
-
-  throw new SyntaxError(`Cannot extract JSON from: ${text.slice(0, 120)}`)
+const RESPONSE_TOOL = {
+  name: 'send_response',
+  description: 'Send your response to the user and indicate whether the conversation is complete.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      message: {
+        type: 'string',
+        description: 'Your warm, encouraging response followed by one clear question. When done is true, write a warm closing message with no question.',
+      },
+      done: {
+        type: 'boolean',
+        description: 'Set to true only when you have covered all 9 topic areas. Otherwise false.',
+      },
+    },
+    required: ['message', 'done'],
+  },
 }
 
 async function callClaude(messages, retries = 1) {
@@ -63,12 +57,13 @@ async function callClaude(messages, retries = 1) {
       max_tokens: 512,
       system: SYSTEM_PROMPT,
       messages: messagesToSend,
+      tools: [RESPONSE_TOOL],
+      tool_choice: { type: 'tool', name: 'send_response' },
     }),
   })
 
   if (!response.ok) {
     const err = await response.text()
-    // Retry once on 529 (overloaded) or 500 from Anthropic
     if (retries > 0 && (response.status === 529 || response.status === 500)) {
       await new Promise(r => setTimeout(r, 1500))
       return callClaude(messages, retries - 1)
@@ -90,24 +85,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'messages must be an array' })
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) {
+  if (!process.env.ANTHROPIC_API_KEY) {
     return res.status(500).json({ error: 'Missing ANTHROPIC_API_KEY' })
   }
 
   try {
     const data = await callClaude(messages)
-    const raw = data.content?.[0]?.text ?? ''
 
-    let parsed
-    try {
-      parsed = extractJSON(raw)
-    } catch (parseErr) {
-      console.error('JSON parse failed, raw response:', raw)
-      throw parseErr
+    // Tool use response: find the send_response tool call
+    const toolUse = data.content?.find(b => b.type === 'tool_use' && b.name === 'send_response')
+    if (!toolUse) {
+      console.error('No tool_use block in response:', JSON.stringify(data.content))
+      return res.status(500).json({ error: 'Unexpected response format' })
     }
 
-    return res.status(200).json({ message: parsed.message, done: parsed.done ?? false })
+    const { message, done } = toolUse.input
+    return res.status(200).json({ message, done: done ?? false })
   } catch (err) {
     console.error('quiz-chat error:', err.message)
     return res.status(500).json({ error: 'Internal server error' })
