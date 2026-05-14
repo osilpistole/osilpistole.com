@@ -75,9 +75,9 @@ function Hero() {
           </div>
 
           <h1 className="font-heading text-[2.6rem] md:text-6xl lg:text-7xl font-bold text-ink leading-[1.12] tracking-tight">
-            Strategy, clarity, and<br />
-            execution for
-            <span className="block h-[1.12em] relative overflow-hidden">
+            Strategy, clarity, and<br className="hidden sm:block" />
+            {' '}execution for
+            <span className="block min-h-[1.12em] relative overflow-hidden">
               {/* Desktop — animated typewriter */}
               <span className="hidden sm:inline">
                 <span className="gradient-text-animated">{typed}</span>
@@ -357,9 +357,9 @@ function Transformation() {
           </div>
         </RevealSection>
 
-        <div className="grid grid-cols-2 rounded-3xl overflow-hidden border border-ink/8 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 rounded-3xl overflow-hidden border border-ink/8 shadow-sm">
           {/* Before */}
-          <div className="group px-8 py-10 bg-parchment/50 border-r border-ink/8 hover:bg-ink transition-colors duration-300 cursor-default">
+          <div className="group px-8 py-10 bg-parchment/50 border-b sm:border-b-0 sm:border-r border-ink/8 hover:bg-ink transition-colors duration-300 cursor-default">
             <p className="text-ink/30 group-hover:text-white/40 text-[10px] font-bold uppercase tracking-[0.25em] mb-4 transition-colors duration-300">Before</p>
             <p className="text-ink/60 group-hover:text-white/80 text-xl md:text-2xl font-medium leading-snug transition-colors duration-300">{t.from}</p>
           </div>
@@ -380,15 +380,21 @@ function Transformation() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
           </button>
-          <div className="flex gap-2">
+          {/* Dots — desktop only */}
+          <div className="hidden sm:flex gap-2">
             {transforms.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActive(i)}
+                aria-label={`Go to transformation ${i + 1}`}
                 className={`rounded-full transition-all duration-300 ${i === active ? 'w-6 h-2 bg-ink' : 'w-2 h-2 bg-ink/15 hover:bg-ink/30'}`}
               />
             ))}
           </div>
+          {/* Counter — mobile only */}
+          <span className="sm:hidden text-xs font-semibold text-ink/40 tabular-nums">
+            {active + 1} / {transforms.length}
+          </span>
           <button
             onClick={() => setActive(i => (i + 1) % transforms.length)}
             className="w-8 h-8 rounded-full border border-ink/15 hover:border-ink/40 hover:bg-ink/5 flex items-center justify-center transition-all duration-200 text-ink/40 hover:text-ink"
