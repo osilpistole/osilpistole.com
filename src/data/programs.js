@@ -126,7 +126,7 @@ export const programs = [
       'Unlimited attempts — return to any day as many times as you need',
       'Immediate access through your member portal',
     ],
-    embedId: null,
+    embedId: 'tc-osilpistole-10-U44QMJ',
     productId: '10',
   },
   {
