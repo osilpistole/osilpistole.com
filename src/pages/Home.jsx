@@ -41,18 +41,26 @@ function Hero() {
   const typed = useTypewriter(heroWords)
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col overflow-hidden bg-parchment">
+    <section className="relative overflow-hidden bg-parchment">
       <div className="absolute top-0 left-0 right-0 h-1 color-stripe z-20" />
 
-      {/* Background blobs */}
-      <div className="absolute top-[15%] left-[5%] w-72 h-72 rounded-full bg-sunrise/20 blur-3xl animate-float pointer-events-none" />
-      <div className="absolute bottom-[10%] left-[15%] w-56 h-56 rounded-full bg-morning/25 blur-3xl animate-float-delayed pointer-events-none" />
-
-      {/* Right-side photo */}
-      <div className="absolute inset-y-0 right-[-12%] w-full lg:w-[62%] pointer-events-none">
+      {/* ── Mobile: photo stacked on top ── */}
+      <div className="md:hidden relative h-[58vw] max-h-[300px] min-h-[220px] overflow-hidden">
         <img
           src={import.meta.env.BASE_URL + 'images/standing-studio.jpg'}
           alt="Osil Pistole"
+          className="w-full h-full object-cover object-[52%_top]"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(253,250,245,0.15) 40%, #FDFAF5 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(253,250,245,0.6) 0%, transparent 40%)' }} />
+      </div>
+
+      {/* ── Desktop: photo absolute right ── */}
+      <div className="hidden md:block absolute inset-y-0 right-[-12%] w-full lg:w-[62%] pointer-events-none">
+        <img
+          src={import.meta.env.BASE_URL + 'images/standing-studio.jpg'}
+          alt=""
+          aria-hidden="true"
           className="w-full h-full object-cover object-[52%_top]"
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #FDFAF5 0%, #FDFAF5 2%, rgba(253,250,245,0.88) 22%, rgba(253,250,245,0.15) 48%, transparent 65%)' }} />
@@ -61,9 +69,16 @@ function Hero() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to left, #FDFAF5 0%, transparent 12%)' }} />
       </div>
 
-      {/* Text */}
-      <div className="relative z-10 flex flex-col justify-center min-h-[100svh] max-w-7xl mx-auto w-full px-6 lg:px-14">
-        <div className="max-w-3xl pt-20">
+      {/* Background blobs — desktop */}
+      <div className="hidden md:block absolute top-[15%] left-[5%] w-72 h-72 rounded-full bg-sunrise/20 blur-3xl animate-float pointer-events-none" />
+      <div className="hidden md:block absolute bottom-[10%] left-[15%] w-56 h-56 rounded-full bg-morning/25 blur-3xl animate-float-delayed pointer-events-none" />
+      {/* Background blobs — mobile */}
+      <div className="md:hidden absolute bottom-[15%] right-[5%] w-48 h-48 rounded-full bg-sunrise/20 blur-3xl animate-float pointer-events-none" />
+      <div className="md:hidden absolute bottom-[5%] left-[5%] w-36 h-36 rounded-full bg-morning/20 blur-3xl animate-float-delayed pointer-events-none" />
+
+      {/* ── Text ── */}
+      <div className="relative z-10 flex flex-col justify-center md:min-h-[100svh] max-w-7xl mx-auto w-full px-6 lg:px-14">
+        <div className="max-w-3xl md:pt-20 pt-8 pb-14 md:pb-0">
 
           <div className="flex items-center gap-3 mb-6 whitespace-nowrap">
             <span className="text-ink/40 text-[11px] font-semibold uppercase tracking-[0.28em]">Speaker &middot; Consultant &middot; Mentor</span>
@@ -74,17 +89,12 @@ function Hero() {
             </span>
           </div>
 
-          <h1 className="font-heading text-[2.6rem] md:text-6xl lg:text-7xl font-bold text-ink leading-[1.12] tracking-tight">
+          <h1 className="font-heading text-[2.4rem] md:text-6xl lg:text-7xl font-bold text-ink leading-[1.12] tracking-tight">
             Strategy, clarity, and<br className="hidden sm:block" />
             {' '}execution for
             <span className="block min-h-[1.12em] relative overflow-hidden">
-              {/* Desktop — animated typewriter */}
-              <span className="hidden sm:inline">
-                <span className="gradient-text-animated">{typed}</span>
-                <span className="typewriter-cursor" />
-              </span>
-              {/* Mobile — static, no animation */}
-              <span className="sm:hidden gradient-text-animated">leaders</span>
+              <span className="gradient-text-animated">{typed}</span>
+              <span className="typewriter-cursor" />
             </span>
             ready to step into more.
           </h1>
