@@ -29,6 +29,56 @@ Format for every response:
 When you have covered all topic areas:
 {"message": "your warm closing message here", "done": true}`
 
+function extractJSON(text) {
+  // 1. Direct parse
+  try { return JSON.parse(text) } catch {}
+
+  // 2. Strip markdown fences
+  const stripped = text.replace(/```json?\n?/gi, '').replace(/```/g, '').trim()
+  try { return JSON.parse(stripped) } catch {}
+
+  // 3. Find first {...} block anywhere in the text
+  const match = stripped.match(/\{[\s\S]*\}/)
+  if (match) {
+    try { return JSON.parse(match[0]) } catch {}
+  }
+
+  throw new SyntaxError(`Cannot extract JSON from: ${text.slice(0, 120)}`)
+}
+
+async function callClaude(messages, retries = 1) {
+  const apiKey = process.env.ANTHROPIC_API_KEY
+  const seed = { role: 'user', content: "I'm ready to start." }
+  const messagesToSend = [seed, ...messages]
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 512,
+      system: SYSTEM_PROMPT,
+      messages: messagesToSend,
+    }),
+  })
+
+  if (!response.ok) {
+    const err = await response.text()
+    // Retry once on 529 (overloaded) or 500 from Anthropic
+    if (retries > 0 && (response.status === 529 || response.status === 500)) {
+      await new Promise(r => setTimeout(r, 1500))
+      return callClaude(messages, retries - 1)
+    }
+    throw new Error(`Anthropic ${response.status}: ${err}`)
+  }
+
+  return response.json()
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
@@ -45,49 +95,21 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Missing ANTHROPIC_API_KEY' })
   }
 
-  // Claude API requires the first message to always be from 'user'.
-  // The frontend stores messages starting with the first assistant question,
-  // so we always prepend the seed user turn to satisfy this requirement.
-  const seed = { role: 'user', content: "I'm ready to start." }
-  const messagesToSend = [seed, ...messages]
-
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 512,
-        system: SYSTEM_PROMPT,
-        messages: messagesToSend,
-      }),
-    })
-
-    if (!response.ok) {
-      const err = await response.text()
-      console.error('Claude API error:', err)
-      return res.status(502).json({ error: 'AI service error' })
-    }
-
-    const data = await response.json()
+    const data = await callClaude(messages)
     const raw = data.content?.[0]?.text ?? ''
 
     let parsed
     try {
-      parsed = JSON.parse(raw)
-    } catch {
-      // Claude occasionally adds markdown fences — strip and retry
-      const cleaned = raw.replace(/```json?\n?/g, '').replace(/```/g, '').trim()
-      parsed = JSON.parse(cleaned)
+      parsed = extractJSON(raw)
+    } catch (parseErr) {
+      console.error('JSON parse failed, raw response:', raw)
+      throw parseErr
     }
 
     return res.status(200).json({ message: parsed.message, done: parsed.done ?? false })
   } catch (err) {
-    console.error('quiz-chat error:', err)
+    console.error('quiz-chat error:', err.message)
     return res.status(500).json({ error: 'Internal server error' })
   }
 }
