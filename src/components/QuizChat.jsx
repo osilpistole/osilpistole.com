@@ -231,13 +231,19 @@ export default function QuizChat() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: history }),
       })
+      if (!res.ok) throw new Error(`API error ${res.status}`)
       const data = await res.json()
+      if (data.error) throw new Error(data.error)
       setMessages(prev => [...prev, { role: 'assistant', content: data.message }])
       const userCount = history.filter(m => m.role === 'user').length
       setProgress(Math.min(Math.round((userCount / 10) * 100), 95))
       if (data.done) setTimeout(() => setScreen('email'), 600)
     } catch (err) {
       console.error('quiz-chat error:', err)
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "Hmm, something went wrong on my end — sorry about that! Please type your answer again and I'll pick right back up.",
+      }])
     } finally {
       setIsTyping(false)
     }

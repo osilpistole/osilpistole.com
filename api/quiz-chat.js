@@ -1,3 +1,5 @@
+export const maxDuration = 30
+
 const SYSTEM_PROMPT = `You are a warm, insightful business mentor helping someone figure out what course, mentorship, or workshop to build. You work alongside Osil Pistole — a coach and consultant who helps faith-based leaders, ministers, coaches, and online business owners launch their first offer.
 
 Your job is to have a natural, encouraging conversation — one question at a time. You are genuinely curious and respond to what they actually said, not a script.
@@ -59,7 +61,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 400,
+        max_tokens: 512,
         system: SYSTEM_PROMPT,
         messages: messagesToSend,
       }),

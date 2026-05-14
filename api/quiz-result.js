@@ -18,6 +18,8 @@ Use this exact format:
 
 Set missing_assessments to true if they said they have NOT taken either the Spiritual Gifts Assessment or the 5-Fold Assessment. Set to false if they have taken both.`
 
+export const maxDuration = 45
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
