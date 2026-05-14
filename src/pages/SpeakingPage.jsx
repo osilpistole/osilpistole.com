@@ -153,15 +153,16 @@ export default function SpeakingPage() {
       </section>
 
       {/* Available For */}
-      <section className="py-20 md:py-28 px-6 lg:px-14 bg-ink text-white">
+      <section className="relative py-20 md:py-28 px-6 lg:px-14 bg-white overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-sunrise/10 blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <RevealSection>
               <p className="text-sunrise text-[11px] font-bold uppercase tracking-[0.25em] mb-5">Availability</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.1]">
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1]">
                 Available<br />For
               </h2>
-              <p className="text-white/50 mt-6 text-[17px] leading-relaxed max-w-sm">
+              <p className="text-ink/55 mt-6 text-[17px] leading-relaxed max-w-sm">
                 Osil brings energy, clarity, and purpose to a wide range of events and formats.
               </p>
               <div className="mt-10">
@@ -171,9 +172,9 @@ export default function SpeakingPage() {
             <RevealSection delay={0.15}>
               <div className="grid grid-cols-2 gap-3">
                 {availableFor.map((item) => (
-                  <div key={item} className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+                  <div key={item} className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-parchment border border-ink/8 hover:border-sunrise/40 hover:bg-sunrise/5 transition-all duration-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-sunrise shrink-0" />
-                    <span className="text-white/70 text-sm font-medium">{item}</span>
+                    <span className="text-ink/70 text-sm font-medium">{item}</span>
                   </div>
                 ))}
               </div>

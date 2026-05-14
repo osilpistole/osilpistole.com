@@ -55,10 +55,10 @@ function Hero() {
           alt="Osil Pistole"
           className="w-full h-full object-cover object-[52%_top]"
         />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #F7F4EE 0%, #F7F4EE 2%, rgba(247,244,238,0.88) 22%, rgba(247,244,238,0.15) 48%, transparent 65%)' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #F7F4EE 0%, rgba(247,244,238,0.5) 15%, transparent 35%)' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #F7F4EE 0%, transparent 12%)' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to left, #F7F4EE 0%, transparent 12%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #FDFAF5 0%, #FDFAF5 2%, rgba(253,250,245,0.88) 22%, rgba(253,250,245,0.15) 48%, transparent 65%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #FDFAF5 0%, rgba(253,250,245,0.5) 15%, transparent 35%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #FDFAF5 0%, transparent 12%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to left, #FDFAF5 0%, transparent 12%)' }} />
       </div>
 
       {/* Text */}
@@ -74,17 +74,22 @@ function Hero() {
             </span>
           </div>
 
-          <h1 className="font-heading text-[2.4rem] md:text-5xl lg:text-[3.2rem] font-bold text-ink leading-[1.18] tracking-tight">
+          <h1 className="font-heading text-[2.6rem] md:text-6xl lg:text-7xl font-bold text-ink leading-[1.12] tracking-tight">
             Strategy, clarity, and<br />
-            execution for{' '}
-            <span className="relative inline-block">
-              <span className="gradient-text-animated">{typed}</span>
-              <span className="typewriter-cursor" />
+            execution for
+            <span className="block h-[1.12em] relative overflow-hidden">
+              {/* Desktop — animated typewriter */}
+              <span className="hidden sm:inline">
+                <span className="gradient-text-animated">{typed}</span>
+                <span className="typewriter-cursor" />
+              </span>
+              {/* Mobile — static, no animation */}
+              <span className="sm:hidden gradient-text-animated">leaders</span>
             </span>
-            <br />ready to step into more.
+            ready to step into more.
           </h1>
 
-          <p className="mt-7 text-base text-ink/55 leading-relaxed max-w-lg">
+          <p className="mt-7 text-base text-ink/70 leading-relaxed max-w-lg">
             30 years of business experience. Prophetic leader and voice. Real strategy. Measurable results. Speaker, consultant, mentor, and coach — this is where vision becomes action.
           </p>
 
@@ -92,7 +97,7 @@ function Hero() {
             <ButtonPrimary to="/work-with-me">Work With Me</ButtonPrimary>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-sm font-semibold border-2 border-ink/15 text-ink/65 hover:border-ink/30 hover:text-ink hover:bg-ink/5 transition-all duration-300"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-sm font-semibold border-2 border-ink/30 text-ink/65 hover:border-ink/50 hover:text-ink hover:bg-ink/5 transition-all duration-300"
             >
               Book Me to Speak
             </Link>
@@ -130,7 +135,7 @@ function Marquee() {
 /* ─── Intro / About ─── */
 function Intro() {
   return (
-    <section className="py-24 md:py-32 px-6 lg:px-10 bg-parchment">
+    <section className="relative py-24 md:py-32 px-6 lg:px-10 bg-parchment texture-overlay overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <RevealSection>
@@ -138,10 +143,10 @@ function Intro() {
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1] mb-8">
               Clarity that<br />leads to action.
             </h2>
-            <p className="text-ink/60 leading-relaxed mb-5 text-[17px]">
+            <p className="text-ink/75 leading-relaxed mb-5 text-[17px]">
               Osil Pistole is a speaker, consultant, and mentor who helps people and organizations break through confusion, strengthen their voice, and build what they are called to build.
             </p>
-            <p className="text-ink/60 leading-relaxed text-[17px]">
+            <p className="text-ink/75 leading-relaxed text-[17px]">
               Her work sits at the intersection of identity, purpose, leadership, strategy, and execution. Whether speaking to a room, mentoring a leader, or building a brand from the ground up — her goal is always the same.
             </p>
             <Link
@@ -165,9 +170,9 @@ function Intro() {
                 />
               </div>
               {/* Floating accent card */}
-              <div className="absolute -bottom-5 -left-5 bg-ink text-white rounded-2xl px-5 py-4 shadow-2xl">
+              <div className="absolute -bottom-5 -left-5 bg-growth text-white rounded-2xl px-5 py-4 shadow-2xl">
                 <p className="text-2xl font-bold">30+</p>
-                <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mt-0.5">Years Experience</p>
+                <p className="text-white/70 text-xs font-semibold uppercase tracking-widest mt-0.5">Years Experience</p>
               </div>
             </div>
           </RevealSection>
@@ -266,15 +271,21 @@ const audiences = [
 
 function WhoIHelp() {
   return (
-    <section className="py-20 md:py-28 px-6 lg:px-10 bg-ink text-white">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative py-20 md:py-28 px-6 lg:px-10 bg-parchment overflow-hidden">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <span className="font-heading font-black leading-none text-ink/[0.04]" style={{ fontSize: 'clamp(10rem, 26vw, 20rem)' }}>YOU</span>
+      </div>
+      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-sunrise/12 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-morning/10 blur-3xl pointer-events-none" />
+
+      <div className="relative max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <RevealSection>
-            <p className="text-sunrise text-[11px] font-bold uppercase tracking-[0.25em] mb-5">Who This Is For</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.1]">
+            <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-5">Who This Is For</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1]">
               Who I<br />Work With
             </h2>
-            <p className="text-white/50 mt-6 text-[17px] leading-relaxed max-w-sm">
+            <p className="text-ink/65 mt-6 text-[17px] leading-relaxed max-w-sm">
               People and teams who know they're made for more and are ready to move with clarity and conviction.
             </p>
             <div className="mt-10">
@@ -287,10 +298,10 @@ function WhoIHelp() {
               {audiences.map((item) => (
                 <div
                   key={item}
-                  className="flex items-center justify-between px-6 py-4 rounded-2xl border border-white/8 hover:border-sunrise/40 hover:bg-white/5 transition-all duration-200 group cursor-default"
+                  className="flex items-center justify-between px-6 py-4 rounded-2xl border border-ink/10 bg-white hover:border-sunrise/40 hover:bg-sunrise/5 transition-all duration-200 group cursor-default"
                 >
-                  <span className="text-white/70 group-hover:text-white font-medium transition-colors">{item}</span>
-                  <span className="text-white/15 group-hover:text-sunrise text-xs font-bold uppercase tracking-widest transition-colors">→</span>
+                  <span className="text-ink/70 group-hover:text-ink font-medium transition-colors">{item}</span>
+                  <span className="text-ink/20 group-hover:text-sunrise text-xs font-bold uppercase tracking-widest transition-colors">→</span>
                 </div>
               ))}
             </div>
@@ -337,7 +348,7 @@ function Transformation() {
   const t = transforms[active]
 
   return (
-    <section className="py-20 md:py-28 px-6 lg:px-10 bg-parchment">
+    <section className="relative py-20 md:py-28 px-6 lg:px-10 bg-parchment texture-overlay overflow-hidden">
       <div className="max-w-5xl mx-auto">
         <RevealSection>
           <div className="mb-14">
@@ -396,6 +407,15 @@ function Transformation() {
 function FinalCTA() {
   return (
     <section className="relative py-24 md:py-36 px-6 lg:px-10 bg-ink text-white overflow-hidden">
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&auto=format&fit=crop&q=80"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-ink/80" />
+      </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,200,66,0.12),transparent_60%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(184,164,216,0.1),transparent_60%)]" />
 

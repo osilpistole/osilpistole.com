@@ -92,15 +92,15 @@ export default function ConsultingPage() {
       </section>
 
       {/* Services */}
-      <section className="py-20 md:py-28 px-6 lg:px-14 bg-ink text-white">
+      <section className="py-20 md:py-28 px-6 lg:px-14 bg-parchment">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <RevealSection>
               <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-5">What's Included</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.1]">
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1]">
                 What this<br />can include.
               </h2>
-              <p className="text-white/50 mt-6 text-[17px] leading-relaxed max-w-sm">
+              <p className="text-ink/65 mt-6 text-[17px] leading-relaxed max-w-sm">
                 This is not just advice. It is clarity, strategy, and movement — tailored to where you are and where you are going.
               </p>
               <div className="mt-10">
@@ -113,10 +113,10 @@ export default function ConsultingPage() {
                   <Link
                     key={s.slug}
                     to={`/consulting/services#${s.slug}`}
-                    className="flex items-center justify-between px-6 py-4 rounded-2xl border border-white/8 hover:bg-white/5 hover:border-white/20 transition-all duration-200 group"
+                    className="flex items-center justify-between px-6 py-4 rounded-2xl border border-ink/8 bg-white hover:border-growth/40 hover:bg-growth/5 transition-all duration-200 group"
                   >
-                    <span className="text-white/65 group-hover:text-white font-medium transition-colors">{s.label}</span>
-                    <span className="text-white/15 group-hover:text-growth text-xs font-bold transition-colors">→</span>
+                    <span className="text-ink/65 group-hover:text-ink font-medium transition-colors">{s.label}</span>
+                    <span className="text-ink/20 group-hover:text-growth text-xs font-bold transition-colors">→</span>
                   </Link>
                 ))}
               </div>
@@ -131,19 +131,19 @@ export default function ConsultingPage() {
           {/* Photo */}
           <div className="relative overflow-hidden min-h-[480px] lg:min-h-[600px]">
             <img
-              src={import.meta.env.BASE_URL + 'images/consulting-working.jpg'}
+              src={import.meta.env.BASE_URL + 'images/IMG_7288.JPG'}
               alt="Consulting"
               className="absolute inset-0 w-full h-full object-cover object-top"
             />
           </div>
           {/* Quote */}
-          <div className="bg-ink flex items-center justify-center px-10 py-16 lg:py-0">
+          <div className="bg-growth flex items-center justify-center px-10 py-16 lg:py-0">
             <div>
-              <div className="w-10 h-1 bg-growth rounded-full mb-8" />
+              <div className="w-10 h-1 bg-white/40 rounded-full mb-8" />
               <p className="font-heading text-white text-2xl md:text-3xl font-bold leading-snug max-w-sm">
                 "This is not just advice. It is clarity, strategy, and movement."
               </p>
-              <p className="mt-6 text-white/40 text-sm font-semibold uppercase tracking-widest">— Osil Pistole</p>
+              <p className="mt-6 text-white/60 text-sm font-semibold uppercase tracking-widest">— Osil Pistole</p>
             </div>
           </div>
         </div>

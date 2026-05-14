@@ -69,6 +69,7 @@ export default function Header() {
           onClick={() => setOpen(!open)}
           className="md:hidden flex flex-col gap-1.5 p-2"
           aria-label="Toggle menu"
+          aria-expanded={open}
         >
           <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-ink'} ${open ? 'rotate-45 translate-y-2' : ''}`} />
           <span className={`block w-6 h-0.5 transition-all duration-300 ${showSolid ? 'bg-ink' : 'bg-ink'} ${open ? 'opacity-0' : ''}`} />

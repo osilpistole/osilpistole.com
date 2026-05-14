@@ -74,6 +74,13 @@ export default function ContactPage() {
             {/* Sidebar */}
             <RevealSection>
               <div className="flex flex-col gap-8">
+                <div className="rounded-3xl overflow-hidden aspect-[3/4] shadow-lg">
+                  <img
+                    src={import.meta.env.BASE_URL + 'images/IMG_7290.JPG'}
+                    alt="Osil Pistole"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
                 <div>
                   <p className="text-ink/40 text-[11px] font-bold uppercase tracking-[0.25em] mb-4">Email</p>
                   <a href="mailto:osil@osilpistole.com" className="text-ink font-semibold hover:text-sunrise transition-colors">

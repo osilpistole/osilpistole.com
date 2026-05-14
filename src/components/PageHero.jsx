@@ -17,9 +17,9 @@ export default function PageHero({ eyebrow, eyebrowColor = 'text-growth', title,
             alt={photoAlt}
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #F7F4EE 0%, #F7F4EE 2%, rgba(247,244,238,0.9) 25%, rgba(247,244,238,0.2) 55%, transparent 75%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #F7F4EE 0%, transparent 30%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #F7F4EE 0%, transparent 15%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #FDFAF5 0%, #FDFAF5 2%, rgba(253,250,245,0.9) 25%, rgba(253,250,245,0.2) 55%, transparent 75%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #FDFAF5 0%, transparent 30%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #FDFAF5 0%, transparent 15%)' }} />
         </div>
       )}
 

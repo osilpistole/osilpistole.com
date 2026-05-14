@@ -30,35 +30,58 @@ const services = [
 export default function WorkWithMe() {
   return (
     <>
-      {/* Hero — dark, clean, typographic with service preview strip */}
-      <section className="relative pt-36 pb-0 md:pt-44 px-6 lg:px-14 bg-ink text-white overflow-hidden">
+      {/* Hero — light parchment with fading photo right */}
+      <section className="relative pt-36 pb-0 md:pt-44 bg-parchment overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 color-stripe z-20" />
-        <div className="relative max-w-7xl mx-auto">
-          <RevealSection>
-            <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-6">Work With Osil</p>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.05] tracking-tight max-w-4xl">
-              Four ways to work together.
-            </h1>
-            <p className="mt-8 text-white/50 text-lg leading-relaxed max-w-xl">
-              Whether you need a speaker, consultant, mentor, or coach — this is where vision becomes strategy, and strategy becomes action.
-            </p>
-          </RevealSection>
+
+        {/* Warm blobs */}
+        <div className="absolute top-[10%] left-[2%] w-80 h-80 rounded-full bg-sunrise/15 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-[10%] left-[20%] w-56 h-56 rounded-full bg-morning/10 blur-3xl pointer-events-none" />
+
+        {/* Right-side photo fading to parchment */}
+        <div className="absolute inset-y-0 right-[-8%] w-full lg:w-[58%] pointer-events-none hidden lg:block">
+          <img
+            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600&auto=format&fit=crop&q=80"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #FDFAF5 0%, #FDFAF5 2%, rgba(253,250,245,0.92) 22%, rgba(253,250,245,0.2) 50%, transparent 70%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #FDFAF5 0%, rgba(253,250,245,0.4) 18%, transparent 40%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #FDFAF5 0%, transparent 12%)' }} />
         </div>
-        {/* Service preview strip */}
-        <div className="relative max-w-7xl mx-auto mt-16 border-t border-white/10">
-          <div className="grid grid-cols-2 md:grid-cols-4">
-            {[
-              { num: '01', label: 'Speaking', color: 'bg-sunrise' },
-              { num: '02', label: 'Consulting', color: 'bg-growth' },
-              { num: '03', label: 'Mentoring', color: 'bg-morning' },
-              { num: '04', label: 'Coaching', color: 'bg-white' },
-            ].map((s, i) => (
-              <div key={s.num} className={`flex items-center gap-4 py-6 px-6 border-white/10 ${i > 0 ? 'border-l' : ''}`}>
-                <div className={`w-2 h-2 rounded-full shrink-0 ${s.color}`} />
-                <span className="text-white/30 text-xs font-bold uppercase tracking-widest">{s.num}</span>
-                <span className="text-white/70 font-semibold">{s.label}</span>
+
+        <div className="relative z-10 px-6 lg:px-14">
+          <div className="max-w-7xl mx-auto">
+            <RevealSection>
+              <div className="max-w-2xl">
+                <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-6">Work With Osil</p>
+                <h1 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.05] tracking-tight">
+                  Four ways to work together.
+                </h1>
+                <p className="mt-8 text-ink/55 text-lg leading-relaxed max-w-xl">
+                  Whether you need a speaker, consultant, mentor, or coach — this is where vision becomes strategy, and strategy becomes action.
+                </p>
               </div>
-            ))}
+            </RevealSection>
+          </div>
+
+          {/* Service preview strip */}
+          <div className="relative max-w-7xl mx-auto mt-16 border-t border-ink/8">
+            <div className="grid grid-cols-2 md:grid-cols-4">
+              {[
+                { num: '01', label: 'Speaking', color: 'bg-sunrise' },
+                { num: '02', label: 'Consulting', color: 'bg-growth' },
+                { num: '03', label: 'Mentoring', color: 'bg-morning' },
+                { num: '04', label: 'Coaching', color: 'bg-ink' },
+              ].map((s, i) => (
+                <div key={s.num} className={`flex items-center gap-4 py-6 px-6 border-ink/8 ${i > 0 ? 'border-l' : ''}`}>
+                  <div className={`w-2 h-2 rounded-full shrink-0 ${s.color}`} />
+                  <span className="text-ink/30 text-xs font-bold uppercase tracking-widest">{s.num}</span>
+                  <span className="text-ink/65 font-semibold">{s.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -111,30 +134,37 @@ export default function WorkWithMe() {
       </section>
 
       {/* Photo + quote */}
-      <section className="relative overflow-hidden h-64 md:h-80">
-        <img
-          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&auto=format&fit=crop&q=80"
-          alt="Coaching and strategy session"
-          className="w-full h-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-ink/70" />
-        <div className="absolute inset-0 flex items-center justify-center px-6">
-          <p className="font-heading text-white text-2xl md:text-3xl font-bold text-center max-w-2xl leading-snug">
-            "This is not just advice. It is clarity, strategy, and movement."
-          </p>
+      <section className="bg-parchment px-6 lg:px-14 py-16 md:py-20">
+        <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+          <div className="relative overflow-hidden min-h-[480px] lg:min-h-[600px]">
+            <img
+              src={import.meta.env.BASE_URL + 'images/IMG_7288.JPG'}
+              alt="Osil Pistole on the phone"
+              className="absolute inset-0 w-full h-full object-cover object-top"
+            />
+          </div>
+          <div className="bg-sunrise/15 flex items-center justify-center px-10 py-16 lg:py-0">
+            <div>
+              <div className="w-10 h-1 bg-sunrise rounded-full mb-8" />
+              <p className="font-heading text-ink text-2xl md:text-3xl font-bold leading-snug max-w-sm">
+                "This is where vision becomes strategy, and strategy becomes action."
+              </p>
+              <p className="mt-6 text-ink/50 text-sm font-semibold uppercase tracking-widest">— Osil Pistole</p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Who I work with */}
-      <section className="py-20 md:py-28 px-6 lg:px-14 bg-ink text-white">
+      <section className="py-20 md:py-28 px-6 lg:px-14 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <RevealSection>
               <p className="text-sunrise text-[11px] font-bold uppercase tracking-[0.25em] mb-5">Who This Is For</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.1]">
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1]">
                 Who I<br />Work With
               </h2>
-              <p className="text-white/50 mt-6 text-[17px] leading-relaxed max-w-sm">
+              <p className="text-ink/65 mt-6 text-[17px] leading-relaxed max-w-sm">
                 People and teams who know they're made for more and are ready to move with clarity and conviction.
               </p>
               <div className="mt-10">
@@ -144,9 +174,9 @@ export default function WorkWithMe() {
             <RevealSection delay={0.15}>
               <div className="flex flex-col gap-2">
                 {['Leaders', 'Entrepreneurs', 'Ministries & Churches', 'Founders', 'Teams & Organizations', "Women's Groups", 'Creative Visionaries', 'People Ready for Their Next Level'].map((item) => (
-                  <div key={item} className="flex items-center justify-between px-6 py-4 rounded-2xl border border-white/8 hover:border-sunrise/40 hover:bg-white/5 transition-all duration-200 group cursor-default">
-                    <span className="text-white/70 group-hover:text-white font-medium transition-colors">{item}</span>
-                    <span className="text-white/15 group-hover:text-sunrise text-xs font-bold transition-colors">→</span>
+                  <div key={item} className="flex items-center justify-between px-6 py-4 rounded-2xl border border-ink/10 bg-parchment hover:border-sunrise/40 hover:bg-sunrise/5 transition-all duration-200 group cursor-default">
+                    <span className="text-ink/70 group-hover:text-ink font-medium transition-colors">{item}</span>
+                    <span className="text-ink/20 group-hover:text-sunrise text-xs font-bold transition-colors">→</span>
                   </div>
                 ))}
               </div>

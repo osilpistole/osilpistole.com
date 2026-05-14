@@ -83,10 +83,10 @@ export default function QuizLandingPage() {
           </Reveal>
           <div className="flex flex-col gap-6">
             {[
-              { icon: '💬', title: 'A real conversation — not a form', body: 'The AI reads your answers and responds to what you actually said. Every conversation is different. It feels like talking to someone who genuinely wants to understand you.' },
-              { icon: '✨', title: 'Your personalized business idea', body: 'A specific recommendation — not generic advice. Your audience, your format, your first three steps. Built from your answers.' },
-              { icon: '📬', title: 'A mini-report in your inbox', body: 'Your results are emailed to you so you can come back to them. No account, no password, no catch.' },
-              { icon: '🎯', title: 'A path to make it real', body: 'At the end, you can book a $99 strategy session to turn the idea into a full launch plan — website, workshop setup, offer design, everything.' },
+              { icon: <span aria-hidden="true">💬</span>, title: 'A real conversation — not a form', body: 'The AI reads your answers and responds to what you actually said. Every conversation is different. It feels like talking to someone who genuinely wants to understand you.' },
+              { icon: <span aria-hidden="true">✨</span>, title: 'Your personalized business idea', body: 'A specific recommendation — not generic advice. Your audience, your format, your first three steps. Built from your answers.' },
+              { icon: <span aria-hidden="true">📬</span>, title: 'A mini-report in your inbox', body: 'Your results are emailed to you so you can come back to them. No account, no password, no catch.' },
+              { icon: <span aria-hidden="true">🎯</span>, title: 'A path to make it real', body: 'At the end, you can book a $99 strategy session to turn the idea into a full launch plan — website, workshop setup, offer design, everything.' },
             ].map(({ icon, title, body }, i) => (
               <Reveal key={title} delay={i * 0.08}>
                 <div className="flex gap-5 items-start">

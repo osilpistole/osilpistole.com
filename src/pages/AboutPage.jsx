@@ -78,7 +78,7 @@ function ExpertiseCard({ item }) {
     <div className="bg-parchment rounded-2xl p-6 border border-ink/6 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col">
       <div className={`w-6 h-1 ${item.accent} rounded-full mb-4`} />
       <h3 className="font-heading text-base font-bold text-ink mb-2">{item.label}</h3>
-      <p className="text-ink/50 text-sm leading-relaxed flex-1">{item.desc}</p>
+      <p className="text-ink/65 text-sm leading-relaxed flex-1">{item.desc}</p>
     </div>
   )
 }
@@ -142,7 +142,7 @@ export default function AboutPage() {
               <h1 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.05] tracking-tight">
                 Meet<br />Osil Pistole.
               </h1>
-              <p className="mt-6 text-ink/55 text-[17px] leading-relaxed max-w-md">
+              <p className="mt-6 text-ink/70 text-[17px] leading-relaxed max-w-md">
                 30 years of experience helping people and organizations move forward — with clarity, strategy, and purpose.
               </p>
 
@@ -174,12 +174,12 @@ export default function AboutPage() {
         <div className="absolute inset-y-0 right-0 w-full lg:w-[48%] pointer-events-none hidden lg:block">
           <img
             src={import.meta.env.BASE_URL + 'images/polka-wall.jpg'}
-            alt="Osil Pistole"
+            alt="Osil Pistole photographed against a patterned wall"
             className="w-full h-full object-cover object-top"
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #F7F4EE 0%, #F7F4EE 2%, rgba(247,244,238,0.7) 20%, transparent 45%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #F7F4EE 0%, transparent 20%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #F7F4EE 0%, transparent 15%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #FDFAF5 0%, #FDFAF5 2%, rgba(253,250,245,0.7) 20%, transparent 45%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #FDFAF5 0%, transparent 20%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #FDFAF5 0%, transparent 15%)' }} />
         </div>
 
         {/* Mobile photo */}
@@ -194,7 +194,7 @@ export default function AboutPage() {
       </section>
 
       {/* Bio */}
-      <section className="py-20 md:py-28 px-6 lg:px-14 bg-parchment">
+      <section className="relative py-20 md:py-28 px-6 lg:px-14 bg-parchment texture-overlay overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <RevealSection>
@@ -204,7 +204,7 @@ export default function AboutPage() {
               </h2>
             </RevealSection>
             <RevealSection delay={0.1}>
-              <div className="space-y-5 text-ink/60 leading-relaxed text-[17px]">
+              <div className="space-y-5 text-ink/75 leading-relaxed text-[17px]">
                 <p>
                   Osil Pistole is a speaker, consultant, mentor, and creative strategist with a passion for helping people and organizations move forward with clarity, confidence, and purpose.
                 </p>
@@ -223,6 +223,17 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Pull Quote */}
+      <section className="py-14 md:py-20 px-6 lg:px-14 bg-parchment">
+        <div className="max-w-5xl mx-auto">
+          <RevealSection>
+            <p className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-ink/20 italic leading-relaxed text-center">
+              "Her heart is always the same: to help people live with clarity, courage, hope, and momentum."
+            </p>
+          </RevealSection>
+        </div>
+      </section>
+
       {/* Business Expertise */}
       <section className="py-20 md:py-28 px-6 lg:px-14 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -232,7 +243,7 @@ export default function AboutPage() {
               <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1] mb-6">
                 A rare blend of<br />creative and strategic.
               </h2>
-              <p className="text-ink/60 text-[17px] leading-relaxed">
+              <p className="text-ink/75 text-[17px] leading-relaxed">
                 Osil brings a unique combination of creative skill and business acumen that most people need entire teams to replicate. From building websites and designing brands to growing social media audiences and launching businesses — she understands how it all connects.
               </p>
             </RevealSection>
@@ -248,7 +259,7 @@ export default function AboutPage() {
       </section>
 
       {/* Ministry & Calling */}
-      <section className="py-20 md:py-28 px-6 lg:px-14 bg-parchment">
+      <section className="relative py-20 md:py-28 px-6 lg:px-14 bg-parchment texture-overlay overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <RevealSection>
@@ -256,7 +267,7 @@ export default function AboutPage() {
               <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1] mb-6">
                 Rooted in faith,<br />built to serve.
               </h2>
-              <p className="text-ink/60 text-[17px] leading-relaxed">
+              <p className="text-ink/75 text-[17px] leading-relaxed">
                 Before the strategy, there is the calling. Osil's life and work are deeply grounded in her faith — as an ordained minister, prophetic voice, preacher, worship leader, and devoted encourager of everyone she meets.
               </p>
             </RevealSection>
@@ -272,21 +283,21 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-20 md:py-28 px-6 lg:px-14 bg-ink text-white">
+      <section className="py-20 md:py-28 px-6 lg:px-14 bg-white">
         <div className="max-w-7xl mx-auto">
           <RevealSection>
             <p className="text-sunrise text-[11px] font-bold uppercase tracking-[0.25em] mb-5">What Drives Her</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.1] mb-14">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.1] mb-14">
               Core values.
             </h2>
           </RevealSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {values.map((v, i) => (
               <RevealSection key={v.title} delay={i * 0.1} className="flex">
-                <div className="bg-white/5 rounded-3xl p-8 md:p-10 border border-white/8 hover:bg-white/8 hover:border-white/15 transition-all duration-300 flex flex-col w-full">
+                <div className="bg-parchment rounded-3xl p-8 md:p-10 border border-ink/8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col w-full">
                   <div className={`w-10 h-1 ${v.accent} rounded-full mb-8`} />
-                  <h3 className="font-heading text-2xl font-bold text-white mb-3">{v.title}</h3>
-                  <p className="text-white/50 leading-relaxed">{v.desc}</p>
+                  <h3 className="font-heading text-2xl font-bold text-ink mb-3">{v.title}</h3>
+                  <p className="text-ink/55 leading-relaxed">{v.desc}</p>
                 </div>
               </RevealSection>
             ))}

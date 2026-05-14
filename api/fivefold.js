@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   }
 
   const kitApiKey = process.env.KIT_API_KEY
-  const kitFormId = process.env.KIT_FIVEFOLD_FORM_ID
+  const kitFormId = process.env.KIT_QUIZ_FORM_ID_5Fold
 
   if (kitApiKey && kitFormId) {
     try {
