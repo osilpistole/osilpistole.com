@@ -117,6 +117,27 @@ function ResultCard({ result }) {
         <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: INK }}>{result.format}</p>
       </ResultSection>
 
+      {result.pricing && (
+        <ResultSection accent="growth" label="Your Income Math">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
+            {[
+              { label: 'Price per person', value: result.pricing.price_per_person },
+              { label: 'Students per launch', value: result.pricing.students_per_launch },
+              { label: 'Launches per year', value: result.pricing.launches_per_year },
+              { label: 'Est. monthly income', value: result.pricing.monthly_income_estimate },
+            ].map(({ label, value }) => (
+              <div key={label} style={{ background: 'white', borderRadius: 10, padding: '0.6rem 0.75rem' }}>
+                <p style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(44,44,42,0.4)', margin: '0 0 0.2rem' }}>{label}</p>
+                <p style={{ fontSize: '1rem', fontWeight: 700, color: INK, margin: 0 }}>{value}</p>
+              </div>
+            ))}
+          </div>
+          {result.pricing.math && (
+            <p style={{ fontSize: '0.85rem', lineHeight: 1.6, color: 'rgba(44,44,42,0.65)', margin: 0 }}>{result.pricing.math}</p>
+          )}
+        </ResultSection>
+      )}
+
       <ResultSection accent="morning" label="Your First 3 Steps">
         {result.steps?.map((step, i) => (
           <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: i < 2 ? '0.75rem' : 0 }}>
