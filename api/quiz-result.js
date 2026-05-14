@@ -35,6 +35,13 @@ Use this exact schema:
   "idea": "A specific name for their offer followed by 2 sentences describing what it is and why it fits them",
   "audience": "Exactly who they should serve — who they are, what they struggle with, what they are ready for",
   "format": "course | cohort | workshop | mentorship | event — plus one sentence on why this format fits their life and goals",
+  "positioning": "A one-sentence positioning statement in this exact format: For [specific person] who [specific struggle], [offer name] is the [category] that [specific outcome] — because [unique differentiator that only this person could deliver].",
+  "advantages": [
+    "First specific reason they are uniquely positioned to do this — draw from their story, past proof, or lived experience",
+    "Second advantage — a skill, relationship, or insight that most people in this space don't have",
+    "Third advantage — what they've figured out that competitors get wrong, or a result they've already produced"
+  ],
+  "first_launch": "A 2-3 sentence minimum viable first launch recommendation. What is the smallest, fastest version they could test in the next 30-60 days — before the full offer is built? Name it, price it, and describe how to fill it (e.g., a free workshop, a beta cohort at half price, a single 1:1 package). The goal is proof of concept, not perfection.",
   "pricing": {
     "price_per_person": "e.g. $2,000",
     "students_per_launch": 6,

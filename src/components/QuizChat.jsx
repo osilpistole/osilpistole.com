@@ -117,6 +117,31 @@ function ResultCard({ result }) {
         <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: INK }}>{result.format}</p>
       </ResultSection>
 
+      {result.positioning && (
+        <ResultSection accent="sunrise" label="Your Positioning Statement">
+          <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: INK, fontStyle: 'italic' }}>{result.positioning}</p>
+        </ResultSection>
+      )}
+
+      {result.advantages?.length > 0 && (
+        <ResultSection accent="growth" label="Why You're the Right Person for This">
+          {result.advantages.map((adv, i) => (
+            <div key={i} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start', marginBottom: i < result.advantages.length - 1 ? '0.6rem' : 0 }}>
+              <div style={{ width: 20, height: 20, borderRadius: '50%', background: GROWTH, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'white' }} />
+              </div>
+              <p style={{ fontSize: '0.88rem', lineHeight: 1.55, color: INK, margin: 0 }}>{adv}</p>
+            </div>
+          ))}
+        </ResultSection>
+      )}
+
+      {result.first_launch && (
+        <ResultSection accent="morning" label="Your Minimum Viable First Launch">
+          <p style={{ fontSize: '0.9rem', lineHeight: 1.65, color: INK }}>{result.first_launch}</p>
+        </ResultSection>
+      )}
+
       {result.pricing && (
         <ResultSection accent="growth" label="Your Income Math">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
