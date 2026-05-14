@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-const BOOKING_URL = 'https://your-thrivecart-link.com' // Replace with real ThriveCart URL
+const BOOKING_URL = 'https://osilpistole.thrivecart.com/prophetic-strategy-session/'
 
 function TypingIndicator() {
   return (
