@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 const navLinks = [
   { label: 'Home', to: '/' },
   { label: 'Work With Me', to: '/work-with-me' },
-  { label: 'Programs', to: '/programs' },
+  { label: 'Products', to: '/programs' },
   { label: 'Speaking', to: '/speaking' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
@@ -56,6 +56,12 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <a
+            href="https://members.osilpistole.com"
+            className="text-sm font-medium text-ink/55 hover:text-ink border border-ink/20 hover:border-ink/40 px-4 py-2 rounded-full transition-all duration-200"
+          >
+            Login
+          </a>
           <Link
             to="/contact"
             className="bg-sunrise text-ink text-sm font-bold px-6 py-2.5 rounded-full hover:bg-sunrise/85 transition-all duration-200 shadow-sm hover:shadow-lg hover:-translate-y-0.5 btn-glow"
@@ -92,6 +98,13 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <a
+            href="https://members.osilpistole.com"
+            onClick={() => setOpen(false)}
+            className="text-base font-medium text-ink/60 hover:text-ink transition-colors"
+          >
+            Login →
+          </a>
           <Link
             to="/contact"
             onClick={() => setOpen(false)}

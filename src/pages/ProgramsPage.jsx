@@ -15,7 +15,7 @@ export default function ProgramsPage() {
         />
         <div className="relative max-w-7xl mx-auto">
           <RevealSection>
-            <p className="text-sunrise text-xs font-bold uppercase tracking-[0.25em] mb-6">Programs &amp; Resources</p>
+            <p className="text-sunrise text-xs font-bold uppercase tracking-[0.25em] mb-6">Products &amp; Resources</p>
             <h1 className="font-heading text-4xl md:text-6xl font-bold text-white leading-tight md:leading-[1.05] tracking-tight max-w-3xl">
               You know there&apos;s more.<br />
               <span className="gradient-text-animated">Let&apos;s find it together.</span>

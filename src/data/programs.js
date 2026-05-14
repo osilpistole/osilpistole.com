@@ -1,5 +1,13 @@
 export const freeResources = [
   {
+    slug: 'quiz',
+    title: 'AI Build Quiz — What Should You Build First?',
+    tagline: 'Answer 10–12 questions and get a personalized recommendation for your first course, mentorship, or workshop.',
+    icon: '🤖',
+    link: '/quiz',
+    cta: 'Start Free Quiz',
+  },
+  {
     slug: 'spiritual-gifts',
     title: 'Spiritual Gifts Assessment',
     tagline: 'Discover the specific gifts God placed inside you — in 5 minutes, completely free.',
