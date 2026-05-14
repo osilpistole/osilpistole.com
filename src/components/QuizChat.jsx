@@ -263,6 +263,7 @@ export default function QuizChat() {
   const [email, setEmail] = useState('')
   const [result, setResult] = useState(null)
   const [progress, setProgress] = useState(0)
+  const [quizDone, setQuizDone] = useState(false)
   const bottomRef = useRef(null)
   const recognitionRef = useRef(null)
 
@@ -310,7 +311,7 @@ export default function QuizChat() {
       setMessages(prev => [...prev, { role: 'assistant', content: data.message }])
       const userCount = history.filter(m => m.role === 'user').length
       setProgress(Math.min(Math.round((userCount / 10) * 100), 95))
-      if (data.done) setTimeout(() => setScreen('email'), 600)
+      if (data.done) { setProgress(100); setQuizDone(true) }
     } catch (err) {
       console.error('quiz-chat error:', err)
       setMessages(prev => [...prev, {
@@ -512,11 +513,26 @@ export default function QuizChat() {
           ))}
           {isTyping && <TypingIndicator />}
         </div>
+        {quizDone && (
+          <div style={{ animation: 'fadeUp 0.5s ease-out', paddingTop: '0.5rem' }}>
+            <button
+              onClick={() => setScreen('email')}
+              style={{
+                width: '100%', background: SUNRISE, color: INK, border: 'none',
+                borderRadius: 999, padding: '1rem 2rem', fontWeight: 700,
+                fontSize: '1rem', cursor: 'pointer', fontFamily: 'var(--font-heading)',
+                boxShadow: '0 8px 28px rgba(245,200,66,0.4)',
+              }}
+            >
+              Get my results →
+            </button>
+          </div>
+        )}
         <div ref={bottomRef} />
       </div>
 
-      {/* Input area */}
-      <div style={{
+      {/* Input area — hidden once quiz is complete */}
+      {!quizDone && <div style={{
         padding: '0.85rem 1rem 1rem',
         borderTop: '1px solid rgba(44,44,42,0.09)',
         background: 'white',
@@ -587,7 +603,7 @@ export default function QuizChat() {
             Press Enter to send · Tap 🎙 to speak your answer
           </p>
         )}
-      </div>
+      </div>}
     </div>
   )
 }
