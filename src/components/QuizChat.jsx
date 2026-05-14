@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import BuilderCharacter from './BuilderCharacter'
 
 const BOOKING_URL = 'https://osilpistole.thrivecart.com/prophetic-strategy-session/'
 
@@ -16,31 +17,8 @@ const styles = `
 
 function Avatar() {
   return (
-    <div style={{ width: 40, height: 40, flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(245,200,66,0.4))' }}>
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Hard hat dome */}
-        <path d="M8 18 Q8 8 20 8 Q32 8 32 18" fill="#F5C842"/>
-        {/* Hat brim */}
-        <rect x="6" y="16" width="28" height="4" rx="2" fill="#F5C842"/>
-        {/* Hat shine */}
-        <path d="M12 13 Q12 10 20 10 Q24 10 26 12" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round"/>
-        {/* Face */}
-        <circle cx="20" cy="26" r="10" fill="#FDFAF5"/>
-        {/* Cheeks */}
-        <ellipse cx="13" cy="28" rx="3" ry="1.8" fill="rgba(245,200,66,0.3)"/>
-        <ellipse cx="27" cy="28" rx="3" ry="1.8" fill="rgba(245,200,66,0.3)"/>
-        {/* Eyes */}
-        <circle cx="16" cy="25" r="1.6" fill="#2C2C2A"/>
-        <circle cx="24" cy="25" r="1.6" fill="#2C2C2A"/>
-        {/* Eye shine */}
-        <circle cx="16.7" cy="24.3" r="0.5" fill="white"/>
-        <circle cx="24.7" cy="24.3" r="0.5" fill="white"/>
-        {/* Smile */}
-        <path d="M15 29 Q20 33 25 29" stroke="#2C2C2A" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-        {/* Tiny wrench on hat */}
-        <circle cx="30" cy="12" r="2.5" fill="none" stroke="#7DBE6A" strokeWidth="1.8"/>
-        <rect x="31.2" y="11.2" width="4.5" height="1.6" rx="0.8" fill="#7DBE6A"/>
-      </svg>
+    <div style={{ width: 44, height: 44, flexShrink: 0, filter: 'drop-shadow(0 2px 6px rgba(245,200,66,0.35))' }}>
+      <BuilderCharacter size={44} />
     </div>
   )
 }
@@ -414,8 +392,10 @@ export default function QuizChat() {
         background: 'white', flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <Avatar />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ filter: 'drop-shadow(0 2px 6px rgba(245,200,66,0.35))' }}>
+            <BuilderCharacter size={44} />
+          </div>
           <div>
             <p style={{ fontSize: '0.8rem', fontWeight: 700, color: INK, fontFamily: 'var(--font-heading)', margin: 0 }}>AI Build Quiz</p>
             <p style={{ fontSize: '0.7rem', color: 'rgba(44,44,42,0.4)', margin: 0 }}>by Osil Pistole</p>
