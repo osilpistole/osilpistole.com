@@ -103,7 +103,7 @@ export const programs = [
     label: '03',
     status: 'active',
     accent: 'morning',
-    title: 'Presence',
+    title: 'Presence — A 30-Day Lectio Divina Journal',
     shortTitle: 'Presence',
     tagline: '30 days of Scripture, stillness, and five steps that change how you hear God.',
     description: 'Most of us know how to read the Bible. We just don\'t know how to let it read us. We skim, we highlight, we move on — and wonder why nothing seems to be shifting. But there\'s a practice that\'s been used for centuries for exactly this. Lectio Divina. Sacred reading. It slows you down on purpose. It creates space for God\'s Word to land somewhere deeper than your notes app.\n\nPresence is a 30-day Lectio Divina journal built inside your member portal. Each day gives you a curated Scripture passage — read by you, or listened to in the voice of your choice — and then walks you through five ancient steps: Lectio (read it), Meditatio (sit with it), Oratio (pray through it), Contemplatio (be still in it), and Actio (take it into your day). Your responses save automatically. You can download any entry as a beautifully formatted PDF to keep. You can come back to any day as many times as you need. There\'s no rushing this.\n\nThis isn\'t a Bible study. It\'s not a devotional you power through before the morning gets away from you. It\'s thirty days of showing up — not to perform, not to produce, but to be present. Read slowly. Let it be enough.',
