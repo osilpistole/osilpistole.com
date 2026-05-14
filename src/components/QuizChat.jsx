@@ -206,19 +206,32 @@ function ResultCard({ result }) {
         </ResultSection>
       )}
 
-      {result.missing_assessments && (
-        <div style={{
-          background: 'white', border: '1px solid rgba(44,44,42,0.08)',
-          borderRadius: 16, padding: '1rem 1.5rem', marginBottom: '1rem',
-          fontSize: '0.85rem', color: 'rgba(44,44,42,0.6)', lineHeight: 1.6,
-        }}>
-          📌 Want a deeper picture? Take the free{' '}
-          <a href="/spiritual-gifts" style={{ color: '#8a6500', textDecoration: 'underline' }}>Spiritual Gifts Assessment</a>{' '}
-          and{' '}
-          <a href="/fivefold" style={{ color: '#6a4d8a', textDecoration: 'underline' }}>5-Fold Assessment</a>{' '}
-          — they'll sharpen this recommendation significantly.
+      <div style={{
+        background: 'white', border: '1px solid rgba(44,44,42,0.08)',
+        borderRadius: 16, padding: '1.25rem 1.5rem', marginBottom: '1rem',
+      }}>
+        <p style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(44,44,42,0.35)', marginBottom: '0.75rem', margin: '0 0 0.75rem' }}>
+          Free Tools to Go Deeper
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+          <a href="/spiritual-gifts" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', padding: '0.6rem 0.75rem', borderRadius: 10, background: 'rgba(245,200,66,0.07)', border: '1px solid rgba(245,200,66,0.2)' }}>
+            <span style={{ fontSize: '1.1rem' }}>✨</span>
+            <div>
+              <p style={{ fontSize: '0.85rem', fontWeight: 700, color: INK, margin: 0 }}>Spiritual Gifts Assessment</p>
+              <p style={{ fontSize: '0.75rem', color: 'rgba(44,44,42,0.5)', margin: 0 }}>Discover the specific gifts God placed inside you — free, 5 minutes</p>
+            </div>
+            <span style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#8a6500', fontWeight: 600 }}>→</span>
+          </a>
+          <a href="/fivefold" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', padding: '0.6rem 0.75rem', borderRadius: 10, background: 'rgba(184,164,216,0.08)', border: '1px solid rgba(184,164,216,0.2)' }}>
+            <span style={{ fontSize: '1.1rem' }}>👁️</span>
+            <div>
+              <p style={{ fontSize: '0.85rem', fontWeight: 700, color: INK, margin: 0 }}>5-Fold Ministry Assessment</p>
+              <p style={{ fontSize: '0.75rem', color: 'rgba(44,44,42,0.5)', margin: 0 }}>Find which of the five callings God wired into you — free</p>
+            </div>
+            <span style={{ marginLeft: 'auto', fontSize: '0.8rem', color: '#6a4d8a', fontWeight: 600 }}>→</span>
+          </a>
         </div>
-      )}
+      </div>
 
       {/* CTA */}
       <div style={{
