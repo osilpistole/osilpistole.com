@@ -44,8 +44,9 @@ function Hero() {
     <section className="relative overflow-hidden bg-parchment">
       <div className="absolute top-0 left-0 right-0 h-1 color-stripe z-20" />
 
-      {/* ── Mobile: photo stacked on top ── */}
-      <div className="md:hidden relative h-[58vw] max-h-[300px] min-h-[220px] overflow-hidden">
+      {/* ── Mobile: photo stacked on top — pt clears the fixed nav ── */}
+      <div className="md:hidden pt-[4.5rem]">
+      <div className="relative h-[72vw] max-h-[360px] min-h-[240px] overflow-hidden">
         <img
           src={import.meta.env.BASE_URL + 'images/standing-studio.jpg'}
           alt="Osil Pistole"
@@ -53,6 +54,7 @@ function Hero() {
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(253,250,245,0.15) 40%, #FDFAF5 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(253,250,245,0.6) 0%, transparent 40%)' }} />
+      </div>
       </div>
 
       {/* ── Desktop: photo absolute right ── */}
