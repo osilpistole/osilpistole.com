@@ -431,7 +431,7 @@ function ProductsSection() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
               <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-3">Programs &amp; Resources</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-tight">Start here — for free.</h2>
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-tight">Start here.</h2>
             </div>
             <Link to="/programs" className="inline-flex items-center gap-2 text-ink/50 hover:text-ink text-sm font-semibold transition-colors group shrink-0">
               View all programs
@@ -479,20 +479,23 @@ function ProductsSection() {
           </RevealSection>
 
           {/* Free resources */}
-          <RevealSection delay={0.1} className="lg:col-span-2 flex flex-col gap-4">
-            <p className="text-ink/35 text-[10px] font-bold uppercase tracking-[0.3em] mb-1">Free Resources</p>
+          <RevealSection delay={0.1} className="lg:col-span-2 flex flex-col gap-3">
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-ink text-[10px] font-black uppercase tracking-[0.3em]">Free Resources</p>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-growth/15 border border-growth/30 text-growth text-[9px] font-bold uppercase tracking-widest">100% Free</span>
+            </div>
             {freeResources.map((resource, i) => (
               <Link
                 key={resource.slug}
                 to={resource.link}
-                className="group flex items-center gap-4 bg-parchment border border-ink/8 rounded-2xl p-5 hover:border-sunrise/35 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex-1"
+                className="group flex items-center gap-4 bg-ink border border-ink rounded-2xl p-5 hover:bg-ink/85 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 flex-1"
               >
                 <span className="text-2xl shrink-0">{resource.icon}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-heading font-bold text-ink text-sm leading-snug mb-0.5">{resource.title.split('—')[0].trim()}</p>
-                  <p className="text-ink/45 text-xs leading-relaxed">{resource.tagline.split('.')[0]}.</p>
+                  <p className="font-heading font-bold text-white text-sm leading-snug mb-0.5">{resource.title.split('—')[0].trim()}</p>
+                  <p className="text-white/50 text-xs leading-relaxed">{resource.tagline.split('.')[0]}.</p>
                 </div>
-                <svg className="w-4 h-4 text-ink/20 group-hover:text-sunrise group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-white/25 group-hover:text-sunrise group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </Link>
