@@ -137,11 +137,11 @@ export default function ProgramsPage() {
                 Coming Soon
               </span>
               <p className="text-ink/55 text-sm">
-                Coaching sessions and mentorship are on the way.{' '}
+                Mentorship is on the way.{' '}
                 <Link to="/contact" className="text-ink/70 underline underline-offset-2 hover:text-ink transition-colors">
                   Get in touch
                 </Link>{' '}
-                if you&apos;d like to know when they launch.
+                if you&apos;d like to know when it launches.
               </p>
             </div>
           </RevealSection>

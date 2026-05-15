@@ -105,6 +105,62 @@ export default function CoachingPage() {
         </div>
       </section>
 
+      {/* Strategy Session — limited time offer */}
+      <section className="py-20 md:py-28 px-6 lg:px-14 bg-ink text-white">
+        <div className="max-w-7xl mx-auto">
+          <RevealSection>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-sunrise/40 bg-sunrise/10">
+                  <span className="w-1.5 h-1.5 rounded-full bg-sunrise animate-pulse" />
+                  <span className="text-sunrise text-[10px] font-bold uppercase tracking-[0.25em]">Limited Time</span>
+                </div>
+                <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.1] mb-5">
+                  Private 1-on-1<br />Strategy Session
+                </h2>
+                <p className="text-white/55 text-lg leading-relaxed max-w-md mb-8">
+                  One 60-minute call with Osil. You leave with clarity, a plan, and something concrete to move with. No fluff — built around you, in real time.
+                </p>
+                <div className="flex items-baseline gap-3 mb-8">
+                  <span className="font-heading text-5xl font-black text-sunrise">$99</span>
+                  <span className="text-white/30 text-lg line-through">$222</span>
+                  <span className="text-white/40 text-sm">· 60 min · Zoom</span>
+                </div>
+                <div className="flex flex-col gap-3 mb-10">
+                  {[
+                    'Pre-session intake form so the call starts focused',
+                    'Custom action plan delivered within 24 hours',
+                    'Recording of your session to keep',
+                    'Calendly booking link sent immediately after purchase',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-sunrise shrink-0 mt-2" />
+                      <span className="text-white/60 text-sm leading-relaxed">{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  to="/programs/coaching"
+                  className="inline-flex items-center gap-2 bg-sunrise hover:bg-[#f0be2e] text-ink text-sm font-bold px-8 py-4 rounded-full transition-all duration-200 shadow-[0_4px_24px_rgba(245,200,66,0.35)] hover:-translate-y-0.5"
+                >
+                  Book Your Session — $99
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </Link>
+              </div>
+              <div className="rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-auto lg:h-96">
+                <img
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=80"
+                  alt="Strategy session"
+                  className="w-full h-full object-cover opacity-60"
+                />
+              </div>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
       {/* Who it's for */}
       <section className="py-20 md:py-28 px-6 lg:px-14 bg-ink text-white">
         <div className="max-w-7xl mx-auto">

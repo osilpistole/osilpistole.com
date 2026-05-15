@@ -182,23 +182,49 @@ export default function ProductPage() {
               </RevealSection>
             </div>
 
-            {/* Right: checkout embed */}
+            {/* Right: checkout */}
             {isActive && (
               <RevealSection delay={0.1}>
-                <div className="rounded-2xl overflow-hidden border border-ink/8 shadow-[0_8px_40px_rgba(44,44,42,0.09)]">
-                  <div className={`${accent.bg} border-b border-ink/8 px-6 py-3.5 flex items-center gap-2.5`}>
-                    <div className={`w-2 h-2 rounded-full ${accent.dot}`} />
-                    <span className="text-ink/60 text-xs font-bold uppercase tracking-wider">Secure Checkout</span>
-                    {program.bump && (
-                      <span className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sunrise/15 border border-sunrise/30 text-xs font-bold tracking-wide text-ink/70">
-                        Journal add-on at checkout
-                      </span>
-                    )}
+                {program.embedId ? (
+                  <div className="rounded-2xl overflow-hidden border border-ink/8 shadow-[0_8px_40px_rgba(44,44,42,0.09)]">
+                    <div className={`${accent.bg} border-b border-ink/8 px-6 py-3.5 flex items-center gap-2.5`}>
+                      <div className={`w-2 h-2 rounded-full ${accent.dot}`} />
+                      <span className="text-ink/60 text-xs font-bold uppercase tracking-wider">Secure Checkout</span>
+                      {program.bump && (
+                        <span className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sunrise/15 border border-sunrise/30 text-xs font-bold tracking-wide text-ink/70">
+                          Journal add-on at checkout
+                        </span>
+                      )}
+                    </div>
+                    <div className="bg-white p-6 md:p-8">
+                      <ThriveCartEmbed embedId={program.embedId} productId={program.productId} />
+                    </div>
                   </div>
-                  <div className="bg-white p-6 md:p-8">
-                    <ThriveCartEmbed embedId={program.embedId} productId={program.productId} />
+                ) : program.purchaseUrl ? (
+                  <div className={`rounded-2xl border ${accent.border} ${accent.bg} p-8 text-center`}>
+                    <p className="text-ink/60 text-sm mb-6 leading-relaxed">
+                      After purchase you&apos;ll receive a Calendly link to schedule your session.
+                    </p>
+                    <a
+                      href={program.purchaseUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-2 bg-ink text-white text-sm font-bold px-8 py-4 rounded-full hover:bg-ink/85 transition-all duration-200 shadow-lg hover:-translate-y-0.5`}
+                    >
+                      Purchase — {program.price}
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </a>
                   </div>
-                </div>
+                ) : (
+                  <div className={`rounded-2xl border ${accent.border} ${accent.bg} p-8 text-center`}>
+                    <p className="text-ink/50 text-sm mb-2">Purchase link coming soon.</p>
+                    <p className="text-ink/35 text-xs">
+                      <Link to="/contact" className="underline underline-offset-2 hover:text-ink transition-colors">Contact Osil</Link> to reserve your spot now.
+                    </p>
+                  </div>
+                )}
               </RevealSection>
             )}
 
