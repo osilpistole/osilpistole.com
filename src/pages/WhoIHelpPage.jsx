@@ -32,7 +32,7 @@ const audiences = [
       },
     ],
     accent: 'bg-sunrise',
-    photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop&q=80',
+    photo: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'entrepreneurs',
