@@ -22,6 +22,7 @@ import SpiritualGiftsPage from './pages/SpiritualGiftsPage'
 import FivefoldPage from './pages/FivefoldPage'
 import QuizLandingPage from './pages/QuizLandingPage'
 import QuizChat from './components/QuizChat'
+import WhoIHelpPage from './pages/WhoIHelpPage'
 
 function SiteLayout() {
   return (
@@ -47,6 +48,7 @@ function SiteLayout() {
           <Route path="/spiritual-gifts" element={<SpiritualGiftsPage />} />
           <Route path="/fivefold" element={<FivefoldPage />} />
           <Route path="/quiz" element={<QuizLandingPage />} />
+          <Route path="/who-i-help" element={<WhoIHelpPage />} />
         </Routes>
       </main>
       <Footer />

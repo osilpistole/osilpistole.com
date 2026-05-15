@@ -277,9 +277,15 @@ function HowIHelp() {
 
 /* ─── Who I Help ─── */
 const audiences = [
-  'Leaders', 'Entrepreneurs', 'Ministries', 'Founders',
-  'Teams & Organizations', "Women's Groups", 'Churches',
-  'Creative Visionaries', 'People Ready for Their Next Level',
+  { label: 'Leaders',                         id: 'leaders' },
+  { label: 'Entrepreneurs',                   id: 'entrepreneurs' },
+  { label: 'Ministries',                      id: 'ministries' },
+  { label: 'Founders',                        id: 'founders' },
+  { label: 'Teams & Organizations',           id: 'teams-organizations' },
+  { label: "Women's Groups",                  id: 'womens-groups' },
+  { label: 'Churches',                        id: 'churches' },
+  { label: 'Creative Visionaries',            id: 'creative-visionaries' },
+  { label: 'People Ready for Their Next Level', id: 'next-level' },
 ]
 
 function WhoIHelp() {
@@ -317,13 +323,14 @@ function WhoIHelp() {
           <RevealSection delay={0.15}>
             <div className="flex flex-col gap-2 mt-2">
               {audiences.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center justify-between px-6 py-4 rounded-2xl border border-ink/10 bg-white hover:border-sunrise/40 hover:bg-sunrise/5 transition-all duration-200 group cursor-default"
+                <Link
+                  key={item.id}
+                  to={`/who-i-help#${item.id}`}
+                  className="flex items-center justify-between px-6 py-4 rounded-2xl border border-ink/10 bg-white hover:border-sunrise/40 hover:bg-sunrise/5 transition-all duration-200 group"
                 >
-                  <span className="text-ink/70 group-hover:text-ink font-medium transition-colors">{item}</span>
+                  <span className="text-ink/70 group-hover:text-ink font-medium transition-colors">{item.label}</span>
                   <span className="text-ink/20 group-hover:text-sunrise text-xs font-bold uppercase tracking-widest transition-colors">→</span>
-                </div>
+                </Link>
               ))}
             </div>
           </RevealSection>
