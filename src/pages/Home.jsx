@@ -284,12 +284,20 @@ const audiences = [
 
 function WhoIHelp() {
   return (
-    <section className="relative py-20 md:py-28 px-6 lg:px-10 bg-parchment overflow-hidden">
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-        <span className="font-heading font-black leading-none text-ink/[0.04]" style={{ fontSize: 'clamp(10rem, 26vw, 20rem)' }}>YOU</span>
+    <section className="relative py-20 md:py-28 px-6 lg:px-10 overflow-hidden">
+      {/* B&W photo background */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&auto=format&fit=crop&q=80"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover grayscale"
+        />
+        <div className="absolute inset-0 bg-parchment/90" />
       </div>
-      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-sunrise/12 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-morning/10 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <span className="font-heading font-black leading-none text-ink/[0.05]" style={{ fontSize: 'clamp(10rem, 26vw, 20rem)' }}>YOU</span>
+      </div>
 
       <div className="relative max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
