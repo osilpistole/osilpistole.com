@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import ButtonPrimary from '../components/ButtonPrimary'
 import RevealSection from '../components/RevealSection'
+import { freeResources } from '../data/programs'
 
 /* ─── Typewriter hook ─── */
 function useTypewriter(words, typingSpeed = 80, pauseTime = 1800, deletingSpeed = 45) {
@@ -421,6 +422,168 @@ function Transformation() {
   )
 }
 
+/* ─── Products Section ─── */
+function ProductsSection() {
+  return (
+    <section className="py-20 md:py-28 px-6 lg:px-10 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <RevealSection>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-3">Programs &amp; Resources</p>
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-tight">Start here — for free.</h2>
+            </div>
+            <Link to="/programs" className="inline-flex items-center gap-2 text-ink/50 hover:text-ink text-sm font-semibold transition-colors group shrink-0">
+              View all programs
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+          </div>
+        </RevealSection>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+          {/* Presence — featured card */}
+          <RevealSection className="lg:col-span-3">
+            <Link
+              to="/programs/presence"
+              className="group relative block h-72 lg:h-full min-h-[320px] rounded-3xl overflow-hidden bg-cover bg-center"
+              style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80)' }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/15" />
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <div className="inline-flex items-center gap-2 mb-4 w-fit px-3 py-1.5 rounded-full border border-sunrise/40 bg-sunrise/15">
+                  <span className="w-1.5 h-1.5 rounded-full bg-sunrise animate-pulse" />
+                  <span className="text-sunrise text-[10px] font-bold uppercase tracking-[0.25em]">Limited Time</span>
+                </div>
+                <h3 className="font-heading text-3xl md:text-4xl font-bold text-white leading-tight mb-2">
+                  Presence
+                </h3>
+                <p className="text-white/65 text-sm leading-relaxed mb-5 max-w-sm">
+                  A 30-day Lectio Divina journal — Scripture, stillness, and five steps that change how you hear God.
+                </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-heading text-2xl font-black text-sunrise">$27</span>
+                    <span className="text-white/40 text-sm">· Lifetime access</span>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 text-white/70 group-hover:text-white text-sm font-semibold transition-colors">
+                    Get Access
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </RevealSection>
+
+          {/* Free resources */}
+          <RevealSection delay={0.1} className="lg:col-span-2 flex flex-col gap-4">
+            <p className="text-ink/35 text-[10px] font-bold uppercase tracking-[0.3em] mb-1">Free Resources</p>
+            {freeResources.map((resource, i) => (
+              <Link
+                key={resource.slug}
+                to={resource.link}
+                className="group flex items-center gap-4 bg-parchment border border-ink/8 rounded-2xl p-5 hover:border-sunrise/35 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex-1"
+              >
+                <span className="text-2xl shrink-0">{resource.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-heading font-bold text-ink text-sm leading-snug mb-0.5">{resource.title.split('—')[0].trim()}</p>
+                  <p className="text-ink/45 text-xs leading-relaxed">{resource.tagline.split('.')[0]}.</p>
+                </div>
+                <svg className="w-4 h-4 text-ink/20 group-hover:text-sunrise group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            ))}
+          </RevealSection>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Presence Popup ─── */
+function PresencePopup() {
+  const [visible, setVisible] = useState(false)
+  const [dismissed, setDismissed] = useState(false)
+
+  useEffect(() => {
+    if (sessionStorage.getItem('presence-popup-dismissed')) return
+    const t = setTimeout(() => setVisible(true), 4000)
+    return () => clearTimeout(t)
+  }, [])
+
+  function dismiss() {
+    setVisible(false)
+    setDismissed(true)
+    sessionStorage.setItem('presence-popup-dismissed', '1')
+  }
+
+  if (dismissed) return null
+
+  return (
+    <div
+      className={`fixed bottom-6 right-6 z-50 max-w-xs w-full transition-all duration-500 ease-out ${
+        visible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0 pointer-events-none'
+      }`}
+    >
+      <div className="relative bg-white rounded-2xl shadow-[0_8px_40px_rgba(44,44,42,0.18)] border border-ink/8 overflow-hidden">
+        {/* Photo strip */}
+        <div
+          className="h-28 bg-cover bg-center"
+          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&auto=format&fit=crop&q=80)' }}
+        >
+          <div className="w-full h-full bg-gradient-to-t from-black/60 to-transparent flex items-end px-5 pb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sunrise/40 bg-sunrise/15">
+              <span className="w-1.5 h-1.5 rounded-full bg-sunrise animate-pulse" />
+              <span className="text-sunrise text-[9px] font-bold uppercase tracking-[0.2em]">Limited Time Offer</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Close */}
+        <button
+          onClick={dismiss}
+          className="absolute top-3 right-3 w-7 h-7 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center transition-colors backdrop-blur-sm"
+          aria-label="Dismiss"
+        >
+          <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        {/* Content */}
+        <div className="px-5 py-4">
+          <h4 className="font-heading text-base font-bold text-ink leading-snug mb-1">Presence — 30-Day Journal</h4>
+          <p className="text-ink/55 text-xs leading-relaxed mb-4">
+            Scripture, stillness, and five steps that change how you hear God. Just $27 — lifetime access.
+          </p>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/programs/presence"
+              onClick={dismiss}
+              className="flex-1 inline-flex items-center justify-center gap-1.5 bg-sunrise hover:bg-[#f0be2e] text-ink text-xs font-bold px-4 py-2.5 rounded-xl transition-all duration-200"
+            >
+              Get Access — $27
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+            <button
+              onClick={dismiss}
+              className="text-ink/35 hover:text-ink/60 text-xs transition-colors"
+            >
+              No thanks
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── Final CTA ─── */
 function FinalCTA() {
   return (
@@ -472,7 +635,9 @@ export default function Home() {
       <HowIHelp />
       <WhoIHelp />
       <Transformation />
+      <ProductsSection />
       <FinalCTA />
+      <PresencePopup />
     </>
   )
 }
