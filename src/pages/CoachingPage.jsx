@@ -116,21 +116,23 @@ export default function CoachingPage() {
                   <span className="text-sunrise text-[10px] font-bold uppercase tracking-[0.25em]">Limited Time</span>
                 </div>
                 <h2 className="font-heading text-4xl md:text-5xl font-bold text-white leading-[1.1] mb-5">
-                  Private 1-on-1<br />Strategy Session
+                  Prophetic<br />Strategy Session
                 </h2>
                 <p className="text-white/55 text-lg leading-relaxed max-w-md mb-8">
-                  One 60-minute call with Osil. You leave with clarity, a plan, and something concrete to move with. No fluff — built around you, in real time.
+                  For builders, entrepreneurs, and ministry leaders. One 60-minute call — prophetic insight, strategic clarity, and a concrete plan built around your situation.
                 </p>
-                <div className="flex items-baseline gap-3 mb-8">
+                <div className="flex items-baseline gap-3 mb-2">
                   <span className="font-heading text-5xl font-black text-sunrise">$99</span>
                   <span className="text-white/30 text-lg line-through">$222</span>
                   <span className="text-white/40 text-sm">· 60 min · Zoom</span>
                 </div>
+                <p className="text-white/35 text-sm mb-8">The $99 is credited toward whatever we do together next.</p>
                 <div className="flex flex-col gap-3 mb-10">
                   {[
                     'Pre-session intake form so the call starts focused',
                     'Custom action plan delivered within 24 hours',
                     'Recording of your session to keep',
+                    '$99 credited toward any future work together',
                     'Calendly booking link sent immediately after purchase',
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3">
