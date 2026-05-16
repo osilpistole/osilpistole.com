@@ -97,7 +97,7 @@ export default function ProductPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
             {/* Left: product info — max-height guard so sticky doesn't overflow viewport */}
-            <div className="lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
+            <div className="lg:sticky lg:top-28">
               <RevealSection>
                 {/* Image */}
                 <div className="rounded-2xl overflow-hidden mb-8 aspect-[16/9]">
