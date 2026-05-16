@@ -46,7 +46,7 @@ export default function FivefoldPage() {
     <div className="bg-parchment text-ink">
 
       {/* Hero */}
-      <section className="relative overflow-hidden pt-16 pb-12 px-6" style={{ background: '#1C1A2E' }}>
+      <section className="relative overflow-hidden pt-24 pb-12 px-6" style={{ background: '#1C1A2E' }}>
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-20 blur-3xl -translate-y-1/2 translate-x-1/3" style={{ background: '#B8A4D8' }} />
           <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-10 blur-3xl translate-y-1/3 -translate-x-1/4" style={{ background: '#F5C842' }} />

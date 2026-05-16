@@ -140,7 +140,7 @@ export default function FivefoldQuiz({ skipIntro = false }) {
 
 function IntroScreen({ onStart }) {
   return (
-    <div style={{ minHeight: '100vh', background: '#1C1A2E', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+    <div style={{ minHeight: '100vh', background: '#1C1A2E', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '88px 20px 40px' }}>
       <div style={{ maxWidth: 560, width: '100%', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32 }}>
           {ROLES.map((r) => (
@@ -178,7 +178,7 @@ function QuizScreen({ page, totalPages, pageQuestions, answers, progress, pageAn
   const lastQ = Math.min((page + 1) * Q_PER_PAGE, QUESTIONS.length)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F7F4EE', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '32px 16px 60px' }}>
+    <div style={{ minHeight: '100vh', background: '#F7F4EE', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '88px 16px 60px' }}>
       <div style={{ maxWidth: 640, width: '100%', background: 'white', borderRadius: 20, padding: '36px 32px', boxShadow: '0 4px 40px rgba(28,26,46,0.08)' }}>
         <div style={{ marginBottom: 32 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
@@ -232,7 +232,7 @@ function QuizScreen({ page, totalPages, pageQuestions, answers, progress, pageAn
 
 function EmailScreen({ name, email, submitting, error, onName, onEmail, onSubmit }) {
   return (
-    <div style={{ minHeight: '100vh', background: '#1C1A2E', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+    <div style={{ minHeight: '100vh', background: '#1C1A2E', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '88px 20px 40px' }}>
       <div style={{ maxWidth: 480, width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(184,164,216,0.2)', borderRadius: 20, padding: '48px 36px', textAlign: 'center' }}>
         <div style={{ fontSize: 36, marginBottom: 20 }}>✨</div>
         <h2 style={{ fontFamily: "'Sora', sans-serif", fontSize: 26, fontWeight: 800, color: '#FFFFFF', margin: '0 0 10px' }}>You&apos;re almost there.</h2>
@@ -259,7 +259,7 @@ function ResultsScreen({ name, results, scores }) {
   const isClose = (scores[primary.id] - scores[secondary.id]) <= 2
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F7F4EE', padding: '40px 16px 80px' }}>
+    <div style={{ minHeight: '100vh', background: '#F7F4EE', padding: '88px 16px 80px' }}>
       <div style={{ maxWidth: 640, margin: '0 auto' }}>
         <div style={{ background: '#1C1A2E', borderRadius: 20, padding: '40px 32px', textAlign: 'center', marginBottom: 16 }}>
           <p style={{ fontFamily: "'Sora', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>
