@@ -110,7 +110,7 @@ function InstagramFeed() {
         <RevealSection delay={0.1}>
           {/* LightWidget embed — replace the src URL with your own from lightwidget.com */}
           <iframe
-            src="https://cdn.lightwidget.com/widgets/904f90c9c642584881f0d70c45a82caf.html"
+            src="https://cdn.lightwidget.com/widgets/beea0f152f60516b92f5bbd4c40417cf.html"
             allowTransparency="true"
             className="lightwidget-widget w-full"
             style={{ border: 0, overflow: 'hidden', display: 'block' }}
