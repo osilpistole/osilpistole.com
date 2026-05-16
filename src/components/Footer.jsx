@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const navLinks = [
   { label: 'Home', to: '/' },
-  { label: 'Work With Me', to: '/work-with-me' },
+  { label: 'Work With Me', to: '/who-i-help' },
   { label: 'Speaking', to: '/speaking' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
