@@ -140,7 +140,7 @@ export const programs = [
     description: 'You don\'t need more information. You need clarity, a plan, and someone who can see what you can\'t see from inside it.\n\nThis is a focused 60-minute one-on-one prophetic strategy session with Osil — built for the builder, the entrepreneur, and the ministry leader who knows they\'re called to something significant and needs to know what to build, how to move, and what step is actually next.\n\nIn one hour you\'ll get prophetic insight, strategic clarity, and a concrete plan. Not generic advice — specific direction for your specific situation, from someone who has helped leaders build businesses, ministries, and movements that last.\n\nNormally $222. Right now $99. And the $99 doesn\'t disappear — every dollar is subtracted from whatever we decide to do together after this. So this session pays for itself before you even start.',
     price: '$99',
     priceNote: 'Limited time · Reg. $222',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&auto=format&fit=crop&q=80',
     includes: [
       '60-minute private Zoom session with Osil',
       'Pre-session intake form so the call starts focused',
