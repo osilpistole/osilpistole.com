@@ -153,7 +153,7 @@ export default function CoachingPage() {
               </div>
               <div className="rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-auto lg:h-96">
                 <img
-                  src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&auto=format&fit=crop&q=80"
+                  src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&auto=format&fit=crop&q=80"
                   alt="Strategy session"
                   className="w-full h-full object-cover opacity-60"
                 />
