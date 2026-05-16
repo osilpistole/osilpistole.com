@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import RevealSection from '../components/RevealSection'
 import PageCTA from '../components/PageCTA'
 
@@ -123,6 +124,14 @@ function InstagramFeed() {
 }
 
 export default function AboutPage() {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://cdn.lightwidget.com/widgets/lightwidget.js'
+    script.async = true
+    document.body.appendChild(script)
+    return () => { document.body.removeChild(script) }
+  }, [])
+
   return (
     <>
       {/* Hero — split: text left, photo right, full height */}
