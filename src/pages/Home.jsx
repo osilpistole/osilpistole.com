@@ -107,7 +107,7 @@ function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <ButtonPrimary to="/work-with-me">Work With Me</ButtonPrimary>
+            <ButtonPrimary to="/who-i-help">Work With Me</ButtonPrimary>
             <Link
               to="/contact"
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-sm font-semibold border-2 border-ink/30 text-ink/65 hover:border-ink/50 hover:text-ink hover:bg-ink/5 transition-all duration-300"
@@ -230,7 +230,7 @@ function HowIHelp() {
               <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-3">What I Do</p>
               <h2 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-tight">How I Help</h2>
             </div>
-            <Link to="/work-with-me" className="inline-flex items-center gap-2 text-ink/50 hover:text-ink text-sm font-semibold transition-colors group shrink-0">
+            <Link to="/who-i-help" className="inline-flex items-center gap-2 text-ink/50 hover:text-ink text-sm font-semibold transition-colors group shrink-0">
               See all services
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -316,7 +316,7 @@ function WhoIHelp() {
               People and teams who know they're made for more and are ready to move with clarity and conviction.
             </p>
             <div className="mt-10">
-              <ButtonPrimary to="/work-with-me">Work With Me</ButtonPrimary>
+              <ButtonPrimary to="/who-i-help">Work With Me</ButtonPrimary>
             </div>
           </RevealSection>
 
@@ -629,7 +629,7 @@ function FinalCTA() {
             Whether you need a speaker, consultant, mentor, or trainer — this is where clarity, strategy, and execution come together.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <ButtonPrimary to="/work-with-me">Work With Osil</ButtonPrimary>
+            <ButtonPrimary to="/who-i-help">Work With Osil</ButtonPrimary>
             <Link
               to="/contact"
               className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold border-2 border-white/20 text-white/70 hover:border-white/40 hover:text-white hover:bg-white/5 transition-all duration-300"
