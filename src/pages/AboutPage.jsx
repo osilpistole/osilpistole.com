@@ -109,14 +109,7 @@ function InstagramFeed() {
         </RevealSection>
 
         <RevealSection delay={0.1}>
-          {/* LightWidget embed — replace the src URL with your own from lightwidget.com */}
-          <iframe
-            src="https://cdn.lightwidget.com/widgets/beea0f152f60516b92f5bbd4c40417cf.html"
-            allowTransparency="true"
-            className="lightwidget-widget w-full"
-            style={{ border: 0, overflow: 'hidden', display: 'block' }}
-            title="Instagram feed"
-          />
+          <behold-widget feed-id="lMr5as9mzlqViGRbSmAJ"></behold-widget>
         </RevealSection>
       </div>
     </section>
@@ -126,10 +119,10 @@ function InstagramFeed() {
 export default function AboutPage() {
   useEffect(() => {
     const script = document.createElement('script')
-    script.src = 'https://cdn.lightwidget.com/widgets/lightwidget.js'
-    script.async = true
-    document.body.appendChild(script)
-    return () => { document.body.removeChild(script) }
+    script.type = 'module'
+    script.src = 'https://w.behold.so/widget.js'
+    document.head.appendChild(script)
+    return () => { document.head.removeChild(script) }
   }, [])
 
   return (
