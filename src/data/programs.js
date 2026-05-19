@@ -1,5 +1,13 @@
 export const freeResources = [
   {
+    slug: 'enneagram',
+    title: 'Enneagram for Business Quiz',
+    tagline: 'Discover your Enneagram type and wing — and what each one means for the business, ministry, or mentorship you are wired to build.',
+    icon: '🎯',
+    link: '/enneagram',
+    cta: 'Take the Quiz',
+  },
+  {
     slug: 'quiz',
     title: 'AI Build Quiz — What Should You Build First?',
     tagline: 'Answer 10–12 questions and get a personalized recommendation for your first course, mentorship, or workshop.',
