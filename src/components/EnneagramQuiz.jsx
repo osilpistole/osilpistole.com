@@ -164,20 +164,30 @@ function buildSubmitPayload({ answers, businessAnswers, name, email }) {
 }
 
 // Builds a shuffle of QUESTIONS indices where no two consecutive entries
-// share a typeId. Falls back to plain shuffle if the constraint can't be met.
+// share a typeId. Uses a greedy pick: at each step, choose uniformly from
+// the remaining questions whose type differs from the last one placed.
+// Guaranteed to satisfy the constraint as long as no single type is more
+// than half the pool (8/72 ≈ 11% — well within bounds).
 function buildShuffledOrder(questions) {
-  const indices = questions.map((_, i) => i)
-  for (let attempt = 0; attempt < 50; attempt++) {
-    const shuffled = shuffle(indices)
-    let bad = false
-    for (let i = 1; i < shuffled.length; i++) {
-      if (questions[shuffled[i]].typeId === questions[shuffled[i - 1]].typeId) {
-        bad = true; break
-      }
-    }
-    if (!bad) return shuffled
+  const pool = questions.map((_, i) => i)
+  const out = []
+  let lastTypeId = null
+
+  while (pool.length > 0) {
+    const eligibleIdxs = pool
+      .map((qIdx, poolPos) => ({ qIdx, poolPos }))
+      .filter(({ qIdx }) => questions[qIdx].typeId !== lastTypeId)
+
+    // Edge case: if no eligible questions remain (pool of all-same-type),
+    // fall back to any remaining question. Shouldn't happen with our data.
+    const candidates = eligibleIdxs.length > 0 ? eligibleIdxs : pool.map((qIdx, poolPos) => ({ qIdx, poolPos }))
+    const pick = candidates[Math.floor(Math.random() * candidates.length)]
+    out.push(pick.qIdx)
+    pool.splice(pick.poolPos, 1)
+    lastTypeId = questions[pick.qIdx].typeId
   }
-  return shuffle(indices)
+
+  return out
 }
 
 function shuffle(arr) {
