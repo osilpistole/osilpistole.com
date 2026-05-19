@@ -15,14 +15,30 @@ const RESPONSE_TOOL = {
   input_schema: {
     type: 'object',
     properties: {
-      whatToBuild:    { type: 'string', description: '1–2 sentence specific recommendation.' },
-      whyItFits:      { type: 'string', description: '2–3 sentences tying to type, wing, growth direction.' },
-      format:         { type: 'string', enum: ['1:1', 'Group', 'E-course', 'Membership', 'Workshop', 'Hybrid'] },
-      scale:          { type: 'string', enum: ['Intimate', 'Small group', 'Wider reach'] },
-      firstStep:      { type: 'string', description: 'One concrete action this week.' },
+      whatToBuild:    { type: 'string', description: '1–2 sentence specific recommendation for the PRIMARY pick.' },
+      whyItFits:      { type: 'string', description: '2–3 sentences tying the primary pick to type, wing, growth direction, and their business answers.' },
+      format:         { type: 'string', enum: ['1:1', 'Group', 'E-course', 'Membership', 'Workshop', 'Hybrid'], description: 'Format of the primary recommendation.' },
+      scale:          { type: 'string', enum: ['Intimate', 'Small group', 'Wider reach'], description: 'Scale of the primary recommendation.' },
+      priceRange:     { type: 'string', description: 'Suggested dollar range for the primary pick. Examples: "$497–$997", "$1,500–$3,000/mo", "$97". Use their income goal and audience size to calibrate.' },
+      firstStep:      { type: 'string', description: 'One concrete action they can take this week.' },
       watchOutFor:    { type: 'string', description: 'A shadow warning rooted in their stress direction.' },
+      alternatives:   {
+        type: 'array',
+        description: 'Exactly 2 lighter alternative builds they could also consider — pick different formats or price tiers from the primary recommendation. Keep these short.',
+        minItems: 2,
+        maxItems: 2,
+        items: {
+          type: 'object',
+          properties: {
+            whatToBuild: { type: 'string', description: 'Brief title + one-sentence description of this alternative.' },
+            format:      { type: 'string', enum: ['1:1', 'Group', 'E-course', 'Membership', 'Workshop', 'Hybrid'] },
+            priceRange:  { type: 'string', description: 'Suggested dollar range for this alternative.' },
+          },
+          required: ['whatToBuild', 'format', 'priceRange'],
+        },
+      },
     },
-    required: ['whatToBuild', 'whyItFits', 'format', 'scale', 'firstStep', 'watchOutFor'],
+    required: ['whatToBuild', 'whyItFits', 'format', 'scale', 'priceRange', 'firstStep', 'watchOutFor', 'alternatives'],
   },
 }
 
@@ -38,9 +54,13 @@ function buildSystemPrompt({ primaryType, wing, arrows, profile }) {
     `Their business style: ${profile.businessStyle}`,
     `When healthy, they move toward Type ${arrows.growth}. When stressed, they slip into Type ${arrows.stress}.`,
     '',
-    'Based on their type AND their business answers below, recommend ONE specific thing to build, the format and scale that fit their season, one concrete first step they can take this week, and one watch-out rooted in their stress direction.',
+    'Based on their type AND their business answers below, provide:',
+    '  1. ONE primary recommendation — what to build, format, scale, price range, why it fits, first step, and watch-out.',
+    '  2. EXACTLY 2 alternative builds at different formats and/or price tiers — keep these short.',
     '',
-    'Be specific. Avoid hedging. The recommendation should feel like it could only have been written for this person.',
+    'Price ranges should be realistic dollar amounts (e.g., "$297–$497", "$997–$2,000", "$1,500–$3,000/mo", "$5,000–$10,000"). Calibrate to their income goal AND audience size — someone with no audience should not be selling a $5,000 cohort yet.',
+    '',
+    'Be specific. Avoid hedging. The primary recommendation should feel like it could only have been written for this person. The alternatives should be genuinely different — not minor variations.',
     'Always use the send_recommendation tool to respond.',
   ].join('\n')
 }
@@ -81,7 +101,7 @@ async function generateRecommendation({ primaryType, wing, arrows, businessAnswe
 
   const data = await callClaude({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 800,
+    max_tokens: 1200,
     system: systemPrompt,
     messages: [{ role: 'user', content: userMessage }],
     tools: [RESPONSE_TOOL],
@@ -98,6 +118,16 @@ function buildRecRow(label, value) {
 }
 
 function buildEmailHtml({ name, primaryType, wing, recommendation, typeData, wingData, arrows }) {
+  const altsHtml = recommendation?.alternatives?.length
+    ? `<h3 style="font-family:Sora,sans-serif;font-size:16px;margin:28px 0 12px;">Two alternatives to consider</h3>
+       ${recommendation.alternatives.map((alt) => `
+         <div style="border-left:3px solid #F5C842;padding:10px 16px;margin:0 0 14px;background:#fffdf3;">
+           <p style="margin:0 0 4px;font-weight:bold;">${alt.whatToBuild}</p>
+           <p style="margin:0;font-size:13px;color:rgba(44,44,42,0.7);">${alt.format} · ${alt.priceRange}</p>
+         </div>
+       `).join('')}`
+    : ''
+
   const recHtml = recommendation
     ? `
       <h2 style="font-family:Sora,sans-serif;font-size:18px;margin:32px 0 12px;">Your personalized recommendation</h2>
@@ -105,8 +135,10 @@ function buildEmailHtml({ name, primaryType, wing, recommendation, typeData, win
       ${buildRecRow('Why this fits who you are', recommendation.whyItFits)}
       ${buildRecRow('Recommended format', recommendation.format)}
       ${buildRecRow('Scale that fits your season', recommendation.scale)}
+      ${buildRecRow('Suggested price range', recommendation.priceRange)}
       ${buildRecRow('Your first step this week', recommendation.firstStep)}
       ${buildRecRow('Watch out for', recommendation.watchOutFor)}
+      ${altsHtml}
     `
     : `<p><em>Your custom recommendation couldn't be generated this time — Osil will be in touch.</em></p>`
 

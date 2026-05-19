@@ -492,17 +492,31 @@ function RecommendationCard({ rec }) {
     ['Why this fits who you are', rec.whyItFits],
     ['Recommended format', rec.format],
     ['Scale that fits your season', rec.scale],
+    ['Suggested price range', rec.priceRange],
     ['Your first step this week', rec.firstStep],
     ['Watch out for', rec.watchOutFor],
   ]
   return (
     <div>
-      {rows.map(([label, value]) => (
-        <div key={label} style={{ marginBottom: 14 }}>
-          <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#a37e00', margin: '0 0 4px' }}>{label}</p>
-          <p style={{ ...prose, margin: 0 }}>{value}</p>
+      {rows.map(([label, value]) =>
+        value ? (
+          <div key={label} style={{ marginBottom: 14 }}>
+            <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#a37e00', margin: '0 0 4px' }}>{label}</p>
+            <p style={{ ...prose, margin: 0 }}>{value}</p>
+          </div>
+        ) : null
+      )}
+      {Array.isArray(rec.alternatives) && rec.alternatives.length > 0 && (
+        <div style={{ marginTop: 22, paddingTop: 18, borderTop: '1px solid rgba(245,200,66,0.4)' }}>
+          <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#a37e00', margin: '0 0 10px' }}>Two alternatives to consider</p>
+          {rec.alternatives.map((alt, i) => (
+            <div key={i} style={{ padding: '10px 14px', marginBottom: 10, background: 'rgba(255,255,255,0.6)', borderLeft: '3px solid #F5C842', borderRadius: 4 }}>
+              <p style={{ ...prose, margin: '0 0 4px', fontWeight: 600 }}>{alt.whatToBuild}</p>
+              <p style={{ fontSize: 13, color: 'rgba(44,44,42,0.65)', margin: 0 }}>{alt.format} · {alt.priceRange}</p>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   )
 }
