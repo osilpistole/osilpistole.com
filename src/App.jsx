@@ -20,6 +20,7 @@ import ProgramsPage from './pages/ProgramsPage'
 import ProductPage from './pages/ProductPage'
 import SpiritualGiftsPage from './pages/SpiritualGiftsPage'
 import FivefoldPage from './pages/FivefoldPage'
+import EnneagramPage from './pages/EnneagramPage'
 import QuizLandingPage from './pages/QuizLandingPage'
 import QuizChat from './components/QuizChat'
 import WhoIHelpPage from './pages/WhoIHelpPage'
@@ -47,6 +48,7 @@ function SiteLayout() {
           <Route path="/programs/:slug" element={<ProductPage />} />
           <Route path="/spiritual-gifts" element={<SpiritualGiftsPage />} />
           <Route path="/fivefold" element={<FivefoldPage />} />
+          <Route path="/enneagram" element={<EnneagramPage />} />
           <Route path="/quiz" element={<QuizLandingPage />} />
           <Route path="/who-i-help" element={<WhoIHelpPage />} />
         </Routes>
