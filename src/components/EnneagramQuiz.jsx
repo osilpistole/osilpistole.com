@@ -8,12 +8,14 @@
 import { useState, useMemo } from 'react'
 import { QUESTIONS, LIKERT_LABELS } from '../data/enneagram-questions.js'
 import { INTERSTITIALS } from '../data/enneagram-interstitials.js'
+import { TYPES, TYPE_WINGS } from '../data/enneagram-types.js'
 import {
   scoreAnswers,
   pickPrimaryType,
   detectWing,
   getArrows,
 } from '../lib/enneagram-scoring.js'
+import EnneagramArrowDiagram from './EnneagramArrowDiagram.jsx'
 
 const QUESTIONS_PER_ROUND = 9
 const TOTAL_ROUNDS = 8
@@ -137,7 +139,10 @@ export default function EnneagramQuiz() {
     )
   }
 
-  // Other screens added in later tasks
+  if (screen === 'results') {
+    return <ResultsScreen name={name} result={result} />
+  }
+
   return null
 }
 
@@ -363,4 +368,124 @@ const fieldLabel = {
 const inputStyle = {
   width: '100%', padding: '12px 14px', border: '1.5px solid rgba(44,44,42,0.2)',
   borderRadius: 8, fontSize: 16, fontFamily: 'inherit', color: '#2c2c2a',
+}
+
+function ResultsScreen({ name, result }) {
+  if (!result) return null
+  const { primaryType, wing, arrows, recommendation } = result
+  const typeKey = `${primaryType}w${wing}`
+  const typeData = TYPES[primaryType]
+  const wingData = TYPE_WINGS[typeKey]
+
+  return (
+    <article style={{ maxWidth: 760, margin: '0 auto', padding: '40px 24px 80px' }}>
+      <header style={{ textAlign: 'center', marginBottom: 40 }}>
+        <p style={labelEyebrow}>{name ? `${name}, your type is` : 'Your type'}</p>
+        <h1 style={{ ...pageHeading, fontSize: 42, marginBottom: 8 }}>
+          Type {primaryType}w{wing}
+        </h1>
+        <p style={{ fontSize: 20, color: 'rgba(44,44,42,0.75)', margin: 0 }}>{wingData.subtitle}</p>
+      </header>
+
+      <Section title="Who You Are At Your Core">
+        <p style={prose}>{wingData.coreDescription}</p>
+      </Section>
+
+      <Section title="Your Gifts in Business">
+        <ul style={bulletList}>{wingData.strengths.map((s, i) => <li key={i} style={bullet}>{s}</li>)}</ul>
+      </Section>
+
+      <Section title="Your Shadow Side to Watch">
+        <ul style={bulletList}>{wingData.blindSpots.map((s, i) => <li key={i} style={bullet}>{s}</li>)}</ul>
+      </Section>
+
+      <Section title="When You're Healthy">
+        <EnneagramArrowDiagram from={primaryType} to={arrows.growth} label="Growth direction" />
+        <p style={prose}>{typeData.growthParagraph}</p>
+      </Section>
+
+      <Section title="When You're Stressed">
+        <EnneagramArrowDiagram from={primaryType} to={arrows.stress} label="Stress direction" />
+        <p style={prose}>{typeData.stressParagraph}</p>
+      </Section>
+
+      <Section title="Your Personalized Build Recommendation" accent>
+        {recommendation ? (
+          <RecommendationCard rec={recommendation} />
+        ) : (
+          <p style={{ ...prose, fontStyle: 'italic' }}>
+            We couldn't generate your custom recommendation right now —
+            but your full results have been emailed to you and I'll be in touch.
+          </p>
+        )}
+      </Section>
+
+      <Section title="A Word For You">
+        <blockquote style={{ ...prose, fontStyle: 'italic', borderLeft: '3px solid #F5C842', paddingLeft: 16, margin: 0 }}>
+          "{typeData.bibleVerse.text}"
+          <footer style={{ marginTop: 8, fontStyle: 'normal', fontSize: 14, color: 'rgba(44,44,42,0.6)' }}>
+            — {typeData.bibleVerse.reference}
+          </footer>
+        </blockquote>
+      </Section>
+
+      <div style={{ marginTop: 48, padding: '32px 24px', background: '#faf6ec', borderRadius: 12, textAlign: 'center' }}>
+        <p style={labelEyebrow}>Ready to go deeper?</p>
+        <h3 style={{ ...pageHeading, fontSize: 22, margin: '8px 0 16px' }}>Want to talk through this with me?</h3>
+        <a href="/coaching" style={primaryAnchor}>Book a Prophetic Strategy Session →</a>
+        <p style={{ ...body, marginTop: 28, fontSize: 14, color: 'rgba(44,44,42,0.6)' }}>
+          Haven't taken these yet? <a href="/spiritual-gifts">Spiritual Gifts Quiz</a> · <a href="/fivefold">5-Fold Quiz</a>
+        </p>
+      </div>
+
+      <p style={{ textAlign: 'center', marginTop: 40, fontSize: 14, color: 'rgba(44,44,42,0.55)' }}>
+        Your full results have been emailed to you.
+      </p>
+    </article>
+  )
+}
+
+function Section({ title, accent, children }) {
+  return (
+    <section
+      style={{
+        marginTop: 36, padding: accent ? '24px' : 0,
+        background: accent ? 'rgba(245,200,66,0.10)' : 'transparent',
+        border: accent ? '1px solid rgba(245,200,66,0.4)' : 'none',
+        borderRadius: accent ? 12 : 0,
+      }}
+    >
+      <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '0.02em', color: '#2c2c2a', margin: '0 0 12px' }}>{title}</h2>
+      {children}
+    </section>
+  )
+}
+
+function RecommendationCard({ rec }) {
+  const rows = [
+    ['What to build', rec.whatToBuild],
+    ['Why this fits who you are', rec.whyItFits],
+    ['Recommended format', rec.format],
+    ['Scale that fits your season', rec.scale],
+    ['Your first step this week', rec.firstStep],
+    ['Watch out for', rec.watchOutFor],
+  ]
+  return (
+    <div>
+      {rows.map(([label, value]) => (
+        <div key={label} style={{ marginBottom: 14 }}>
+          <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#a37e00', margin: '0 0 4px' }}>{label}</p>
+          <p style={{ ...prose, margin: 0 }}>{value}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+const prose = { fontSize: 16, lineHeight: 1.65, color: '#2c2c2a', margin: 0 }
+const bulletList = { paddingLeft: 20, margin: 0 }
+const bullet = { ...prose, marginBottom: 6 }
+const primaryAnchor = {
+  display: 'inline-block', background: '#2c2c2a', color: '#fff', padding: '12px 24px',
+  borderRadius: 8, fontWeight: 700, fontFamily: "'Sora', sans-serif", fontSize: 16, textDecoration: 'none',
 }
