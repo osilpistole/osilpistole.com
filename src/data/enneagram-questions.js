@@ -48,7 +48,7 @@ export const QUESTIONS = [
   // Type 4 — The Individualist
   { typeId: 4, text: 'I feel like there is something different about me that other people do not quite get.' },
   { typeId: 4, text: 'I am drawn to what is emotionally rich, beautiful, or melancholy — not the surface stuff.' },
-  { typeId: 4, text: 'I often want what I do not have, and feel ordinary about what I do have.' },
+  { typeId: 4, text: 'I am often more drawn to what is missing from my life than to what I already have.' },
   { typeId: 4, text: 'My moods can swing strongly, and I follow them rather than fight them.' },
   { typeId: 4, text: 'I want my life and work to express who I really am — not be generic.' },
   { typeId: 4, text: 'I sometimes feel envious of other people whose lives look easier than mine.' },
@@ -69,11 +69,11 @@ export const QUESTIONS = [
   { typeId: 6, text: 'I am always running scenarios in my head — what could go wrong, what to plan for.' },
   { typeId: 6, text: 'I am deeply loyal to the people and causes I commit to.' },
   { typeId: 6, text: 'I sometimes overthink decisions because I am looking for hidden problems.' },
-  { typeId: 6, text: 'I trust people slowly, but once I trust you, I really show up.' },
+  { typeId: 6, text: 'When I commit to a person or a cause, my loyalty runs deep.' },
   { typeId: 6, text: 'Authority is complicated for me — I respect it, then I question it.' },
   { typeId: 6, text: 'I find it hard to feel settled without a backup plan.' },
   { typeId: 6, text: 'I tend to assume something can go wrong and prepare for it just in case.' },
-  { typeId: 6, text: 'I want to feel like I have a team, a safe place, or a structure I can count on.' },
+  { typeId: 6, text: 'I feel safer when I have a group I belong to, or a clear system I can rely on.' },
 
   // Type 7 — The Enthusiast
   { typeId: 7, text: 'I have a lot of ideas going at once, and it is hard to pick just one.' },
@@ -92,7 +92,7 @@ export const QUESTIONS = [
   { typeId: 8, text: 'I am protective of the people I love — sometimes more than they want.' },
   { typeId: 8, text: 'I trust myself more than I trust experts, systems, or institutions.' },
   { typeId: 8, text: 'I have trouble showing the soft parts of me to people who have not earned it.' },
-  { typeId: 8, text: 'I would rather lose a fight than feel small or controlled.' },
+  { typeId: 8, text: 'I push back hard when I feel someone is trying to control me, even at a cost.' },
   { typeId: 8, text: 'I take up space when others will not, and people sometimes find it intense.' },
 
   // Type 9 — The Peacemaker
@@ -100,7 +100,7 @@ export const QUESTIONS = [
   { typeId: 9, text: 'I avoid conflict when I can, even at my own cost.' },
   { typeId: 9, text: 'I lose track of what I want when I am with people I am close to.' },
   { typeId: 9, text: 'I procrastinate the things that take real energy.' },
-  { typeId: 9, text: 'I am easygoing — most things are fine, until they are really not.' },
+  { typeId: 9, text: 'I come across as easygoing, but when I am pushed too far, the reaction surprises people.' },
   { typeId: 9, text: 'I prefer keeping the peace over being honest about how I actually feel.' },
   { typeId: 9, text: 'I sometimes wait for life to come to me instead of going after it.' },
   { typeId: 9, text: 'When I do get angry, it comes out sideways or much later.' },

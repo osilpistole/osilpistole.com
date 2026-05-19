@@ -4,3 +4,6 @@ dist
 *.local
 .vercel
 .superpowers/
+
+# External design reference clone — not part of this project
+awesome-design-md/

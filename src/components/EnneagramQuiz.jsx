@@ -38,8 +38,9 @@ const BUSINESS_QUESTIONS = [
   },
   {
     id: 'format',
-    label: 'What format do you naturally lean toward?',
+    label: 'What format do you naturally lean toward? (select all that apply)',
     options: ['1:1', 'Group', 'E-course', 'Membership', 'Live event', 'Not sure yet'],
+    multi: true,
   },
   {
     id: 'income',
@@ -112,7 +113,16 @@ export default function EnneagramQuiz() {
     return (
       <BusinessQuestionsScreen
         answers={businessAnswers}
-        onAnswer={(id, value) => setBusinessAnswers((prev) => ({ ...prev, [id]: value }))}
+        onAnswer={(id, value, multi) => {
+          setBusinessAnswers((prev) => {
+            if (!multi) return { ...prev, [id]: value }
+            const current = Array.isArray(prev[id]) ? prev[id] : []
+            const next = current.includes(value)
+              ? current.filter((v) => v !== value)
+              : [...current, value]
+            return { ...prev, [id]: next }
+          })
+        }}
         onSubmit={async () => {
           setSubmitting(true)
           setSubmitError('')
@@ -314,7 +324,11 @@ function EmailGateScreen({ name, email, onName, onEmail, onContinue }) {
 }
 
 function BusinessQuestionsScreen({ answers, onAnswer, onSubmit, submitting, submitError }) {
-  const allAnswered = BUSINESS_QUESTIONS.every((q) => answers[q.id])
+  const allAnswered = BUSINESS_QUESTIONS.every((q) => {
+    const v = answers[q.id]
+    if (q.multi) return Array.isArray(v) && v.length > 0
+    return v != null && v !== ''
+  })
   return (
     <section style={{ maxWidth: 720, margin: '0 auto', padding: '40px 24px' }}>
       <p style={labelEyebrow}>One last step</p>
@@ -327,9 +341,10 @@ function BusinessQuestionsScreen({ answers, onAnswer, onSubmit, submitting, subm
           <p style={{ fontSize: 17, fontWeight: 600, color: '#2c2c2a', margin: '0 0 10px' }}>{q.label}</p>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {q.options.map((opt) => {
-              const selected = answers[q.id] === opt
+              const v = answers[q.id]
+              const selected = q.multi ? Array.isArray(v) && v.includes(opt) : v === opt
               return (
-                <button key={opt} onClick={() => onAnswer(q.id, opt)} style={selected ? likertBtnSelected : likertBtn}>
+                <button key={opt} onClick={() => onAnswer(q.id, opt, q.multi)} style={selected ? likertBtnSelected : likertBtn}>
                   {opt}
                 </button>
               )

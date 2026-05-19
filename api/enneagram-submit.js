@@ -74,7 +74,7 @@ async function generateRecommendation({ primaryType, wing, arrows, businessAnswe
 
   const userMessage = [
     'Here are my answers about my current business season:',
-    ...Object.entries(businessAnswers).map(([k, v]) => `- ${k}: ${v}`),
+    ...Object.entries(businessAnswers).map(([k, v]) => `- ${k}: ${Array.isArray(v) ? v.join(', ') : v}`),
     '',
     'Please send me my personalized recommendation now.',
   ].join('\n')
