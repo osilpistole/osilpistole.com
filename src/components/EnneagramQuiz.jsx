@@ -47,6 +47,16 @@ const BUSINESS_QUESTIONS = [
     label: 'What\'s your primary income goal from this?',
     options: ['Side income', 'Supplement my main work', 'Replace my current income', 'Kingdom flexibility, no fixed number'],
   },
+  {
+    id: 'primaryGoal',
+    label: 'Right now, what\'s the bigger goal for this offer?',
+    options: [
+      'Revenue is the goal',
+      'Building my audience and platform is the goal',
+      'Mostly revenue, but I do need to grow my audience',
+      'Mostly platform-building — I have other income',
+    ],
+  },
 ]
 
 export default function EnneagramQuiz() {
