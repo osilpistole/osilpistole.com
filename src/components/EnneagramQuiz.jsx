@@ -223,9 +223,9 @@ function shuffle(arr) {
   return a
 }
 
-// To swap the hero photo, replace this URL with any Unsplash image ID.
-// Format: https://images.unsplash.com/photo-{ID}?w=1600&auto=format&fit=crop&q=80
-const HERO_IMAGE_URL = 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600&auto=format&fit=crop&q=80'
+// To swap the hero photo, replace this URL.
+// Local images live in /public/images/ and are referenced with a leading slash.
+const HERO_IMAGE_URL = '/images/enneagram-hero.jpg'
 
 function IntroScreen({ onStart }) {
   return (
@@ -239,11 +239,11 @@ function IntroScreen({ onStart }) {
           marginBottom: 32,
           backgroundImage: `url(${HERO_IMAGE_URL})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center 40%',
+          backgroundPosition: 'center 45%',
           boxShadow: '0 4px 24px rgba(44,44,42,0.12)',
         }}
         role="img"
-        aria-label="Silhouette of a person with arms raised at sunrise — symbolizing identity, freedom, and stepping into who you are made to be."
+        aria-label="Hands cradling a glowing network of people — what you build holds your people."
       />
       <p style={labelEyebrow}>Free assessment</p>
       <h1 style={pageHeading}>The Enneagram for Business Quiz</h1>
