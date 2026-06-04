@@ -230,20 +230,17 @@ const HERO_IMAGE_URL = '/images/enneagram-hero.jpg'
 function IntroScreen({ onStart }) {
   return (
     <section style={{ maxWidth: 760, margin: '0 auto', padding: '24px 24px 40px' }}>
-      <div
+      <img
+        src={HERO_IMAGE_URL}
+        alt="Hands cradling a glowing network of people — what you build holds your people."
         style={{
           width: '100%',
-          height: 'clamp(220px, 36vw, 360px)',
+          height: 'auto',
+          display: 'block',
           borderRadius: 16,
-          overflow: 'hidden',
           marginBottom: 32,
-          backgroundImage: `url(${HERO_IMAGE_URL})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 45%',
           boxShadow: '0 4px 24px rgba(44,44,42,0.12)',
         }}
-        role="img"
-        aria-label="Hands cradling a glowing network of people — what you build holds your people."
       />
       <p style={labelEyebrow}>Free assessment</p>
       <h1 style={pageHeading}>The Enneagram for Business Quiz</h1>
