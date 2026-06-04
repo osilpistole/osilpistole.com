@@ -526,7 +526,7 @@ function ResultsScreen({ name, email, consentToEmail, result }) {
       </div>
 
       <p style={{ textAlign: 'center', marginTop: 40, fontSize: 14, color: 'rgba(44,44,42,0.55)' }}>
-        Your full results have been emailed to you.
+        Your full results should land in your inbox within a few minutes. If you don&apos;t see them, check your spam folder.
       </p>
     </article>
   )

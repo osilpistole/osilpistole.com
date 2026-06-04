@@ -95,12 +95,12 @@ function InstagramFeed() {
               <h2 className="font-heading text-4xl font-bold text-ink leading-tight">Follow Along</h2>
             </div>
             <a
-              href="https://instagram.com/osil-pistole"
+              href="https://www.instagram.com/osil.pistole/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-ink/50 hover:text-ink text-sm font-semibold transition-colors group shrink-0"
             >
-              @osil-pistole
+              @osil.pistole
               <svg className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
               </svg>

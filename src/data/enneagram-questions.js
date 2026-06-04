@@ -69,7 +69,7 @@ export const QUESTIONS = [
   { typeId: 6, text: 'I am always running scenarios in my head — what could go wrong, what to plan for.' },
   { typeId: 6, text: 'I am deeply loyal to the people and causes I commit to.' },
   { typeId: 6, text: 'I sometimes overthink decisions because I am looking for hidden problems.' },
-  { typeId: 6, text: 'When I commit to a person or a cause, my loyalty runs deep.' },
+  { typeId: 6, text: 'I can second-guess a decision endlessly, even after I have made it.' },
   { typeId: 6, text: 'Authority is complicated for me — I respect it, then I question it.' },
   { typeId: 6, text: 'I find it hard to feel settled without a backup plan.' },
   { typeId: 6, text: 'I tend to assume something can go wrong and prepare for it just in case.' },
