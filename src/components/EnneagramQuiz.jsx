@@ -65,6 +65,7 @@ export default function EnneagramQuiz() {
   const [answers, setAnswers] = useState(() => Array(QUESTIONS.length).fill(null))
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [consentToEmail, setConsentToEmail] = useState(true)
   const [businessAnswers, setBusinessAnswers] = useState({})
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
@@ -112,8 +113,10 @@ export default function EnneagramQuiz() {
       <EmailGateScreen
         name={name}
         email={email}
+        consentToEmail={consentToEmail}
         onName={setName}
         onEmail={setEmail}
+        onConsent={setConsentToEmail}
         onContinue={() => setScreen('business')}
       />
     )
@@ -137,7 +140,7 @@ export default function EnneagramQuiz() {
           setSubmitting(true)
           setSubmitError('')
           try {
-            const payload = buildSubmitPayload({ answers, businessAnswers, name, email })
+            const payload = buildSubmitPayload({ answers, businessAnswers, name, email, consentToEmail })
             const resp = await fetch('/api/enneagram-submit', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -160,13 +163,13 @@ export default function EnneagramQuiz() {
   }
 
   if (screen === 'results') {
-    return <ResultsScreen name={name} result={result} />
+    return <ResultsScreen name={name} email={email} consentToEmail={consentToEmail} result={result} />
   }
 
   return null
 }
 
-function buildSubmitPayload({ answers, businessAnswers, name, email }) {
+function buildSubmitPayload({ answers, businessAnswers, name, email, consentToEmail }) {
   // Compute primary + wing on the client and send both raw answers AND derived
   // values. The server will trust the derived values; raw answers are sent so
   // we have an audit trail and can re-score server-side later if we want.
@@ -177,6 +180,7 @@ function buildSubmitPayload({ answers, businessAnswers, name, email }) {
   return {
     name,
     email,
+    consentToEmail,
     answers,
     businessAnswers,
     derived: { scores, primaryType: primary, wing, arrows, candidates, tieOccurred },
@@ -308,7 +312,7 @@ function InterstitialScreen({ interstitial, onContinue }) {
   )
 }
 
-function EmailGateScreen({ name, email, onName, onEmail, onContinue }) {
+function EmailGateScreen({ name, email, consentToEmail, onName, onEmail, onConsent, onContinue }) {
   const valid = name.trim() && /\S+@\S+\.\S+/.test(email.trim())
   return (
     <section style={{ maxWidth: 520, margin: '0 auto', padding: '60px 24px' }}>
@@ -322,10 +326,30 @@ function EmailGateScreen({ name, email, onName, onEmail, onContinue }) {
       <input type="text" value={name} onChange={(e) => onName(e.target.value)} style={inputStyle} />
       <label style={fieldLabel}>Email address</label>
       <input type="email" placeholder="you@example.com" value={email} onChange={(e) => onEmail(e.target.value)} style={inputStyle} />
+
+      <label
+        style={{
+          display: 'flex', alignItems: 'flex-start', gap: 10, marginTop: 18, padding: '12px 14px',
+          background: 'rgba(245,200,66,0.10)', border: '1px solid rgba(245,200,66,0.35)',
+          borderRadius: 8, cursor: 'pointer',
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={consentToEmail}
+          onChange={(e) => onConsent(e.target.checked)}
+          style={{ marginTop: 3, width: 18, height: 18, accentColor: '#F5C842', cursor: 'pointer' }}
+        />
+        <span style={{ fontSize: 14, lineHeight: 1.5, color: '#2c2c2a' }}>
+          Yes — I'd love to hear from Osil! Send me occasional notes with new free
+          resources, encouragement, and updates. (No spam, ever. Unsubscribe anytime.)
+        </span>
+      </label>
+
       <button
         onClick={onContinue}
         disabled={!valid}
-        style={{ ...primaryBtn, marginTop: 12, opacity: valid ? 1 : 0.5, cursor: valid ? 'pointer' : 'not-allowed' }}
+        style={{ ...primaryBtn, marginTop: 18, opacity: valid ? 1 : 0.5, cursor: valid ? 'pointer' : 'not-allowed' }}
       >
         Continue →
       </button>
@@ -405,12 +429,24 @@ const inputStyle = {
   borderRadius: 8, fontSize: 16, fontFamily: 'inherit', color: '#2c2c2a',
 }
 
-function ResultsScreen({ name, result }) {
+function ResultsScreen({ name, email, consentToEmail, result }) {
   if (!result) return null
   const { primaryType, wing, arrows, recommendation } = result
   const typeKey = `${primaryType}w${wing}`
   const typeData = TYPES[primaryType]
   const wingData = TYPE_WINGS[typeKey]
+
+  function handleStrategyClick(e) {
+    // Fire-and-forget tag in Kit, then let the link navigate.
+    // sendBeacon survives the navigation and doesn't block it.
+    if (consentToEmail && email && typeof navigator !== 'undefined' && navigator.sendBeacon) {
+      try {
+        const blob = new Blob([JSON.stringify({ email, primaryType, wing })], { type: 'application/json' })
+        navigator.sendBeacon('/api/enneagram-track-click', blob)
+      } catch {}
+    }
+    // do NOT preventDefault — let the anchor navigate normally
+  }
 
   return (
     <article style={{ maxWidth: 760, margin: '0 auto', padding: '40px 24px 80px' }}>
@@ -467,7 +503,7 @@ function ResultsScreen({ name, result }) {
       <div style={{ marginTop: 48, padding: '32px 24px', background: '#faf6ec', borderRadius: 12, textAlign: 'center' }}>
         <p style={labelEyebrow}>Ready to go deeper?</p>
         <h3 style={{ ...pageHeading, fontSize: 22, margin: '8px 0 16px' }}>Want to talk through this with me?</h3>
-        <a href="/coaching" style={primaryAnchor}>Book a Prophetic Strategy Session →</a>
+        <a href="/coaching" onClick={handleStrategyClick} style={primaryAnchor}>Book a Prophetic Strategy Session →</a>
         <p style={{ ...body, marginTop: 28, fontSize: 14, color: 'rgba(44,44,42,0.6)' }}>
           Haven't taken these yet? <a href="/spiritual-gifts">Spiritual Gifts Quiz</a> · <a href="/fivefold">5-Fold Quiz</a>
         </p>

@@ -203,17 +203,24 @@ async function subscribeToKit({ name, email }) {
   if (!process.env.KIT_API_KEY) throw new Error('Missing KIT_API_KEY')
   if (!process.env.KIT_QUIZ_FORM_ID_Enneagram) throw new Error('Missing KIT_QUIZ_FORM_ID_Enneagram')
   const formId = process.env.KIT_QUIZ_FORM_ID_Enneagram
+
+  // Optional: pass tag IDs so the new subscriber is automatically tagged.
+  // KIT_TAG_ID_Enneagram_Taker is a numeric tag id from the Kit dashboard.
+  const tagId = process.env.KIT_TAG_ID_Enneagram_Taker
+  const body = { api_key: process.env.KIT_API_KEY, email, first_name: name }
+  if (tagId) body.tags = [Number(tagId)]
+
   const r = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ api_key: process.env.KIT_API_KEY, email, first_name: name }),
+    body: JSON.stringify(body),
   })
   if (!r.ok) throw new Error(`Kit ${r.status}: ${await r.text()}`)
 }
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
-  const { name, email, businessAnswers, derived } = req.body || {}
+  const { name, email, businessAnswers, derived, consentToEmail = true } = req.body || {}
   if (!name || !email || !businessAnswers || !derived) {
     return res.status(400).json({ error: 'Missing required fields' })
   }
@@ -238,10 +245,15 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error('enneagram-submit Resend error:', err.message)
   }
-  try {
-    await subscribeToKit({ name, email })
-  } catch (err) {
-    console.error('enneagram-submit Kit error:', err.message)
+  // Only subscribe to Kit if the user opted in via the consent checkbox
+  if (consentToEmail) {
+    try {
+      await subscribeToKit({ name, email })
+    } catch (err) {
+      console.error('enneagram-submit Kit error:', err.message)
+    }
+  } else {
+    console.log('enneagram-submit: skipping Kit subscribe — user did not consent')
   }
 
   return res.status(200).json({ primaryType, wing, arrows, recommendation, aiFailed })
