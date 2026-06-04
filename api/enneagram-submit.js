@@ -203,19 +203,33 @@ async function subscribeToKit({ name, email }) {
   if (!process.env.KIT_API_KEY) throw new Error('Missing KIT_API_KEY')
   if (!process.env.KIT_QUIZ_FORM_ID_Enneagram) throw new Error('Missing KIT_QUIZ_FORM_ID_Enneagram')
   const formId = process.env.KIT_QUIZ_FORM_ID_Enneagram
+  const apiKey = process.env.KIT_API_KEY
 
-  // Optional: pass tag IDs so the new subscriber is automatically tagged.
-  // KIT_TAG_ID_Enneagram_Taker is a numeric tag id from the Kit dashboard.
-  const tagId = process.env.KIT_TAG_ID_Enneagram_Taker
-  const body = { api_key: process.env.KIT_API_KEY, email, first_name: name }
-  if (tagId) body.tags = [Number(tagId)]
-
-  const r = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
+  // Step 1: Subscribe to the form. The form-subscribe endpoint's `tags`
+  // parameter is unreliable in practice — sometimes silently drops the
+  // tag. So we do tagging as a separate call below.
+  const formResp = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ api_key: apiKey, email, first_name: name }),
   })
-  if (!r.ok) throw new Error(`Kit ${r.status}: ${await r.text()}`)
+  if (!formResp.ok) throw new Error(`Kit form-subscribe ${formResp.status}: ${await formResp.text()}`)
+
+  // Step 2: Add the "Enneagram Quiz Taker" tag separately, using the
+  // tags/{id}/subscribe endpoint (which is reliable — same pattern the
+  // strategy-session-click endpoint uses).
+  const tagId = process.env.KIT_TAG_ID_Enneagram_Taker
+  if (tagId) {
+    const tagResp = await fetch(`https://api.convertkit.com/v3/tags/${tagId}/subscribe`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ api_key: apiKey, email, first_name: name }),
+    })
+    if (!tagResp.ok) {
+      // Don't fail the whole flow if just the tag fails — log and move on.
+      console.error('enneagram-submit Kit tag error:', tagResp.status, await tagResp.text())
+    }
+  }
 }
 
 export default async function handler(req, res) {
