@@ -223,9 +223,28 @@ function shuffle(arr) {
   return a
 }
 
+// To swap the hero photo, replace this URL with any Unsplash image ID.
+// Format: https://images.unsplash.com/photo-{ID}?w=1600&auto=format&fit=crop&q=80
+const HERO_IMAGE_URL = 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1600&auto=format&fit=crop&q=80'
+
 function IntroScreen({ onStart }) {
   return (
-    <section style={{ maxWidth: 720, margin: '0 auto', padding: '40px 24px' }}>
+    <section style={{ maxWidth: 760, margin: '0 auto', padding: '24px 24px 40px' }}>
+      <div
+        style={{
+          width: '100%',
+          height: 'clamp(220px, 36vw, 360px)',
+          borderRadius: 16,
+          overflow: 'hidden',
+          marginBottom: 32,
+          backgroundImage: `url(${HERO_IMAGE_URL})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
+          boxShadow: '0 4px 24px rgba(44,44,42,0.12)',
+        }}
+        role="img"
+        aria-label="Silhouette of a person with arms raised at sunrise — symbolizing identity, freedom, and stepping into who you are made to be."
+      />
       <p style={labelEyebrow}>Free assessment</p>
       <h1 style={pageHeading}>The Enneagram for Business Quiz</h1>
       <p style={lead}>
