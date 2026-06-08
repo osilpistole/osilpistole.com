@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import BackToTop from './components/BackToTop'
 import EmailSlideIn from './components/EmailSlideIn'
+import AICloneBubble from './components/AICloneBubble'
 import Home from './pages/Home'
 import WorkWithMe from './pages/WorkWithMe'
 import SpeakingPage from './pages/SpeakingPage'
@@ -24,6 +25,7 @@ import EnneagramPage from './pages/EnneagramPage'
 import QuizLandingPage from './pages/QuizLandingPage'
 import QuizChat from './components/QuizChat'
 import WhoIHelpPage from './pages/WhoIHelpPage'
+import AskOsilPage from './pages/AskOsilPage'
 
 function SiteLayout() {
   return (
@@ -51,11 +53,13 @@ function SiteLayout() {
           <Route path="/enneagram" element={<EnneagramPage />} />
           <Route path="/quiz" element={<QuizLandingPage />} />
           <Route path="/who-i-help" element={<WhoIHelpPage />} />
+          <Route path="/ask-osil" element={<AskOsilPage />} />
         </Routes>
       </main>
       <Footer />
       <BackToTop />
       <EmailSlideIn />
+      <AICloneBubble />
     </div>
   )
 }
