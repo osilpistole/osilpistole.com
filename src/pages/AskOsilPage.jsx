@@ -6,8 +6,8 @@ export default function AskOsilPage() {
       <div className="mx-auto max-w-2xl text-center">
         <div className="mx-auto mb-10 h-40 w-40 overflow-hidden rounded-full border-4 border-white shadow-lg md:h-48 md:w-48">
           <img
-            src="/images/IMG_7290.JPG"
-            alt="Osil Pistole laughing on a vintage telephone"
+            src="/images/osil-cartoon.png"
+            alt="Osil Pistole — illustrated portrait, laughing on a vintage telephone"
             className="h-full w-full object-cover"
             loading="eager"
           />
