@@ -17,6 +17,7 @@ import SpeakingTopicsPage from './pages/SpeakingTopicsPage'
 import ConsultingServicesPage from './pages/ConsultingServicesPage'
 import MentoringAreasPage from './pages/MentoringAreasPage'
 import AwakenAndAlignPage from './pages/AwakenAndAlignPage'
+import PresencePage from './pages/PresencePage'
 import ProgramsPage from './pages/ProgramsPage'
 import ProductPage from './pages/ProductPage'
 import SpiritualGiftsPage from './pages/SpiritualGiftsPage'
@@ -46,6 +47,7 @@ function SiteLayout() {
           <Route path="/consulting/services" element={<ConsultingServicesPage />} />
           <Route path="/mentoring/areas" element={<MentoringAreasPage />} />
           <Route path="/awaken-and-align" element={<AwakenAndAlignPage />} />
+          <Route path="/presence" element={<PresencePage />} />
           <Route path="/programs" element={<ProgramsPage />} />
           <Route path="/programs/:slug" element={<ProductPage />} />
           <Route path="/spiritual-gifts" element={<SpiritualGiftsPage />} />

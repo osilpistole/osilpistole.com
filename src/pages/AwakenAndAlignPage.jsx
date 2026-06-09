@@ -209,6 +209,43 @@ export default function AwakenAndAlignPage() {
         </div>
       </section>
 
+      {/* ── PREVIEW: First 90 seconds of Session 1 ─────────────────── */}
+      <section className="py-24 md:py-32 px-6 lg:px-16 bg-white relative overflow-hidden">
+        <div className="max-w-4xl mx-auto">
+          <Reveal className="text-center mb-12">
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-sunrise/70 mb-5">Listen Now — No Card Needed</p>
+            <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light text-ink leading-[1.05] mb-5">
+              The first 90 seconds<br/>of Session 1.
+            </h2>
+            <p className="text-ink/55 text-[15px] leading-relaxed max-w-xl mx-auto">
+              Hearing God&apos;s Voice. Press play, sit still, and let it land. If the first 90 seconds do something in you — the rest will too.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <div className="relative rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(44,44,42,0.18)] border border-ink/8 bg-ink">
+              <div className="relative pb-[56.25%] h-0">
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/q5Jw3PaeaJ8?start=0&end=90&rel=0&modestbranding=1"
+                  title="Awaken &amp; Align — Session 1 Preview"
+                  loading="lazy"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.25} className="text-center mt-10">
+            <p className="text-ink/55 text-[13px] italic mb-6">
+              Want the full session — plus the other nine?
+            </p>
+            <BuyButton href={TC_SERIES_URL} variant="gold">Get the Series — $47</BuyButton>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── SESSIONS ──────────────────────────────────────────────── */}
       <section className="py-28 md:py-36 px-6 lg:px-16 bg-[#141311] relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent, rgba(245,200,66,0.22), transparent)' }} />
