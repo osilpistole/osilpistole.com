@@ -213,6 +213,7 @@ function Session1Preview() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <BuyButton href={TC_SERIES_URL} variant="gold">Get the Series — $47</BuyButton>
+              <BuyButton href={TC_BUNDLE_URL} variant="outlineDark">+ Journal · Bundle $67</BuyButton>
               <button
                 type="button"
                 onClick={restart}
@@ -404,7 +405,11 @@ export default function AwakenAndAlignPage() {
           </Reveal>
 
           <Reveal delay={0.35} className="text-center mt-12">
-            <BuyButton href={TC_SERIES_URL} variant="gold">Get the Full Series — $47</BuyButton>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <BuyButton href={TC_SERIES_URL} variant="gold">Get the Full Series — $47</BuyButton>
+              <BuyButton href={TC_BUNDLE_URL} variant="outlineLight">+ Journal · Bundle $67</BuyButton>
+            </div>
+            <p className="text-ink/35 text-[11px] mt-3">Bundle saves $7 vs buying separately.</p>
           </Reveal>
         </div>
       </section>
@@ -425,8 +430,9 @@ export default function AwakenAndAlignPage() {
               <p>You&apos;re not making it up. You&apos;re missing a quiet, practiced rhythm of sitting with God and learning to recognize His voice — not as a once-in-a-while experience, but as a way of living.</p>
               <p className="text-ink font-medium">Awaken and Align is ten guided meditations to clear the noise, tune your spirit, and move forward with the clarity and confidence that only comes from hearing God for yourself.</p>
             </div>
-            <div className="mt-10">
+            <div className="mt-10 flex flex-wrap gap-3">
               <BuyButton href={TC_SERIES_URL} variant="gold">Start Your Journey — $47</BuyButton>
+              <BuyButton href={TC_BUNDLE_URL} variant="outlineLight">+ Journal · Bundle $67</BuyButton>
             </div>
           </Reveal>
 
@@ -491,7 +497,11 @@ export default function AwakenAndAlignPage() {
           </div>
 
           <Reveal delay={0.2} className="text-center mt-12">
-            <BuyButton href={TC_SERIES_URL} variant="gold">Get the Full Series — $47</BuyButton>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <BuyButton href={TC_SERIES_URL} variant="gold">Get the Full Series — $47</BuyButton>
+              <BuyButton href={TC_BUNDLE_URL} variant="outlineDark">+ Journal · Bundle $67</BuyButton>
+            </div>
+            <p className="text-white/30 text-[11px] mt-3">Bundle saves $7 vs buying separately.</p>
           </Reveal>
 
         </div>
@@ -730,12 +740,11 @@ export default function AwakenAndAlignPage() {
             <p className="text-white/32 text-[15px] leading-[1.75] max-w-md mx-auto mb-12">
               One quiet hour with God can change the next year of your life. Press play and find out.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-wrap gap-3 justify-center">
               <BuyButton href={TC_SERIES_URL} variant="gold">Get the Series — $47</BuyButton>
-              <a href="#preview" onClick={(e) => scrollToId('preview', e)} className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/14 text-white/55 hover:border-sunrise/50 hover:text-sunrise transition-all duration-300">
-                Hear the Sample
-              </a>
+              <BuyButton href={TC_BUNDLE_URL} variant="outlineDark">+ Journal · Bundle $67</BuyButton>
             </div>
+            <p className="text-white/30 text-[11px] mt-3 text-center">Bundle saves $7. <a href="#preview" onClick={(e) => scrollToId('preview', e)} className="underline underline-offset-2 hover:text-white/60">Hear the sample first →</a></p>
           </Reveal>
         </div>
       </section>
