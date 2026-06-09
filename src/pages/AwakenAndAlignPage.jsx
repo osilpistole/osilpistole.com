@@ -8,6 +8,14 @@ const PORTAL_URL     = 'https://members.osilpistole.com/login'
 // Same serene image as the /programs/awaken-and-align card.
 const HERO_IMG = 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=2400&auto=format&fit=crop&q=85'
 
+// Dark serene scene for the final-CTA background (silhouette mountains at dusk).
+const CTA_BG = 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=2400&auto=format&fit=crop&q=85'
+
+// Different ambient track than Presence (which uses Bethel Music). This is
+// the UPPERROOM instrumental that's already used inside the member portal
+// for Presence days 6-10 — fits the meditation/voice-of-God theme.
+const MUSIC_VIDEO_ID = 'wA_WPqz1U1A'
+
 const sessions = [
   { num: 1,  title: "Hearing God's Voice",               desc: "Open the door to a deeper conversation with God and learn to recognize the voice that's been speaking all along." },
   { num: 2,  title: "Breaking Free from Fear",            desc: "Name the fear holding you back and receive the peace and courage to take your next step anyway." },
@@ -22,12 +30,12 @@ const sessions = [
 ]
 
 const FLOATING_WORDS = [
-  { word: 'Clarity',   x: '12%', y: '22%', delay: '0s'   },
-  { word: 'Stillness', x: '78%', y: '18%', delay: '2.4s' },
-  { word: 'Calling',   x: '18%', y: '70%', delay: '4.8s' },
-  { word: 'Listen',    x: '82%', y: '68%', delay: '1.2s' },
-  { word: 'Peace',     x: '50%', y: '85%', delay: '3.6s' },
-  { word: 'Awaken',    x: '46%', y: '12%', delay: '6.0s' },
+  { word: 'Clarity',   x: '14%', y: '24%', delay: '0s'   },
+  { word: 'Stillness', x: '78%', y: '20%', delay: '2.4s' },
+  { word: 'Calling',   x: '20%', y: '74%', delay: '4.8s' },
+  { word: 'Listen',    x: '82%', y: '70%', delay: '1.2s' },
+  { word: 'Peace',     x: '50%', y: '88%', delay: '3.6s' },
+  { word: 'Awaken',    x: '48%', y: '14%', delay: '6.0s' },
 ]
 
 function useReveal(threshold = 0.1) {
@@ -56,6 +64,87 @@ function Reveal({ children, delay = 0, className = '' }) {
   )
 }
 
+/* Floating ambient music — auto-starts on first user interaction. */
+function AmbientMusic() {
+  const [open, setOpen] = useState(false)
+  const startedRef = useRef(false)
+  const iframeRef = useRef(null)
+
+  function send(func, args = []) {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func, args }),
+      '*'
+    )
+  }
+
+  useEffect(() => {
+    function start() {
+      if (startedRef.current) return
+      startedRef.current = true
+      send('playVideo')
+      setTimeout(() => send('setVolume', [40]), 350)
+      setOpen(true)
+      cleanup()
+    }
+    const events = ['click', 'touchstart', 'scroll', 'keydown']
+    function cleanup() {
+      events.forEach(ev => window.removeEventListener(ev, start))
+    }
+    events.forEach(ev => window.addEventListener(ev, start, { passive: true }))
+    return cleanup
+  }, [])
+
+  function toggle() {
+    if (!open) {
+      setOpen(true)
+      send('playVideo')
+      setTimeout(() => send('setVolume', [40]), 300)
+    } else {
+      send('pauseVideo')
+      setOpen(false)
+    }
+  }
+
+  return (
+    <>
+      <iframe
+        ref={iframeRef}
+        title="Ambient music"
+        aria-hidden="true"
+        src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=0&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1`}
+        allow="autoplay; encrypted-media"
+        style={{
+          position: 'fixed', right: 0, bottom: 0, width: 1, height: 1,
+          opacity: 0, pointerEvents: 'none', border: 0,
+        }}
+      />
+      <button
+        type="button"
+        onClick={toggle}
+        className="fixed left-6 z-40 group"
+        style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 1.5rem))' }}
+        aria-label={open ? 'Pause music' : 'Play ambient music'}
+      >
+        <span className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/92 backdrop-blur-md border border-ink/12 shadow-[0_8px_28px_rgba(44,44,42,0.10)] hover:bg-white transition-all">
+          <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-sunrise/24 group-hover:bg-sunrise/40 transition-colors">
+            {open ? (
+              <>
+                <span className="absolute inset-0 rounded-full border border-sunrise/45 animate-ping" />
+                <svg className="w-3 h-3 text-ink/80 relative" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>
+              </>
+            ) : (
+              <svg className="w-3.5 h-3.5 text-ink/80 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+            )}
+          </span>
+          <span className="font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-ink/65 leading-none">
+            {open ? 'Music On' : 'Play Music'}
+          </span>
+        </span>
+      </button>
+    </>
+  )
+}
+
 function BuyButton({ href, children, variant = 'gold', className = '' }) {
   const base = 'inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full transition-all duration-300 px-8 py-3.5 text-sm hover:-translate-y-0.5 active:translate-y-0'
   const variants = {
@@ -77,28 +166,30 @@ export default function AwakenAndAlignPage() {
   return (
     <div className="bg-parchment text-ink font-body overflow-x-hidden">
 
+      <AmbientMusic />
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500;1,600&display=swap');
         .aa-display { font-family: 'Cormorant Garamond', Georgia, serif; }
         @keyframes aa-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes aa-float {
-          0%   { opacity: 0; transform: translate(-50%, -50%) translateY(8px); }
-          25%  { opacity: 0.45; transform: translate(-50%, -50%) translateY(0); }
-          75%  { opacity: 0.45; transform: translate(-50%, -50%) translateY(-6px); }
-          100% { opacity: 0; transform: translate(-50%, -50%) translateY(-14px); }
+          0%   { opacity: 0; transform: translate(-50%, -50%) translateY(10px); }
+          25%  { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
+          75%  { opacity: 1; transform: translate(-50%, -50%) translateY(-6px); }
+          100% { opacity: 0; transform: translate(-50%, -50%) translateY(-16px); }
         }
         .aa-floatword {
           position: absolute;
           transform: translate(-50%, -50%);
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-style: italic;
-          font-weight: 300;
-          color: rgba(255,255,255,0.78);
-          text-shadow: 0 1px 24px rgba(0,0,0,0.25);
-          letter-spacing: 0.02em;
-          font-size: clamp(28px, 4vw, 56px);
+          font-family: 'Sora', system-ui, sans-serif;
+          font-weight: 200;
+          color: rgba(44, 44, 42, 0.08);
+          letter-spacing: 0.04em;
+          text-transform: lowercase;
+          font-size: clamp(72px, 12vw, 180px);
+          line-height: 1;
           opacity: 0;
-          animation: aa-float 7.2s ease-in-out infinite;
+          animation: aa-float 9s ease-in-out infinite;
           pointer-events: none;
           white-space: nowrap;
         }
@@ -109,7 +200,7 @@ export default function AwakenAndAlignPage() {
         .aa-u5 { opacity: 0; animation: aa-up 0.9s ease 1.35s forwards; }
       `}</style>
 
-      {/* ── HERO — soft landscape with floating words ──────────────── */}
+      {/* ── HERO — soft landscape (darkened) ───────────────────────── */}
       <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden">
         {/* Landscape backdrop */}
         <div
@@ -117,22 +208,11 @@ export default function AwakenAndAlignPage() {
           style={{ backgroundImage: `url("${HERO_IMG}")` }}
           aria-hidden="true"
         />
-        {/* Soft warm wash on top — keeps the landscape but mutes contrast */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(247,244,238,0.05) 0%, rgba(20,19,17,0.18) 55%, rgba(20,19,17,0.55) 100%)' }} />
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(60% 45% at 50% 38%, rgba(245,200,66,0.13) 0%, transparent 70%)' }} />
+        {/* Darker warm wash — keeps the landscape readable but lets text breathe */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(20,19,17,0.32) 0%, rgba(20,19,17,0.48) 55%, rgba(20,19,17,0.72) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(60% 45% at 50% 38%, rgba(245,200,66,0.12) 0%, transparent 70%)' }} />
         <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.035, backgroundImage: GRAIN }} />
 
-        {/* Translucent floating words */}
-        {FLOATING_WORDS.map((w, i) => (
-          <span
-            key={i}
-            className="aa-floatword"
-            style={{ left: w.x, top: w.y, animationDelay: w.delay }}
-            aria-hidden="true"
-          >
-            {w.word}
-          </span>
-        ))}
 
         {/* Hero content */}
         <div className="relative z-10 max-w-3xl mx-auto text-center px-6 pt-28 pb-24">
@@ -184,12 +264,33 @@ export default function AwakenAndAlignPage() {
         </div>
       </section>
 
-      {/* ── PREVIEW — moved up, second section ─────────────────────── */}
-      <section id="preview" className="py-24 md:py-32 px-6 lg:px-16 bg-parchment relative overflow-hidden">
+      {/* ── AMBIENT FLOATING WORDS — quiet watermark band ──────────── */}
+      <section className="relative bg-parchment overflow-hidden py-32 md:py-44">
+        <div className="absolute inset-0 pointer-events-none">
+          {FLOATING_WORDS.map((w, i) => (
+            <span
+              key={i}
+              className="aa-floatword"
+              style={{ left: w.x, top: w.y, animationDelay: w.delay }}
+              aria-hidden="true"
+            >
+              {w.word}
+            </span>
+          ))}
+        </div>
+        <div className="relative max-w-xl mx-auto text-center px-6">
+          <p className="aa-display italic text-ink/55 text-[clamp(20px,2.6vw,28px)] leading-relaxed">
+            Ten quiet sessions.<br/>One inner voice you&apos;ve been trying to hear.
+          </p>
+        </div>
+      </section>
+
+      {/* ── PREVIEW ────────────────────────────────────────────────── */}
+      <section id="preview" className="py-24 md:py-32 px-6 lg:px-16 bg-white relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(60% 40% at 50% 0%, rgba(245,200,66,0.10), transparent 70%)' }} />
         <div className="max-w-4xl mx-auto relative">
           <Reveal className="text-center mb-12">
-            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-sunrise/85 mb-5">A 90-Second Sample</p>
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-sunrise/85 mb-5">Sample</p>
             <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light italic text-ink leading-[1.05] mb-5">
               Press play. Sit still.<br/>Let it land.
             </h2>
@@ -528,10 +629,16 @@ export default function AwakenAndAlignPage() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ─────────────────────────────────────────────── */}
-      <section className="relative py-36 md:py-44 px-6 lg:px-16 bg-[#141311] overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 55% 55% at 50% 55%, rgba(245,200,66,0.1) 0%, transparent 70%)' }} />
-        <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent, rgba(245,200,66,0.2), transparent)' }} />
+      {/* ── FINAL CTA — dark serene photo backdrop ─────────────────── */}
+      <section className="relative py-36 md:py-44 px-6 lg:px-16 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url("${CTA_BG}")` }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(20,19,17,0.78) 0%, rgba(20,19,17,0.86) 50%, rgba(20,19,17,0.92) 100%)' }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 55% 55% at 50% 55%, rgba(245,200,66,0.12) 0%, transparent 70%)' }} />
+        <div className="absolute top-0 left-0 right-0 h-px pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent, rgba(245,200,66,0.25), transparent)' }} />
         <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.032, backgroundImage: GRAIN }} />
 
         <div className="relative max-w-3xl mx-auto text-center">

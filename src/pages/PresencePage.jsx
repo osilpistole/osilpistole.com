@@ -84,6 +84,7 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
 /* Floating ambient music toggle — Bethel Music, the actual Day 1 track */
 function AmbientMusic() {
   const [open, setOpen] = useState(false)
+  const startedRef = useRef(false)
   const iframeRef = useRef(null)
 
   function send(func, args = []) {
@@ -93,12 +94,30 @@ function AmbientMusic() {
     )
   }
 
+  // Browsers block autoplay-with-sound; trigger on the first user gesture
+  // (click, touch, scroll, keypress) so visitors don't need to find the button.
+  useEffect(() => {
+    function start() {
+      if (startedRef.current) return
+      startedRef.current = true
+      send('playVideo')
+      setTimeout(() => send('setVolume', [45]), 350)
+      setOpen(true)
+      cleanup()
+    }
+    const events = ['click', 'touchstart', 'scroll', 'keydown']
+    function cleanup() {
+      events.forEach(ev => window.removeEventListener(ev, start, { passive: true }))
+    }
+    events.forEach(ev => window.addEventListener(ev, start, { passive: true, once: false }))
+    return cleanup
+  }, [])
+
   function toggle() {
     if (!open) {
       setOpen(true)
-      // Trigger play from user gesture for iOS/desktop autoplay rules
       send('playVideo')
-      setTimeout(() => send('setVolume', [55]), 300)
+      setTimeout(() => send('setVolume', [45]), 300)
     } else {
       send('pauseVideo')
       setOpen(false)
@@ -214,7 +233,7 @@ function VersePreview() {
           ) : (
             <>
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              <span>Hear it in Osil&apos;s voice</span>
+              <span>Hear it spoken</span>
             </>
           )}
         </button>
@@ -254,8 +273,8 @@ function VersePreview() {
                 )}
               </button>
               <div className="min-w-0 flex-1">
-                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-ink/45 mb-0.5">Osil&apos;s Voice</p>
-                <p className="text-ink/70 text-sm">Day 1 — opening passage &amp; prompt</p>
+                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-ink/45 mb-0.5">Day 1 — Spoken</p>
+                <p className="text-ink/70 text-sm">Opening passage &amp; prompt</p>
               </div>
             </div>
           </div>
@@ -371,7 +390,7 @@ export default function PresencePage() {
               You Were Made to Hear.
             </h2>
             <p className="text-ink/55 text-[15px] max-w-lg mx-auto">
-              Read it slowly. Or hear it spoken in my voice. Either way — let it land.
+              Read it slowly. Or hear it spoken. Either way — let it land.
             </p>
           </Reveal>
 
