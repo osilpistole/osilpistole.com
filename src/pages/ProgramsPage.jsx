@@ -2,6 +2,15 @@ import { Link } from 'react-router-dom'
 import RevealSection from '../components/RevealSection'
 import { programs, freeResources, accentMap } from '../data/programs'
 
+// Override the generic /programs/:slug route for products that have
+// their own dedicated marketing landing page. Anything not listed here
+// falls through to /programs/:slug.
+const LANDING_PAGE = {
+  'awaken-and-align': '/awaken-and-align',
+  'bundle':           '/awaken-and-align', // bundle is sold prominently from the series page
+  'presence':         '/presence',
+}
+
 export default function ProgramsPage() {
   return (
     <>
@@ -85,11 +94,11 @@ export default function ProgramsPage() {
                       <p className="text-ink/70 text-sm leading-relaxed flex-1 mb-6">{program.tagline}</p>
 
                       <Link
-                        to={`/programs/${program.slug}`}
-                        aria-label={`Get Access — ${program.shortTitle}`}
+                        to={LANDING_PAGE[program.slug] ?? `/programs/${program.slug}`}
+                        aria-label={`Learn more — ${program.shortTitle}`}
                         className={`inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl text-sm font-bold transition-all duration-200 ${accent.bg} border ${accent.border} ${accent.text} hover:brightness-95 hover:-translate-y-0.5`}
                       >
-                        Get Access
+                        {LANDING_PAGE[program.slug] ? 'Learn More' : 'Get Access'}
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                         </svg>
