@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import BuyModal, { openBuyModal } from '../components/BuyModal.jsx'
 
 const TC_SERIES_URL  = 'https://osilpistole.thrivecart.com/awaken-and-align-meditation-series/'
 const TC_JOURNAL_URL = 'https://osilpistole.thrivecart.com/awaken-and-align-meditation-journal/'
@@ -64,11 +65,12 @@ function Reveal({ children, delay = 0, className = '' }) {
   )
 }
 
-/* Floating ambient music — auto-starts on first user interaction. */
-function AmbientMusic() {
-  const [open, setOpen] = useState(false)
-  const startedRef = useRef(false)
+/* Floating ambient music — starts muted (browser-allowed) then unmutes
+   on the first user interaction so it feels like autoplay. */
+function AmbientMusic({ accent = 'sunrise' }) {
+  const [unmuted, setUnmuted] = useState(false)
   const iframeRef = useRef(null)
+  const unmutedRef = useRef(false)
 
   function send(func, args = []) {
     iframeRef.current?.contentWindow?.postMessage(
@@ -77,13 +79,21 @@ function AmbientMusic() {
     )
   }
 
+  // Try muted autoplay on mount. Most browsers allow this without a gesture.
+  useEffect(() => {
+    const t = setTimeout(() => send('playVideo'), 800)
+    return () => clearTimeout(t)
+  }, [])
+
+  // Unmute on the first user gesture.
   useEffect(() => {
     function start() {
-      if (startedRef.current) return
-      startedRef.current = true
+      if (unmutedRef.current) return
+      unmutedRef.current = true
       send('playVideo')
-      setTimeout(() => send('setVolume', [40]), 350)
-      setOpen(true)
+      send('unMute')
+      setTimeout(() => send('setVolume', [40]), 200)
+      setUnmuted(true)
       cleanup()
     }
     const events = ['click', 'touchstart', 'scroll', 'keydown']
@@ -95,23 +105,30 @@ function AmbientMusic() {
   }, [])
 
   function toggle() {
-    if (!open) {
-      setOpen(true)
+    if (!unmuted) {
       send('playVideo')
-      setTimeout(() => send('setVolume', [40]), 300)
+      send('unMute')
+      setTimeout(() => send('setVolume', [40]), 200)
+      setUnmuted(true)
+      unmutedRef.current = true
     } else {
       send('pauseVideo')
-      setOpen(false)
+      setUnmuted(false)
+      unmutedRef.current = false
     }
   }
+
+  const accentBg = accent === 'morning' ? 'bg-morning/22 group-hover:bg-morning/35' : 'bg-sunrise/24 group-hover:bg-sunrise/40'
+  const accentRing = accent === 'morning' ? 'border-morning/40' : 'border-sunrise/45'
 
   return (
     <>
       <iframe
         ref={iframeRef}
         title="Ambient music"
+        tabIndex={-1}
         aria-hidden="true"
-        src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=0&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1`}
+        src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1&loop=1&playlist=${MUSIC_VIDEO_ID}`}
         allow="autoplay; encrypted-media"
         style={{
           position: 'fixed', right: 0, bottom: 0, width: 1, height: 1,
@@ -123,13 +140,13 @@ function AmbientMusic() {
         onClick={toggle}
         className="fixed left-6 z-40 group"
         style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 1.5rem))' }}
-        aria-label={open ? 'Pause music' : 'Play ambient music'}
+        aria-label={unmuted ? 'Pause music' : 'Play ambient music'}
       >
         <span className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/92 backdrop-blur-md border border-ink/12 shadow-[0_8px_28px_rgba(44,44,42,0.10)] hover:bg-white transition-all">
-          <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-sunrise/24 group-hover:bg-sunrise/40 transition-colors">
-            {open ? (
+          <span className={`relative flex items-center justify-center w-7 h-7 rounded-full transition-colors ${accentBg}`}>
+            {unmuted ? (
               <>
-                <span className="absolute inset-0 rounded-full border border-sunrise/45 animate-ping" />
+                <span className={`absolute inset-0 rounded-full border animate-ping ${accentRing}`} />
                 <svg className="w-3 h-3 text-ink/80 relative" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>
               </>
             ) : (
@@ -137,7 +154,7 @@ function AmbientMusic() {
             )}
           </span>
           <span className="font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-ink/65 leading-none">
-            {open ? 'Music On' : 'Play Music'}
+            {unmuted ? 'Music On' : 'Play Music'}
           </span>
         </span>
       </button>
@@ -145,8 +162,14 @@ function AmbientMusic() {
   )
 }
 
+function scrollToId(id, e) {
+  if (e) e.preventDefault()
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 function BuyButton({ href, children, variant = 'gold', className = '' }) {
-  const base = 'inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full transition-all duration-300 px-8 py-3.5 text-sm hover:-translate-y-0.5 active:translate-y-0'
+  const base = 'inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full transition-all duration-300 px-8 py-3.5 text-sm hover:-translate-y-0.5 active:translate-y-0 cursor-pointer'
   const variants = {
     gold: 'bg-sunrise text-ink shadow-[0_4px_24px_rgba(245,200,66,0.32)] hover:shadow-[0_8px_36px_rgba(245,200,66,0.5)] hover:bg-[#f0be2e]',
     outlineDark: 'border-2 border-white/22 text-white/75 hover:border-sunrise/70 hover:text-sunrise backdrop-blur-sm',
@@ -154,7 +177,11 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
     soft: 'bg-white/85 backdrop-blur-md text-ink border border-white/40 hover:bg-white shadow-[0_4px_18px_rgba(44,44,42,0.08)]',
   }
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${variants[variant]} ${className}`}>
+    <a
+      href={href}
+      onClick={(e) => { e.preventDefault(); openBuyModal(href) }}
+      className={`${base} ${variants[variant]} ${className}`}
+    >
       {children}
     </a>
   )
@@ -167,6 +194,7 @@ export default function AwakenAndAlignPage() {
     <div className="bg-parchment text-ink font-body overflow-x-hidden">
 
       <AmbientMusic />
+      <BuyModal />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500;1,600&display=swap');
@@ -183,10 +211,10 @@ export default function AwakenAndAlignPage() {
           transform: translate(-50%, -50%);
           font-family: 'Sora', system-ui, sans-serif;
           font-weight: 200;
-          color: rgba(44, 44, 42, 0.08);
-          letter-spacing: 0.04em;
+          color: rgba(44, 44, 42, 0.04);
+          letter-spacing: 0.05em;
           text-transform: lowercase;
-          font-size: clamp(72px, 12vw, 180px);
+          font-size: clamp(28px, 4.5vw, 64px);
           line-height: 1;
           opacity: 0;
           animation: aa-float 9s ease-in-out infinite;
@@ -234,7 +262,7 @@ export default function AwakenAndAlignPage() {
               Get the Series — $47
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
             </BuyButton>
-            <a href="#preview" className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/30 text-white/85 hover:border-white/60 hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
+            <a href="#preview" onClick={(e) => scrollToId('preview', e)} className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/30 text-white/85 hover:border-white/60 hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
               Listen to a Sample
             </a>
           </div>
@@ -245,13 +273,13 @@ export default function AwakenAndAlignPage() {
 
           {/* Three-option callout — series / journal / bundle */}
           <div className="aa-u5 mt-10 flex flex-wrap items-center justify-center gap-2.5 text-[11px]">
-            <a href="#pricing" className="px-4 py-1.5 rounded-full bg-white/12 backdrop-blur-sm border border-white/22 text-white/80 hover:bg-white/20 hover:border-white/40 transition-all">
+            <a href="#pricing" onClick={(e) => scrollToId('pricing', e)} className="px-4 py-1.5 rounded-full bg-white/12 backdrop-blur-sm border border-white/22 text-white/80 hover:bg-white/20 hover:border-white/40 transition-all">
               Series · <span className="font-semibold text-sunrise">$47</span>
             </a>
-            <a href="#pricing" className="px-4 py-1.5 rounded-full bg-white/12 backdrop-blur-sm border border-white/22 text-white/80 hover:bg-white/20 hover:border-white/40 transition-all">
+            <a href="#pricing" onClick={(e) => scrollToId('pricing', e)} className="px-4 py-1.5 rounded-full bg-white/12 backdrop-blur-sm border border-white/22 text-white/80 hover:bg-white/20 hover:border-white/40 transition-all">
               Journal · <span className="font-semibold text-sunrise">$27</span>
             </a>
-            <a href="#pricing" className="px-4 py-1.5 rounded-full bg-sunrise/20 backdrop-blur-sm border border-sunrise/55 text-white hover:bg-sunrise/30 hover:border-sunrise/85 transition-all">
+            <a href="#pricing" onClick={(e) => scrollToId('pricing', e)} className="px-4 py-1.5 rounded-full bg-sunrise/20 backdrop-blur-sm border border-sunrise/55 text-white hover:bg-sunrise/30 hover:border-sunrise/85 transition-all">
               Bundle · <span className="font-semibold text-sunrise">$67</span> <span className="opacity-65">— save $7</span>
             </a>
           </div>
@@ -265,7 +293,7 @@ export default function AwakenAndAlignPage() {
       </section>
 
       {/* ── AMBIENT FLOATING WORDS — quiet watermark band ──────────── */}
-      <section className="relative bg-parchment overflow-hidden py-32 md:py-44">
+      <section className="relative bg-parchment overflow-hidden py-20 md:py-28">
         <div className="absolute inset-0 pointer-events-none">
           {FLOATING_WORDS.map((w, i) => (
             <span
@@ -292,7 +320,7 @@ export default function AwakenAndAlignPage() {
           <Reveal className="text-center mb-12">
             <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-sunrise/85 mb-5">Sample</p>
             <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light italic text-ink leading-[1.05] mb-5">
-              Press play. Sit still.<br/>Let it land.
+              Press play.<br/>Breathe in.
             </h2>
             <p className="text-ink/55 text-[15px] leading-relaxed max-w-xl mx-auto">
               The opening of Session 1 — <span className="italic text-ink/75">Hearing God&apos;s Voice</span>. Ninety seconds is plenty to feel what this is.
@@ -331,11 +359,11 @@ export default function AwakenAndAlignPage() {
       </section>
 
       {/* ── THE PROMISE ───────────────────────────────────────────── */}
-      <section className="py-24 md:py-32 px-6 lg:px-16 bg-white">
+      <section className="py-16 md:py-20 px-6 lg:px-16 bg-white">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1fr] gap-20 items-center">
 
           <Reveal>
-            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-sunrise mb-8">You Are Called to More</p>
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-sunrise mb-8">You Were Created for More</p>
             <blockquote className="aa-display text-[clamp(28px,3.8vw,46px)] font-light italic text-ink leading-[1.22] mb-7">
               &ldquo;You feel it — the pull.<br />
               <span className="text-ink/35">But somewhere between<br />the call and the doing,<br />things get loud.&rdquo;</span>
@@ -653,7 +681,7 @@ export default function AwakenAndAlignPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <BuyButton href={TC_SERIES_URL} variant="gold">Get the Series — $47</BuyButton>
-              <a href="#preview" className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/14 text-white/55 hover:border-sunrise/50 hover:text-sunrise transition-all duration-300">
+              <a href="#preview" onClick={(e) => scrollToId('preview', e)} className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/14 text-white/55 hover:border-sunrise/50 hover:text-sunrise transition-all duration-300">
                 Hear the Sample
               </a>
             </div>

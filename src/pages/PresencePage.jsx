@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import BuyModal, { openBuyModal } from '../components/BuyModal.jsx'
 
 const TC_URL = 'https://osilpistole.thrivecart.com/presence/'
 const PORTAL_URL = 'https://members.osilpistole.com/login'
@@ -68,23 +69,28 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 function BuyButton({ href, children, variant = 'gold', className = '' }) {
-  const base = 'inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full transition-all duration-300 px-8 py-3.5 text-sm hover:-translate-y-0.5 active:translate-y-0'
+  const base = 'inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full transition-all duration-300 px-8 py-3.5 text-sm hover:-translate-y-0.5 active:translate-y-0 cursor-pointer'
   const variants = {
     gold: 'bg-sunrise text-ink shadow-[0_4px_24px_rgba(245,200,66,0.28)] hover:shadow-[0_8px_36px_rgba(245,200,66,0.45)] hover:bg-[#f0be2e]',
     outlineLight: 'border-2 border-ink/18 text-ink/70 hover:border-ink/35 hover:bg-ink/4',
     soft: 'bg-white/85 backdrop-blur-md text-ink border border-white/40 hover:bg-white shadow-[0_4px_18px_rgba(44,44,42,0.08)]',
   }
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${variants[variant]} ${className}`}>
+    <a
+      href={href}
+      onClick={(e) => { e.preventDefault(); openBuyModal(href) }}
+      className={`${base} ${variants[variant]} ${className}`}
+    >
       {children}
     </a>
   )
 }
 
-/* Floating ambient music toggle — Bethel Music, the actual Day 1 track */
+/* Floating ambient music — starts muted (browser-allowed) then unmutes
+   on the first user interaction so it feels like autoplay. */
 function AmbientMusic() {
-  const [open, setOpen] = useState(false)
-  const startedRef = useRef(false)
+  const [unmuted, setUnmuted] = useState(false)
+  const unmutedRef = useRef(false)
   const iframeRef = useRef(null)
 
   function send(func, args = []) {
@@ -94,80 +100,88 @@ function AmbientMusic() {
     )
   }
 
-  // Browsers block autoplay-with-sound; trigger on the first user gesture
-  // (click, touch, scroll, keypress) so visitors don't need to find the button.
+  useEffect(() => {
+    const t = setTimeout(() => send('playVideo'), 800)
+    return () => clearTimeout(t)
+  }, [])
+
   useEffect(() => {
     function start() {
-      if (startedRef.current) return
-      startedRef.current = true
+      if (unmutedRef.current) return
+      unmutedRef.current = true
       send('playVideo')
-      setTimeout(() => send('setVolume', [45]), 350)
-      setOpen(true)
+      send('unMute')
+      setTimeout(() => send('setVolume', [45]), 200)
+      setUnmuted(true)
       cleanup()
     }
     const events = ['click', 'touchstart', 'scroll', 'keydown']
     function cleanup() {
-      events.forEach(ev => window.removeEventListener(ev, start, { passive: true }))
+      events.forEach(ev => window.removeEventListener(ev, start))
     }
-    events.forEach(ev => window.addEventListener(ev, start, { passive: true, once: false }))
+    events.forEach(ev => window.addEventListener(ev, start, { passive: true }))
     return cleanup
   }, [])
 
   function toggle() {
-    if (!open) {
-      setOpen(true)
+    if (!unmuted) {
       send('playVideo')
-      setTimeout(() => send('setVolume', [45]), 300)
+      send('unMute')
+      setTimeout(() => send('setVolume', [45]), 200)
+      setUnmuted(true)
+      unmutedRef.current = true
     } else {
       send('pauseVideo')
-      setOpen(false)
+      setUnmuted(false)
+      unmutedRef.current = false
     }
   }
 
   return (
     <>
-      {/* Hidden iframe, always mounted so the API is ready when tapped */}
       <iframe
         ref={iframeRef}
         title="Ambient music"
+        tabIndex={-1}
         aria-hidden="true"
-        src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=0&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1`}
+        src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1&loop=1&playlist=${MUSIC_VIDEO_ID}`}
         allow="autoplay; encrypted-media"
         style={{
           position: 'fixed', right: 0, bottom: 0, width: 1, height: 1,
           opacity: 0, pointerEvents: 'none', border: 0,
         }}
       />
-
       <button
         type="button"
         onClick={toggle}
         className="fixed left-6 z-40 group"
         style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 1.5rem))' }}
-        aria-label={open ? 'Pause music' : 'Play ambient music'}
+        aria-label={unmuted ? 'Pause music' : 'Play ambient music'}
       >
         <span className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/92 backdrop-blur-md border border-ink/12 shadow-[0_8px_28px_rgba(44,44,42,0.10)] hover:bg-white transition-all">
           <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-morning/22 group-hover:bg-morning/35 transition-colors">
-            {open ? (
+            {unmuted ? (
               <>
                 <span className="absolute inset-0 rounded-full border border-morning/40 animate-ping" />
-                <svg className="w-3 h-3 text-ink/75 relative" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
-                </svg>
+                <svg className="w-3 h-3 text-ink/75 relative" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>
               </>
             ) : (
-              <svg className="w-3.5 h-3.5 text-ink/75 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+              <svg className="w-3.5 h-3.5 text-ink/75 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
             )}
           </span>
           <span className="font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-ink/65 leading-none">
-            {open ? 'Music On' : 'Play Music'}
+            {unmuted ? 'Music On' : 'Play Music'}
           </span>
         </span>
       </button>
     </>
   )
+}
+
+function scrollToId(id, e) {
+  if (e) e.preventDefault()
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 function VersePreview() {
@@ -302,6 +316,7 @@ export default function PresencePage() {
       `}</style>
 
       <AmbientMusic />
+      <BuyModal />
 
       {/* ── HERO — alpine lake at dawn, mystical and serene ────────── */}
       <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
@@ -334,7 +349,7 @@ export default function PresencePage() {
 
           <div className="pr-u5 flex flex-col sm:flex-row items-center justify-center gap-3">
             <BuyButton href={TC_URL} variant="gold">Start the 30 Days — $27</BuyButton>
-            <a href="#preview" className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/30 text-white/90 hover:border-white/55 hover:bg-white/10 backdrop-blur-sm transition-all">
+            <a href="#preview" onClick={(e) => scrollToId('preview', e)} className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/30 text-white/90 hover:border-white/55 hover:bg-white/10 backdrop-blur-sm transition-all">
               Read or listen to Day 1
             </a>
           </div>
@@ -390,7 +405,7 @@ export default function PresencePage() {
               You Were Made to Hear.
             </h2>
             <p className="text-ink/55 text-[15px] max-w-lg mx-auto">
-              Read it slowly. Or hear it spoken. Either way — let it land.
+              Read it slowly. Or hear it spoken. Stay there a moment.
             </p>
           </Reveal>
 
