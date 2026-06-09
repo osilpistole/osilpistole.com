@@ -35,77 +35,91 @@ export default function BuyModal() {
       onClick={() => setUrl(null)}
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(20, 19, 17, 0.78)',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
+        background: 'rgba(20, 19, 17, 0.62)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: 'clamp(0px, 4vw, 32px)',
-        animation: 'bm-fade-in 0.24s ease-out',
+        padding: 'clamp(0px, 5vw, 32px)',
+        animation: 'bm-fade-in 0.28s ease-out',
       }}
       aria-modal="true"
       role="dialog"
     >
       <style>{`
         @keyframes bm-fade-in { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes bm-zoom-in { from { opacity: 0; transform: translateY(14px) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes bm-zoom-in {
+          from { opacity: 0; transform: translateY(18px) scale(0.97); }
+          to   { opacity: 1; transform: translateY(0)    scale(1); }
+        }
       `}</style>
 
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
           position: 'relative',
-          width: 'min(820px, 100%)',
-          height: 'min(92vh, 1100px)',
+          width: 'min(540px, 100%)',
+          height: 'min(76vh, 760px)',
           background: '#FAFAFA',
-          borderRadius: 24,
+          borderRadius: 22,
           overflow: 'hidden',
-          boxShadow: '0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08)',
-          animation: 'bm-zoom-in 0.32s cubic-bezier(0.22, 1, 0.36, 1)',
+          boxShadow: '0 40px 100px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(245, 200, 66, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
+          animation: 'bm-zoom-in 0.36s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
-        {/* Header bar with close + open-in-new-tab fallback */}
+        {/* Top accent line */}
         <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: 48,
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 12px',
-          background: 'linear-gradient(180deg, rgba(20,19,17,0.85), rgba(20,19,17,0))',
-          zIndex: 2, pointerEvents: 'none',
-        }}>
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              pointerEvents: 'auto',
-              fontFamily: 'Sora, system-ui, sans-serif',
-              fontSize: 10, fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.22em',
-              color: 'rgba(255,255,255,0.7)',
-              padding: '6px 12px', borderRadius: 999,
-              background: 'rgba(255,255,255,0.10)',
-              backdropFilter: 'blur(8px)',
-              textDecoration: 'none',
-            }}
-          >
-            Open in new tab ↗
-          </a>
-          <button
-            type="button"
-            onClick={() => setUrl(null)}
-            aria-label="Close"
-            style={{
-              pointerEvents: 'auto',
-              width: 36, height: 36, borderRadius: 999,
-              background: 'rgba(255,255,255,0.14)',
-              backdropFilter: 'blur(8px)',
-              border: 0, cursor: 'pointer',
-              color: 'white', fontSize: 20, lineHeight: 1,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}
-          >
-            ×
-          </button>
-        </div>
+          position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+          background: 'linear-gradient(90deg, rgba(245,200,66,0.0), rgba(245,200,66,1) 50%, rgba(245,200,66,0.0))',
+          zIndex: 3, pointerEvents: 'none',
+        }} />
+
+        {/* Floating controls — small, refined */}
+        <button
+          type="button"
+          onClick={() => setUrl(null)}
+          aria-label="Close"
+          style={{
+            position: 'absolute', top: 12, right: 12, zIndex: 4,
+            width: 30, height: 30, borderRadius: 999,
+            background: 'rgba(255,255,255,0.94)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(44, 44, 42, 0.10)',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.18)',
+            cursor: 'pointer',
+            color: 'rgba(44, 44, 42, 0.75)',
+            fontSize: 18, lineHeight: 1, fontWeight: 300,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'transform 0.18s ease, color 0.18s ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.transform = 'rotate(90deg)'; e.currentTarget.style.color = 'rgba(44,44,42,1)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = 'rotate(0deg)';  e.currentTarget.style.color = 'rgba(44,44,42,0.75)' }}
+        >
+          ×
+        </button>
+
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            position: 'absolute', top: 14, left: 14, zIndex: 4,
+            fontFamily: 'Sora, system-ui, sans-serif',
+            fontSize: 9, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.24em',
+            color: 'rgba(44, 44, 42, 0.50)',
+            padding: '6px 11px', borderRadius: 999,
+            background: 'rgba(255, 255, 255, 0.85)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(44, 44, 42, 0.08)',
+            textDecoration: 'none',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.10)',
+            transition: 'color 0.18s ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(44,44,42,0.85)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(44,44,42,0.50)' }}
+        >
+          Open in tab ↗
+        </a>
 
         <iframe
           src={url}

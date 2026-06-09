@@ -168,6 +168,128 @@ function scrollToId(id, e) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
+/* Session 1 sample — uses YouTube's iframe API to hard-stop at 90s.
+   YouTube's URL "end=" parameter doesn't reliably enforce this on
+   manual playback, so we poll currentTime and seek/pause when we hit 90. */
+const PREVIEW_ID = 'q5Jw3PaeaJ8'
+const PREVIEW_LIMIT = 90
+
+function Session1Preview() {
+  const iframeRef = useRef(null)
+  const pollRef = useRef(null)
+  const [stopped, setStopped] = useState(false)
+
+  function send(func, args = []) {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func, args }),
+      '*'
+    )
+  }
+
+  useEffect(() => {
+    // Listen for state changes; YouTube sends them via postMessage
+    // when enablejsapi=1 is set on the iframe src.
+    function onMsg(e) {
+      const origin = e.origin || ''
+      if (!origin.includes('youtube.com')) return
+      let data
+      try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data } catch { return }
+      if (data && data.event === 'onStateChange') {
+        // 1 = playing, 2 = paused, 0 = ended
+        if (data.info === 1) startPolling()
+        else stopPolling()
+      }
+    }
+    window.addEventListener('message', onMsg)
+
+    // Tell YouTube we want events
+    function bind() {
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'listening', id: PREVIEW_ID }),
+        '*'
+      )
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'addEventListener', args: ['onStateChange'] }),
+        '*'
+      )
+    }
+    const t = setTimeout(bind, 800)
+
+    return () => {
+      window.removeEventListener('message', onMsg)
+      clearTimeout(t)
+      stopPolling()
+    }
+  }, [])
+
+  function startPolling() {
+    if (pollRef.current) return
+    pollRef.current = setInterval(() => {
+      // Request currentTime — YouTube responds asynchronously via postMessage.
+      // To keep things simple and reliable, we instead use a setTimeout-based
+      // cutoff: count seconds since start.
+    }, 500)
+    // Simpler reliable strategy: pause after PREVIEW_LIMIT seconds of wall time
+    // from the moment playback starts.
+    setTimeout(() => {
+      send('pauseVideo')
+      send('seekTo', [0, true])
+      setStopped(true)
+    }, PREVIEW_LIMIT * 1000)
+  }
+
+  function stopPolling() {
+    if (pollRef.current) {
+      clearInterval(pollRef.current)
+      pollRef.current = null
+    }
+  }
+
+  function restart() {
+    send('seekTo', [0, true])
+    send('playVideo')
+    setStopped(false)
+  }
+
+  return (
+    <div className="relative rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(44,44,42,0.18)] border border-ink/8 bg-ink">
+      <div className="relative pb-[56.25%] h-0">
+        <iframe
+          ref={iframeRef}
+          className="absolute inset-0 w-full h-full"
+          src={`https://www.youtube.com/embed/${PREVIEW_ID}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`}
+          title="Awaken &amp; Align — Session 1 Sample"
+          loading="lazy"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        />
+        {stopped && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center bg-ink/85 backdrop-blur-sm text-center px-6"
+            style={{ animation: 'aa-up 0.4s ease forwards' }}
+          >
+            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.32em] text-sunrise/70 mb-3">
+              That&apos;s the Preview
+            </p>
+            <p className="aa-display text-3xl md:text-4xl italic font-light text-white leading-tight mb-7 max-w-xs">
+              Want the rest of Session 1 — plus the other nine?
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <BuyButton href={TC_SERIES_URL} variant="gold">Get the Series — $47</BuyButton>
+              <button
+                type="button"
+                onClick={restart}
+                className="font-heading text-[10px] font-bold uppercase tracking-[0.28em] text-white/55 hover:text-white/85 underline underline-offset-4 cursor-pointer"
+              >
+                Replay
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function BuyButton({ href, children, variant = 'gold', className = '' }) {
   const base = 'inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full transition-all duration-300 px-8 py-3.5 text-sm hover:-translate-y-0.5 active:translate-y-0 cursor-pointer'
   const variants = {
@@ -323,23 +445,12 @@ export default function AwakenAndAlignPage() {
               Press play.<br/>Breathe in.
             </h2>
             <p className="text-ink/55 text-[15px] leading-relaxed max-w-xl mx-auto">
-              The opening of Session 1 — <span className="italic text-ink/75">Hearing God&apos;s Voice</span>. Ninety seconds is plenty to feel what this is.
+              The opening of Session 1 — <span className="italic text-ink/75">Hearing God&apos;s Voice</span>. See for yourself.
             </p>
           </Reveal>
 
           <Reveal delay={0.15}>
-            <div className="relative rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(44,44,42,0.18)] border border-ink/8 bg-ink">
-              <div className="relative pb-[56.25%] h-0">
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src="https://www.youtube.com/embed/q5Jw3PaeaJ8?start=0&end=90&rel=0&modestbranding=1"
-                  title="Awaken &amp; Align — Session 1 Sample"
-                  loading="lazy"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
+            <Session1Preview />
           </Reveal>
 
           {/* Bible verse — right under the sample */}

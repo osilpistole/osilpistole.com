@@ -368,7 +368,7 @@ export default function PresencePage() {
         <div className="max-w-5xl mx-auto relative">
           <Reveal className="text-center mb-14 max-w-2xl mx-auto">
             <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-5">From Presence</p>
-            <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.05] mb-6">
+            <h2 className="aa-display text-[clamp(28px,4.4vw,46px)] font-light leading-[1.15] mb-6 whitespace-nowrap">
               Everything you&apos;re reaching for<br/>comes from being here.
             </h2>
             <p className="text-ink/55 text-[15px] leading-relaxed">
@@ -541,7 +541,7 @@ export default function PresencePage() {
       </section>
 
       {/* ── CTA ─────────────────────────────────────────────────────── */}
-      <section className="px-6 lg:px-16 py-28 md:py-36 bg-[#141311] text-white relative overflow-hidden">
+      <section className="px-6 lg:px-16 py-28 md:py-36 bg-ink text-white relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(184,164,216,0.16), transparent 70%)' }} />
         <div className="max-w-2xl mx-auto text-center relative">
           <Reveal>
