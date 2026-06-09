@@ -101,24 +101,27 @@ export default function BuyModal() {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
+          title="Open in new tab"
+          aria-label="Open in new tab"
           style={{
             position: 'absolute', top: 14, left: 14, zIndex: 4,
-            fontFamily: 'Sora, system-ui, sans-serif',
-            fontSize: 9, fontWeight: 700,
-            textTransform: 'uppercase', letterSpacing: '0.24em',
-            color: 'rgba(44, 44, 42, 0.50)',
-            padding: '6px 11px', borderRadius: 999,
+            width: 26, height: 26, borderRadius: 999,
             background: 'rgba(255, 255, 255, 0.85)',
             backdropFilter: 'blur(8px)',
             border: '1px solid rgba(44, 44, 42, 0.08)',
-            textDecoration: 'none',
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.10)',
-            transition: 'color 0.18s ease',
+            textDecoration: 'none',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: 'rgba(44, 44, 42, 0.55)',
+            transition: 'color 0.18s ease, transform 0.18s ease',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(44,44,42,0.85)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(44,44,42,0.50)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(44,44,42,0.9)'; e.currentTarget.style.transform = 'translate(-1px, -1px)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(44,44,42,0.55)'; e.currentTarget.style.transform = 'translate(0, 0)' }}
         >
-          Open in tab ↗
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7" />
+            <path d="M9 7h8v8" />
+          </svg>
         </a>
 
         <iframe
