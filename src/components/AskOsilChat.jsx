@@ -69,7 +69,7 @@ function Typing() {
   )
 }
 
-export default function AskOsilChat() {
+export default function AskOsilChat({ fill = false, height = 'min(72vh, 640px)' } = {}) {
   const [messages, setMessages] = useState([{ role: 'assistant', content: GREETING }])
   const [input, setInput] = useState('')
   const [pending, setPending] = useState(false)
@@ -128,7 +128,14 @@ export default function AskOsilChat() {
   }
 
   return (
-    <div style={{
+    <div style={fill ? {
+      width: '100%', height: '100%',
+      borderRadius: 14,
+      background: 'transparent',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+    } : {
       width: '100%',
       maxWidth: 640,
       margin: '0 auto',
@@ -139,7 +146,7 @@ export default function AskOsilChat() {
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
-      height: 'min(72vh, 640px)',
+      height,
     }}>
       <style>{`
         @keyframes aoc-fade { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
