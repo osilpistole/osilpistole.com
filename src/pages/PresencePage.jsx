@@ -4,9 +4,23 @@ const TC_URL = 'https://osilpistole.thrivecart.com/presence/'
 const PORTAL_URL = 'https://members.osilpistole.com/login'
 const AUDIO_SAMPLE = '/audio/presence-day-1-preview.mp3'
 
+// Same alpine lake at dawn image used in the member-portal Presence hero.
+const HERO_IMG = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2400&q=88'
+
+// Day 1's ambient track on the member portal — Bethel Music (used for days 1-5).
+const MUSIC_VIDEO_ID = 'Xx1MjhzKcYw'
+const MUSIC_LABEL = 'Bethel Music'
+
 const VERSE_REF = 'John 10:27'
 const VERSE_TEXT = '"My sheep listen to my voice; I know them, and they follow me."'
 const LECTIO_INTRO = 'Read this verse slowly, two or three times. What word or phrase catches your attention? Write it down.'
+
+const FRUITS = [
+  { word: 'Wisdom',  desc: 'The clarity to know what to do and when.' },
+  { word: 'Clarity', desc: 'A quiet mind, not a louder one.' },
+  { word: 'Peace',   desc: 'The kind that doesn\'t need everything fixed first.' },
+  { word: 'Joy',     desc: 'Steady, not circumstantial.' },
+]
 
 const STEPS = [
   { name: 'Lectio',       eng: 'Read',     desc: 'Read the passage slowly. Out loud if you can. Notice what catches.' },
@@ -19,6 +33,7 @@ const STEPS = [
 const INCLUDED = [
   '30 days of curated Scripture — chosen to carry weight',
   'Each passage read aloud in Osil\'s voice — or read it yourself',
+  'Ambient music for every day to set the room',
   'Guided prompts for all five Lectio Divina steps every day',
   'Online journaling — write directly in the portal, saved automatically',
   'PDF download for any entry — passage, prompts, and your responses',
@@ -57,11 +72,82 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
   const variants = {
     gold: 'bg-sunrise text-ink shadow-[0_4px_24px_rgba(245,200,66,0.28)] hover:shadow-[0_8px_36px_rgba(245,200,66,0.45)] hover:bg-[#f0be2e]',
     outlineLight: 'border-2 border-ink/18 text-ink/70 hover:border-ink/35 hover:bg-ink/4',
+    soft: 'bg-white/85 backdrop-blur-md text-ink border border-white/40 hover:bg-white shadow-[0_4px_18px_rgba(44,44,42,0.08)]',
   }
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${variants[variant]} ${className}`}>
       {children}
     </a>
+  )
+}
+
+/* Floating ambient music toggle — Bethel Music, the actual Day 1 track */
+function AmbientMusic() {
+  const [open, setOpen] = useState(false)
+  const iframeRef = useRef(null)
+
+  function send(func, args = []) {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func, args }),
+      '*'
+    )
+  }
+
+  function toggle() {
+    if (!open) {
+      setOpen(true)
+      // Trigger play from user gesture for iOS/desktop autoplay rules
+      send('playVideo')
+      setTimeout(() => send('setVolume', [55]), 300)
+    } else {
+      send('pauseVideo')
+      setOpen(false)
+    }
+  }
+
+  return (
+    <>
+      {/* Hidden iframe, always mounted so the API is ready when tapped */}
+      <iframe
+        ref={iframeRef}
+        title="Ambient music"
+        aria-hidden="true"
+        src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=0&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1`}
+        allow="autoplay; encrypted-media"
+        style={{
+          position: 'fixed', right: 0, bottom: 0, width: 1, height: 1,
+          opacity: 0, pointerEvents: 'none', border: 0,
+        }}
+      />
+
+      <button
+        type="button"
+        onClick={toggle}
+        className="fixed left-6 z-40 group"
+        style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 1.5rem))' }}
+        aria-label={open ? 'Pause music' : 'Play ambient music'}
+      >
+        <span className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/92 backdrop-blur-md border border-ink/12 shadow-[0_8px_28px_rgba(44,44,42,0.10)] hover:bg-white transition-all">
+          <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-morning/22 group-hover:bg-morning/35 transition-colors">
+            {open ? (
+              <>
+                <span className="absolute inset-0 rounded-full border border-morning/40 animate-ping" />
+                <svg className="w-3 h-3 text-ink/75 relative" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+                </svg>
+              </>
+            ) : (
+              <svg className="w-3.5 h-3.5 text-ink/75 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </span>
+          <span className="font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-ink/65 leading-none">
+            {open ? 'Music On' : 'Play Music'}
+          </span>
+        </span>
+      </button>
+    </>
   )
 }
 
@@ -99,7 +185,6 @@ function VersePreview() {
 
   return (
     <div className="bg-white rounded-3xl border border-ink/8 shadow-[0_24px_60px_rgba(44,44,42,0.08)] overflow-hidden">
-      {/* Mode toggle */}
       <div className="flex border-b border-ink/6 bg-parchment/50">
         <button
           type="button"
@@ -135,7 +220,6 @@ function VersePreview() {
         </button>
       </div>
 
-      {/* Content */}
       <div className="p-8 md:p-12">
         <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-4 text-center">
           Day 01 · {VERSE_REF}
@@ -189,31 +273,92 @@ export default function PresencePage() {
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500;1,600&display=swap');
         .aa-display { font-family: 'Cormorant Garamond', Georgia, serif; }
         @keyframes pr-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-        .pr-u1 { opacity: 0; animation: pr-fade 0.9s ease 0.2s forwards; }
-        .pr-u2 { opacity: 0; animation: pr-fade 0.9s ease 0.45s forwards; }
-        .pr-u3 { opacity: 0; animation: pr-fade 0.9s ease 0.7s forwards; }
-        .pr-u4 { opacity: 0; animation: pr-fade 0.9s ease 0.95s forwards; }
+        @keyframes pr-glow { 0%, 100% { opacity: 0.38; } 50% { opacity: 0.62; } }
+        .pr-u1 { opacity: 0; animation: pr-fade 0.95s ease 0.25s forwards; }
+        .pr-u2 { opacity: 0; animation: pr-fade 1.05s ease 0.5s forwards; }
+        .pr-u3 { opacity: 0; animation: pr-fade 0.95s ease 0.85s forwards; }
+        .pr-u4 { opacity: 0; animation: pr-fade 0.95s ease 1.1s forwards; }
+        .pr-u5 { opacity: 0; animation: pr-fade 0.95s ease 1.35s forwards; }
+        .pr-glow { animation: pr-glow 6s ease-in-out infinite; }
       `}</style>
 
-      {/* ── HERO ──────────────────────────────────────────────────── */}
-      <section className="relative px-6 lg:px-16 pt-32 md:pt-40 pb-20 md:pb-28">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(60% 60% at 50% 0%, rgba(184,164,216,0.15), transparent 70%)' }} />
-        <div className="max-w-3xl mx-auto text-center relative">
-          <p className="pr-u1 font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-ink/45 mb-6">
+      <AmbientMusic />
+
+      {/* ── HERO — alpine lake at dawn, mystical and serene ────────── */}
+      <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url("${HERO_IMG}")` }}
+          aria-hidden="true"
+        />
+        {/* Mystical washes */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(247,244,238,0.0) 0%, rgba(20,19,17,0.18) 45%, rgba(20,19,17,0.55) 100%)' }} />
+        <div className="absolute inset-0 pr-glow" style={{ background: 'radial-gradient(45% 35% at 50% 42%, rgba(184,164,216,0.30) 0%, transparent 70%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(80% 50% at 50% 100%, rgba(0,0,0,0.45), transparent 60%)' }} />
+
+        <div className="relative z-10 max-w-3xl mx-auto text-center px-6 py-32">
+          <p className="pr-u1 font-heading text-[10px] font-bold uppercase tracking-[0.38em] text-white/72 mb-7">
             A 30-Day Lectio Divina Journal
           </p>
-          <h1 className="pr-u2 aa-display text-6xl md:text-7xl lg:text-[88px] font-light leading-[0.95] mb-8 tracking-tight">
+
+          <h1 className="pr-u2 aa-display text-[clamp(72px,12vw,148px)] font-light leading-[0.94] tracking-tight text-white mb-10" style={{ textShadow: '0 2px 36px rgba(0,0,0,0.4)' }}>
             Presence
           </h1>
-          <p className="pr-u3 text-ink/65 text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-10">
-            30 days of Scripture, stillness, and five ancient steps that change how you hear God.
+
+          <p className="pr-u3 aa-display italic text-white/85 text-xl md:text-2xl leading-[1.4] max-w-xl mx-auto mb-4" style={{ textShadow: '0 1px 14px rgba(0,0,0,0.45)' }}>
+            Being present with God is the key to everything.
           </p>
-          <div className="pr-u4 flex flex-col sm:flex-row items-center justify-center gap-3">
+
+          <p className="pr-u4 text-white/72 text-[14px] md:text-base leading-relaxed max-w-md mx-auto mb-12" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.45)' }}>
+            Wisdom, clarity, peace, joy — they all come from one place. Thirty days of meeting Him there, morning or evening — or both.
+          </p>
+
+          <div className="pr-u5 flex flex-col sm:flex-row items-center justify-center gap-3">
             <BuyButton href={TC_URL} variant="gold">Start the 30 Days — $27</BuyButton>
-            <a href="#preview" className="text-sm text-ink/55 hover:text-ink underline underline-offset-4 transition-colors">
-              Read or listen to Day 1 first →
+            <a href="#preview" className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/30 text-white/90 hover:border-white/55 hover:bg-white/10 backdrop-blur-sm transition-all">
+              Read or listen to Day 1
             </a>
           </div>
+        </div>
+
+        {/* Scroll cue */}
+        <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 pointer-events-none">
+          <div className="w-px h-10 bg-gradient-to-b from-white/75 to-transparent" />
+          <span className="font-heading text-[8px] uppercase tracking-[0.3em] text-white/75">Scroll</span>
+        </div>
+      </section>
+
+      {/* ── FROM PRESENCE COMES EVERYTHING ─────────────────────────── */}
+      <section className="px-6 lg:px-16 py-24 md:py-32 bg-parchment relative">
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(60% 40% at 50% 0%, rgba(184,164,216,0.12), transparent 65%)' }} />
+        <div className="max-w-5xl mx-auto relative">
+          <Reveal className="text-center mb-14 max-w-2xl mx-auto">
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-5">From Presence</p>
+            <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.05] mb-6">
+              Everything you&apos;re reaching for<br/>comes from being here.
+            </h2>
+            <p className="text-ink/55 text-[15px] leading-relaxed">
+              Not a strategy. Not a stack of advice. The thing underneath all of it.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {FRUITS.map((f, i) => (
+              <Reveal key={f.word} delay={i * 0.07}>
+                <div className="bg-white border border-ink/8 rounded-2xl p-6 h-full hover:border-morning/40 hover:shadow-[0_12px_36px_rgba(44,44,42,0.07)] transition-all duration-300">
+                  <p className="aa-display text-3xl md:text-4xl font-light italic text-morning mb-3">{f.word}</p>
+                  <p className="text-ink/55 text-[13px] leading-relaxed">{f.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={0.3} className="text-center mt-14">
+            <p className="aa-display italic text-ink/65 text-[clamp(20px,2.6vw,28px)] leading-relaxed max-w-2xl mx-auto">
+              Start every day with Him.<br/>End every day with Him.<br/>
+              <span className="text-morning">Or both.</span>
+            </p>
+          </Reveal>
         </div>
       </section>
 
@@ -252,7 +397,7 @@ export default function PresencePage() {
               Built like a sanctuary,<br/>not a checklist.
             </h2>
             <p className="text-ink/55 text-[15px] leading-relaxed max-w-2xl mx-auto">
-              Your own private space inside the member portal. Thirty days laid out, beautifully formatted, and waiting for you.
+              Your own private space inside the member portal. Thirty days laid out — quiet, beautiful, waiting for you.
             </p>
           </Reveal>
 
@@ -367,10 +512,11 @@ export default function PresencePage() {
         <div className="max-w-2xl mx-auto text-center relative">
           <Reveal>
             <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.05] mb-6">
-              Thirty days of presence.<br/>One thing — done well.
+              Meet Him in the morning.<br/>Or at the end of the day.<br/>
+              <span className="text-morning">Or both.</span>
             </h2>
             <p className="text-white/55 text-[15px] leading-relaxed mb-10 max-w-lg mx-auto">
-              $27 once. Lifetime access. No subscription, no upsells. Just thirty days of showing up — and the rest of your life with the practice in your pocket.
+              $27 once. Lifetime access. No subscription, no upsells. Thirty days of being present — and the rest of your life with the practice.
             </p>
             <BuyButton href={TC_URL} variant="gold">Get Presence — $27</BuyButton>
             <p className="mt-6 text-white/35 text-[12px]">
