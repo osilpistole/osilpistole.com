@@ -2,7 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 
 const TC_URL = 'https://osilpistole.thrivecart.com/presence/'
 const PORTAL_URL = 'https://members.osilpistole.com/login'
-const DAY_1_AUDIO = 'https://jkvjcvziupcackdbozoa.supabase.co/storage/v1/object/public/presence-audio/day-01/female.mp3'
+const AUDIO_SAMPLE = '/audio/presence-day-1-preview.mp3'
+
+const VERSE_REF = 'John 10:27'
+const VERSE_TEXT = '"My sheep listen to my voice; I know them, and they follow me."'
+const LECTIO_INTRO = 'Read this verse slowly, two or three times. What word or phrase catches your attention? Write it down.'
 
 const STEPS = [
   { name: 'Lectio',       eng: 'Read',     desc: 'Read the passage slowly. Out loud if you can. Notice what catches.' },
@@ -14,7 +18,7 @@ const STEPS = [
 
 const INCLUDED = [
   '30 days of curated Scripture — chosen to carry weight',
-  'AI voice reading of each passage — choose a female or male voice',
+  'Each passage read aloud in Osil\'s voice — or read it yourself',
   'Guided prompts for all five Lectio Divina steps every day',
   'Online journaling — write directly in the portal, saved automatically',
   'PDF download for any entry — passage, prompts, and your responses',
@@ -61,13 +65,129 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
   )
 }
 
+function VersePreview() {
+  const audioRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [mode, setMode] = useState('read') // 'read' | 'listen'
+
+  useEffect(() => {
+    const a = audioRef.current
+    if (!a) return
+    const onPlay = () => setIsPlaying(true)
+    const onPause = () => setIsPlaying(false)
+    const onEnded = () => setIsPlaying(false)
+    a.addEventListener('play', onPlay)
+    a.addEventListener('pause', onPause)
+    a.addEventListener('ended', onEnded)
+    return () => {
+      a.removeEventListener('play', onPlay)
+      a.removeEventListener('pause', onPause)
+      a.removeEventListener('ended', onEnded)
+    }
+  }, [])
+
+  function togglePlay() {
+    const a = audioRef.current
+    if (!a) return
+    if (a.paused) {
+      a.play()
+      setMode('listen')
+    } else {
+      a.pause()
+    }
+  }
+
+  return (
+    <div className="bg-white rounded-3xl border border-ink/8 shadow-[0_24px_60px_rgba(44,44,42,0.08)] overflow-hidden">
+      {/* Mode toggle */}
+      <div className="flex border-b border-ink/6 bg-parchment/50">
+        <button
+          type="button"
+          onClick={() => setMode('read')}
+          className={`flex-1 py-4 px-6 font-heading text-[10px] font-bold uppercase tracking-[0.28em] transition-colors ${
+            mode === 'read'
+              ? 'bg-white text-ink border-b-2 border-morning -mb-px'
+              : 'text-ink/40 hover:text-ink/65'
+          }`}
+        >
+          Read it
+        </button>
+        <button
+          type="button"
+          onClick={togglePlay}
+          className={`flex-1 py-4 px-6 font-heading text-[10px] font-bold uppercase tracking-[0.28em] transition-colors flex items-center justify-center gap-2 ${
+            mode === 'listen' || isPlaying
+              ? 'bg-white text-ink border-b-2 border-morning -mb-px'
+              : 'text-ink/40 hover:text-ink/65'
+          }`}
+        >
+          {isPlaying ? (
+            <>
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+              <span>Pause</span>
+            </>
+          ) : (
+            <>
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <span>Hear it in Osil&apos;s voice</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="p-8 md:p-12">
+        <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-4 text-center">
+          Day 01 · {VERSE_REF}
+        </p>
+        <blockquote className="aa-display text-[clamp(24px,3.4vw,38px)] font-light italic text-ink leading-[1.35] text-center max-w-2xl mx-auto">
+          {VERSE_TEXT}
+        </blockquote>
+
+        {mode === 'read' && (
+          <div className="mt-10 pt-8 border-t border-ink/6 max-w-2xl mx-auto">
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.28em] text-ink/45 mb-3">Lectio — Read</p>
+            <p className="text-ink/60 text-[15px] leading-relaxed">
+              {LECTIO_INTRO}
+            </p>
+          </div>
+        )}
+
+        {(mode === 'listen' || isPlaying) && (
+          <div className="mt-8 max-w-md mx-auto">
+            <audio ref={audioRef} src={AUDIO_SAMPLE} preload="metadata" />
+            <div className="bg-parchment/60 border border-ink/6 rounded-2xl p-5 flex items-center gap-4">
+              <button
+                type="button"
+                onClick={togglePlay}
+                className="w-12 h-12 rounded-full bg-sunrise text-ink flex items-center justify-center shadow-[0_4px_18px_rgba(245,200,66,0.32)] hover:bg-[#f0be2e] transition-colors shrink-0"
+                aria-label={isPlaying ? 'Pause' : 'Play'}
+              >
+                {isPlaying ? (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+                ) : (
+                  <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                )}
+              </button>
+              <div className="min-w-0 flex-1">
+                <p className="font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-ink/45 mb-0.5">Osil&apos;s Voice</p>
+                <p className="text-ink/70 text-sm">Day 1 — opening passage &amp; prompt</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function PresencePage() {
   return (
     <div className="bg-parchment text-ink font-body overflow-x-hidden">
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500;1,600&display=swap');
-        .pr-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+        .aa-display { font-family: 'Cormorant Garamond', Georgia, serif; }
         @keyframes pr-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         .pr-u1 { opacity: 0; animation: pr-fade 0.9s ease 0.2s forwards; }
         .pr-u2 { opacity: 0; animation: pr-fade 0.9s ease 0.45s forwards; }
@@ -82,7 +202,7 @@ export default function PresencePage() {
           <p className="pr-u1 font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-ink/45 mb-6">
             A 30-Day Lectio Divina Journal
           </p>
-          <h1 className="pr-u2 pr-display text-6xl md:text-7xl lg:text-[88px] font-light leading-[0.95] mb-8 tracking-tight">
+          <h1 className="pr-u2 aa-display text-6xl md:text-7xl lg:text-[88px] font-light leading-[0.95] mb-8 tracking-tight">
             Presence
           </h1>
           <p className="pr-u3 text-ink/65 text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-10">
@@ -91,56 +211,99 @@ export default function PresencePage() {
           <div className="pr-u4 flex flex-col sm:flex-row items-center justify-center gap-3">
             <BuyButton href={TC_URL} variant="gold">Start the 30 Days — $27</BuyButton>
             <a href="#preview" className="text-sm text-ink/55 hover:text-ink underline underline-offset-4 transition-colors">
-              Or listen to Day 1 first →
+              Read or listen to Day 1 first →
             </a>
           </div>
         </div>
       </section>
 
-      {/* ── PREVIEW: Day 1 audio sample ─────────────────────────────── */}
-      <section id="preview" className="px-6 lg:px-16 py-24 md:py-28 bg-white">
+      {/* ── PREVIEW: Read or listen toggle ─────────────────────────── */}
+      <section id="preview" className="px-6 lg:px-16 py-20 md:py-28 bg-white">
         <div className="max-w-3xl mx-auto">
           <Reveal className="text-center mb-10">
-            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-ink/45 mb-5">Listen to Day 1</p>
-            <h2 className="pr-display text-4xl md:text-5xl font-light leading-[1.05] mb-4">
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-5">Day 1 — A Sample</p>
+            <h2 className="aa-display text-4xl md:text-5xl font-light leading-[1.05] mb-4">
               You Were Made to Hear.
             </h2>
-            <p className="text-ink/55 text-sm mb-2">John 10:27 — read aloud in the AI voice you can choose inside the journal.</p>
-            <p className="text-ink/45 text-[13px] italic">Press play, close your eyes, let it land.</p>
+            <p className="text-ink/55 text-[15px] max-w-lg mx-auto">
+              Read it slowly. Or hear it spoken in my voice. Either way — let it land.
+            </p>
           </Reveal>
 
           <Reveal delay={0.15}>
-            <div className="rounded-3xl border border-ink/8 bg-parchment p-6 md:p-8 shadow-[0_10px_40px_rgba(44,44,42,0.06)]">
-              <audio
-                controls
-                preload="metadata"
-                src={DAY_1_AUDIO}
-                className="w-full"
-                style={{ outline: 'none' }}
-              >
-                Your browser doesn&apos;t support audio. <a href={DAY_1_AUDIO}>Download the file</a>.
-              </audio>
-              <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-ink/35">
-                Day 01 · You Were Made to Hear · John 10:27
-              </p>
-            </div>
+            <VersePreview />
           </Reveal>
 
-          <Reveal delay={0.25} className="text-center mt-10">
+          <Reveal delay={0.25} className="text-center mt-12">
             <p className="text-ink/55 text-[13px] italic mb-5">
-              Want the rest of the 30 days?
+              That&apos;s one day. There are twenty-nine more.
             </p>
             <BuyButton href={TC_URL} variant="gold">Get Presence — $27</BuyButton>
           </Reveal>
         </div>
       </section>
 
-      {/* ── THE FIVE STEPS ─────────────────────────────────────────── */}
+      {/* ── INSIDE THE PORTAL — screenshots ─────────────────────────── */}
       <section className="px-6 lg:px-16 py-24 md:py-32 bg-parchment">
+        <div className="max-w-6xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-ink/45 mb-5">A Look Inside</p>
+            <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light text-ink leading-[1.05] mb-5">
+              Built like a sanctuary,<br/>not a checklist.
+            </h2>
+            <p className="text-ink/55 text-[15px] leading-relaxed max-w-2xl mx-auto">
+              Your own private space inside the member portal. Thirty days laid out, beautifully formatted, and waiting for you.
+            </p>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+            <Reveal delay={0.05}>
+              <div className="relative rounded-3xl overflow-hidden bg-white border border-ink/8 shadow-[0_24px_60px_rgba(44,44,42,0.12)]">
+                <img
+                  src="/images/presence-dashboard.jpg"
+                  alt="The Presence dashboard inside the member portal — 30 days laid out in a clean grid with serene mountain hero."
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center mt-5 font-heading text-[10px] font-bold uppercase tracking-[0.28em] text-ink/45">
+                The 30-Day Overview
+              </p>
+              <p className="text-center mt-2 text-ink/55 text-[13px] max-w-xs mx-auto leading-relaxed">
+                Every day at a glance. Mark them done as you go.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <div className="relative rounded-3xl overflow-hidden bg-white border border-ink/8 shadow-[0_24px_60px_rgba(44,44,42,0.12)]">
+                <img
+                  src="/images/presence-day1.jpg"
+                  alt="A single day inside Presence — passage at the top, audio player, then the five Lectio Divina steps with space to journal."
+                  className="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-center mt-5 font-heading text-[10px] font-bold uppercase tracking-[0.28em] text-ink/45">
+                Inside One Day
+              </p>
+              <p className="text-center mt-2 text-ink/55 text-[13px] max-w-xs mx-auto leading-relaxed">
+                Verse, audio, and all five Lectio Divina steps with space to write.
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.25} className="text-center mt-14">
+            <BuyButton href={TC_URL} variant="gold">Start the 30 Days — $27</BuyButton>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── THE FIVE STEPS ─────────────────────────────────────────── */}
+      <section className="px-6 lg:px-16 py-24 md:py-32 bg-white">
         <div className="max-w-5xl mx-auto">
           <Reveal className="text-center mb-16">
             <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-ink/45 mb-5">An Ancient Practice</p>
-            <h2 className="pr-display text-4xl md:text-5xl lg:text-6xl font-light text-ink leading-[1.05] mb-5">
+            <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light text-ink leading-[1.05] mb-5">
               Five steps. Slowed on purpose.
             </h2>
             <p className="text-ink/55 text-[15px] leading-relaxed max-w-2xl mx-auto">
@@ -151,11 +314,11 @@ export default function PresencePage() {
           <div className="grid md:grid-cols-2 gap-5">
             {STEPS.map((step, i) => (
               <Reveal key={i} delay={i * 0.07}>
-                <div className="bg-white border border-ink/8 rounded-2xl p-7 h-full hover:border-morning/40 hover:shadow-[0_12px_40px_rgba(44,44,42,0.07)] transition-all duration-300 group">
+                <div className="bg-parchment border border-ink/8 rounded-2xl p-7 h-full hover:border-morning/40 hover:shadow-[0_12px_40px_rgba(44,44,42,0.07)] transition-all duration-300">
                   <div className="flex items-baseline gap-4 mb-3">
-                    <span className="pr-display text-3xl font-light italic text-morning leading-none">0{i + 1}</span>
+                    <span className="aa-display text-3xl font-light italic text-morning leading-none">0{i + 1}</span>
                     <div>
-                      <p className="pr-display text-2xl font-medium text-ink leading-tight">{step.name}</p>
+                      <p className="aa-display text-2xl font-medium text-ink leading-tight">{step.name}</p>
                       <p className="text-[10px] uppercase tracking-[0.25em] text-ink/40 mt-1">{step.eng}</p>
                     </div>
                   </div>
@@ -168,11 +331,11 @@ export default function PresencePage() {
       </section>
 
       {/* ── WHAT YOU GET ────────────────────────────────────────────── */}
-      <section className="px-6 lg:px-16 py-24 md:py-32 bg-white">
+      <section className="px-6 lg:px-16 py-24 md:py-32 bg-parchment">
         <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
           <Reveal>
             <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-ink/45 mb-5">What&apos;s Inside</p>
-            <h2 className="pr-display text-4xl md:text-5xl font-light leading-[1.05] mb-6">
+            <h2 className="aa-display text-4xl md:text-5xl font-light leading-[1.05] mb-6">
               A real practice,<br/>built to last.
             </h2>
             <div className="space-y-4 text-ink/60 text-[15px] leading-relaxed">
@@ -188,7 +351,7 @@ export default function PresencePage() {
           <Reveal delay={0.15}>
             <ul className="space-y-4">
               {INCLUDED.map((item, i) => (
-                <li key={i} className="flex items-start gap-3 bg-parchment border border-ink/6 rounded-xl px-5 py-4">
+                <li key={i} className="flex items-start gap-3 bg-white border border-ink/6 rounded-xl px-5 py-4">
                   <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-morning flex-shrink-0" />
                   <span className="text-ink/75 text-[14px] leading-relaxed">{item}</span>
                 </li>
@@ -203,7 +366,7 @@ export default function PresencePage() {
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(184,164,216,0.16), transparent 70%)' }} />
         <div className="max-w-2xl mx-auto text-center relative">
           <Reveal>
-            <h2 className="pr-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.05] mb-6">
+            <h2 className="aa-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.05] mb-6">
               Thirty days of presence.<br/>One thing — done well.
             </h2>
             <p className="text-white/55 text-[15px] leading-relaxed mb-10 max-w-lg mx-auto">

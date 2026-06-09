@@ -162,6 +162,19 @@ export default function AwakenAndAlignPage() {
           <p className="aa-u5 mt-10 font-heading text-[9px] tracking-[0.36em] uppercase text-white/45">
             Instant access · Private member portal · Lifetime
           </p>
+
+          {/* Three-option callout — series / journal / bundle */}
+          <div className="aa-u5 mt-10 flex flex-wrap items-center justify-center gap-2.5 text-[11px]">
+            <a href="#pricing" className="px-4 py-1.5 rounded-full bg-white/12 backdrop-blur-sm border border-white/22 text-white/80 hover:bg-white/20 hover:border-white/40 transition-all">
+              Series · <span className="font-semibold text-sunrise">$47</span>
+            </a>
+            <a href="#pricing" className="px-4 py-1.5 rounded-full bg-white/12 backdrop-blur-sm border border-white/22 text-white/80 hover:bg-white/20 hover:border-white/40 transition-all">
+              Journal · <span className="font-semibold text-sunrise">$27</span>
+            </a>
+            <a href="#pricing" className="px-4 py-1.5 rounded-full bg-sunrise/20 backdrop-blur-sm border border-sunrise/55 text-white hover:bg-sunrise/30 hover:border-sunrise/85 transition-all">
+              Bundle · <span className="font-semibold text-sunrise">$67</span> <span className="opacity-65">— save $7</span>
+            </a>
+          </div>
         </div>
 
         {/* Scroll cue */}
@@ -425,7 +438,7 @@ export default function AwakenAndAlignPage() {
       </section>
 
       {/* ── PRICING ───────────────────────────────────────────────── */}
-      <section className="py-28 md:py-36 px-6 lg:px-16 bg-parchment">
+      <section id="pricing" className="py-28 md:py-36 px-6 lg:px-16 bg-parchment">
         <div className="max-w-5xl mx-auto">
 
           <Reveal className="text-center mb-16">
