@@ -1,4 +1,4 @@
-import AICloneWidget from '../components/AICloneWidget.jsx'
+import AskOsilChat from '../components/AskOsilChat.jsx'
 
 export default function AskOsilPage() {
   return (
@@ -17,12 +17,12 @@ export default function AskOsilPage() {
           Talk to my AI clone
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-[#1A1A1A]/70">
-          She's not me — but she sounds like me, knows my work, and can point
-          you to what'll meet you where you are. Ask anything.
+          She&apos;s not me — but she sounds like me, knows my work, and can point
+          you to what&apos;ll meet you where you are. Ask anything.
         </p>
 
-        <div className="mt-12 rounded-3xl border border-[#1A1A1A]/10 bg-white p-6 shadow-sm">
-          <AICloneWidget />
+        <div className="mt-12">
+          <AskOsilChat />
         </div>
 
         <p className="mt-8 text-sm text-[#1A1A1A]/50">

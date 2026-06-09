@@ -4,7 +4,6 @@ import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import BackToTop from './components/BackToTop'
 import EmailSlideIn from './components/EmailSlideIn'
-import AICloneWidget from './components/AICloneWidget.jsx'
 import Home from './pages/Home'
 import WorkWithMe from './pages/WorkWithMe'
 import SpeakingPage from './pages/SpeakingPage'
@@ -61,7 +60,6 @@ function SiteLayout() {
       <Footer />
       <BackToTop />
       <EmailSlideIn />
-      <AICloneWidget />
     </div>
   )
 }
