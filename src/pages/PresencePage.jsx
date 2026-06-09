@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import BuyModal, { openBuyModal } from '../components/BuyModal.jsx'
+import BuyModal, { openBuyModal, preloadCheckoutOrigin } from '../components/BuyModal.jsx'
 
 const TC_URL = 'https://osilpistole.thrivecart.com/presence/'
 const PORTAL_URL = 'https://members.osilpistole.com/login'
@@ -79,6 +79,8 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
     <a
       href={href}
       onClick={(e) => { e.preventDefault(); openBuyModal(href) }}
+      onMouseEnter={() => preloadCheckoutOrigin(href)}
+      onFocus={() => preloadCheckoutOrigin(href)}
       className={`${base} ${variants[variant]} ${className}`}
     >
       {children}
@@ -208,12 +210,14 @@ function VersePreview() {
   function togglePlay() {
     const a = audioRef.current
     if (!a) return
-    if (a.paused) {
-      a.play()
-      setMode('listen')
-    } else {
-      a.pause()
-    }
+    if (a.paused) a.play()
+    else a.pause()
+  }
+
+  function switchToListen() {
+    setMode('listen')
+    const a = audioRef.current
+    if (a && a.paused) a.play()
   }
 
   return (
@@ -232,24 +236,15 @@ function VersePreview() {
         </button>
         <button
           type="button"
-          onClick={togglePlay}
+          onClick={switchToListen}
           className={`flex-1 py-4 px-6 font-heading text-[10px] font-bold uppercase tracking-[0.28em] transition-colors flex items-center justify-center gap-2 ${
-            mode === 'listen' || isPlaying
+            mode === 'listen'
               ? 'bg-white text-ink border-b-2 border-morning -mb-px'
               : 'text-ink/40 hover:text-ink/65'
           }`}
         >
-          {isPlaying ? (
-            <>
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
-              <span>Pause</span>
-            </>
-          ) : (
-            <>
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              <span>Hear it spoken</span>
-            </>
-          )}
+          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <span>Hear it spoken</span>
         </button>
       </div>
 
@@ -270,7 +265,7 @@ function VersePreview() {
           </div>
         )}
 
-        {(mode === 'listen' || isPlaying) && (
+        {mode === 'listen' && (
           <div className="mt-8 max-w-md mx-auto">
             <audio ref={audioRef} src={AUDIO_SAMPLE} preload="metadata" />
             <div className="bg-parchment/60 border border-ink/6 rounded-2xl p-5 flex items-center gap-4">

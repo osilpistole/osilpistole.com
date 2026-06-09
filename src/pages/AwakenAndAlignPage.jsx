@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import BuyModal, { openBuyModal } from '../components/BuyModal.jsx'
+import BuyModal, { openBuyModal, preloadCheckoutOrigin } from '../components/BuyModal.jsx'
 
 const TC_SERIES_URL  = 'https://osilpistole.thrivecart.com/awaken-and-align-meditation-series/'
 const TC_JOURNAL_URL = 'https://osilpistole.thrivecart.com/awaken-and-align-meditation-journal/'
@@ -168,107 +168,45 @@ function scrollToId(id, e) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-/* Session 1 sample — uses YouTube's iframe API to hard-stop at 90s.
-   YouTube's URL "end=" parameter doesn't reliably enforce this on
-   manual playback, so we poll currentTime and seek/pause when we hit 90. */
-const PREVIEW_ID = 'q5Jw3PaeaJ8'
-const PREVIEW_LIMIT = 90
-
+/* Session 1 sample — native MP4 with an end-of-clip CTA overlay.
+   Replaces the previous YouTube embed: faster to load, no API
+   handshake, naturally ends when the clip ends (no manual cutoff
+   timer). The MP4 lives at /videos/awaken-sample.mp4. */
 function Session1Preview() {
-  const iframeRef = useRef(null)
-  const pollRef = useRef(null)
-  const [stopped, setStopped] = useState(false)
-
-  function send(func, args = []) {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ event: 'command', func, args }),
-      '*'
-    )
-  }
-
-  useEffect(() => {
-    // Listen for state changes; YouTube sends them via postMessage
-    // when enablejsapi=1 is set on the iframe src.
-    function onMsg(e) {
-      const origin = e.origin || ''
-      if (!origin.includes('youtube.com')) return
-      let data
-      try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data } catch { return }
-      if (data && data.event === 'onStateChange') {
-        // 1 = playing, 2 = paused, 0 = ended
-        if (data.info === 1) startPolling()
-        else stopPolling()
-      }
-    }
-    window.addEventListener('message', onMsg)
-
-    // Tell YouTube we want events
-    function bind() {
-      iframeRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ event: 'listening', id: PREVIEW_ID }),
-        '*'
-      )
-      iframeRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: 'addEventListener', args: ['onStateChange'] }),
-        '*'
-      )
-    }
-    const t = setTimeout(bind, 800)
-
-    return () => {
-      window.removeEventListener('message', onMsg)
-      clearTimeout(t)
-      stopPolling()
-    }
-  }, [])
-
-  function startPolling() {
-    if (pollRef.current) return
-    pollRef.current = setInterval(() => {
-      // Request currentTime — YouTube responds asynchronously via postMessage.
-      // To keep things simple and reliable, we instead use a setTimeout-based
-      // cutoff: count seconds since start.
-    }, 500)
-    // Simpler reliable strategy: pause after PREVIEW_LIMIT seconds of wall time
-    // from the moment playback starts.
-    setTimeout(() => {
-      send('pauseVideo')
-      send('seekTo', [0, true])
-      setStopped(true)
-    }, PREVIEW_LIMIT * 1000)
-  }
-
-  function stopPolling() {
-    if (pollRef.current) {
-      clearInterval(pollRef.current)
-      pollRef.current = null
-    }
-  }
+  const videoRef = useRef(null)
+  const [ended, setEnded] = useState(false)
 
   function restart() {
-    send('seekTo', [0, true])
-    send('playVideo')
-    setStopped(false)
+    const v = videoRef.current
+    if (!v) return
+    v.currentTime = 0
+    setEnded(false)
+    v.play()
   }
 
   return (
     <div className="relative rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(44,44,42,0.18)] border border-ink/8 bg-ink">
       <div className="relative pb-[56.25%] h-0">
-        <iframe
-          ref={iframeRef}
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${PREVIEW_ID}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`}
-          title="Awaken &amp; Align — Session 1 Sample"
-          loading="lazy"
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        />
-        {stopped && (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/videos/awaken-sample.mp4"
+          poster={HERO_IMG}
+          controls
+          playsInline
+          preload="metadata"
+          onEnded={() => setEnded(true)}
+          onPlay={() => setEnded(false)}
+        >
+          Your browser doesn&apos;t support video.
+        </video>
+        {ended && (
           <div
-            className="absolute inset-0 flex flex-col items-center justify-center bg-ink/85 backdrop-blur-sm text-center px-6"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-ink/88 backdrop-blur-sm text-center px-6"
             style={{ animation: 'aa-up 0.4s ease forwards' }}
           >
             <p className="font-heading text-[10px] font-bold uppercase tracking-[0.32em] text-sunrise/70 mb-3">
-              That&apos;s the Preview
+              That&apos;s the Sample
             </p>
             <p className="aa-display text-3xl md:text-4xl italic font-light text-white leading-tight mb-7 max-w-xs">
               Want the rest of Session 1 — plus the other nine?
@@ -302,6 +240,8 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
     <a
       href={href}
       onClick={(e) => { e.preventDefault(); openBuyModal(href) }}
+      onMouseEnter={() => preloadCheckoutOrigin(href)}
+      onFocus={() => preloadCheckoutOrigin(href)}
       className={`${base} ${variants[variant]} ${className}`}
     >
       {children}
@@ -719,7 +659,7 @@ export default function AwakenAndAlignPage() {
                 </div>
                 <p className="text-ink/42 text-[12px] leading-relaxed mb-6">All 10 meditations in your private member portal.</p>
                 <ul className="space-y-2 flex-1 mb-7">
-                  {['10 guided meditation videos', 'Private member portal access', '90-second sample to try first', 'Lifetime access'].map((f) => (
+                  {['10 guided meditation videos', 'Private member portal access', 'Watch on any device', 'Lifetime access'].map((f) => (
                     <li key={f} className="flex items-center gap-2.5 text-[12px] text-ink/55">
                       <svg className="w-3.5 h-3.5 text-sunrise shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       {f}
