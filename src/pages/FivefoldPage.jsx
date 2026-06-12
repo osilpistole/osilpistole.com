@@ -62,18 +62,18 @@ export default function FivefoldPage() {
             className="text-white leading-[0.95] tracking-tight mb-10 text-[clamp(44px,8vw,84px)] font-light italic"
             style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", textShadow: '0 2px 28px rgba(0,0,0,0.4)' }}
           >
-            Which of the five<br/><span className="text-sunrise">are you?</span>
+            Which of the five<br/><span className="text-sunrise">do you lean toward?</span>
           </h1>
 
           <p className="text-white/82 text-base md:text-lg leading-[1.7] max-w-md mx-auto mb-10" style={{ textShadow: '0 1px 14px rgba(0,0,0,0.4)' }}>
-            Apostle, Prophet, Evangelist, Pastor, Teacher. Five callings. One you carry more than the others. This free 5-minute assessment names yours.
+            Apostle, Prophet, Evangelist, Pastor, Teacher. Five ministry callings, each one different. This free 5-minute assessment shows you which one you most resonate with — a starting point worth taking to your community.
           </p>
 
           <button
             onClick={() => setQuizStarted(true)}
             className="inline-flex items-center justify-center gap-2 bg-sunrise text-ink font-heading font-bold text-base px-8 py-3.5 rounded-full shadow-[0_8px_28px_rgba(245,200,66,0.35)] hover:bg-[#f0be2e] hover:-translate-y-0.5 transition-all duration-300"
           >
-            Discover My Calling →
+            See What I Lean Toward →
           </button>
 
           <p className="mt-7 font-heading text-[10px] tracking-[0.32em] uppercase text-white/55">
@@ -96,17 +96,17 @@ export default function FivefoldPage() {
               className="text-ink leading-[1.12] mb-8 text-[clamp(32px,4.5vw,52px)] font-light italic"
               style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
             >
-              Most leaders are trying to be all five.<br/>You weren&apos;t built that way.
+              Most leaders are trying to be all five.<br/>You probably lean toward one.
             </h2>
             <div className="space-y-5 text-ink/60 text-[15px] md:text-[16px] leading-relaxed">
               <p>
                 Ephesians 4 names five callings — Apostle, Prophet, Evangelist, Pastor, Teacher. Each one builds the church in a different way. None is greater than another.
               </p>
               <p>
-                The exhaustion most leaders carry comes from trying to operate in all five at once. The clarity comes from knowing which one is primarily yours — and which ones need someone else.
+                Most of us lean toward one of them. This assessment is a way of naming that leaning — what you resonate with most when you read the descriptions, how you tend to show up when you&apos;re leading, and where your instincts naturally go.
               </p>
               <p className="text-ink font-medium">
-                This assessment ranks all five for you. The top one is where you should be spending most of your energy. The lower ones name where you need a team.
+                A score doesn&apos;t declare a calling — your community does. But knowing which way you lean is a good starting point for a real conversation with the people God has put around you.
               </p>
             </div>
           </Reveal>
@@ -119,7 +119,7 @@ export default function FivefoldPage() {
           <Reveal className="text-center mb-14">
             <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-sunrise mb-5">The Five</p>
             <h2 className="font-heading text-3xl md:text-5xl font-bold text-ink leading-tight">
-              Five callings.<br/>You carry one.
+              Five callings.<br/>Which one feels most like you?
             </h2>
           </Reveal>
 
@@ -138,6 +138,38 @@ export default function FivefoldPage() {
         </div>
       </section>
 
+      {/* ── A NOTE ON TESTS LIKE THIS ──────────────────────────── */}
+      <section className="py-20 md:py-24 px-6 lg:px-16 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <Reveal>
+            <div className="bg-parchment border border-sunrise/25 rounded-3xl p-8 md:p-10 relative">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <span className="bg-sunrise text-ink font-heading text-[10px] font-bold uppercase tracking-[0.28em] px-4 py-1.5 rounded-full inline-block">
+                  An honest note
+                </span>
+              </div>
+              <h3
+                className="text-ink leading-[1.2] mb-5 text-[clamp(22px,3.2vw,32px)] font-light italic text-center mt-2"
+                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+              >
+                A score does not make a 5-Fold calling.
+              </h3>
+              <div className="space-y-4 text-ink/65 text-[15px] leading-relaxed">
+                <p>
+                  Apostle. Prophet. Evangelist. Pastor. Teacher. These are real callings — recognized, affirmed, and shaped in community with leaders who know you. They are not labels a quiz can hand you.
+                </p>
+                <p>
+                  What this assessment <em>can</em> do is name what you already sense — which of the five you resonate with most, where your instincts naturally go, what you&apos;re drawn to do when you&apos;re leading. That is genuinely useful information.
+                </p>
+                <p className="text-ink font-medium">
+                  Take what you learn here into a conversation with the people God has put around you — your local community, your pastor, leaders you trust. Let them confirm it, refine it, or gently push back. That is how the 5-Fold actually works.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── HOW IT WORKS ──────────────────────────────────────────── */}
       <section className="py-24 md:py-32 px-6 lg:px-16 bg-white">
         <div className="max-w-5xl mx-auto">
@@ -151,8 +183,8 @@ export default function FivefoldPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { num: '01', title: 'Answer 25 short questions', body: 'Five questions per calling. Honest answers, not careful ones.' },
-              { num: '02', title: 'See your top calling',       body: 'All five ranked, with your primary calling named and described.' },
-              { num: '03', title: 'Get a way to lead from it',  body: 'Practical guidance on how to operate from your calling — and where you need others.' },
+              { num: '02', title: 'See which one you lean toward', body: 'All five ranked, with the one you most resonate with named and described.' },
+              { num: '03', title: 'Get a starting point for community', body: 'A clear way to begin the conversation with the leaders God has put around you.' },
             ].map(s => (
               <Reveal key={s.num}>
                 <div className="bg-parchment border border-ink/8 rounded-2xl p-7 h-full hover:shadow-[0_12px_40px_rgba(44,44,42,0.07)] transition-all">
@@ -183,13 +215,13 @@ export default function FivefoldPage() {
               Stop trying to be<br/><span className="text-sunrise">all five.</span>
             </h2>
             <p className="text-white/60 text-[15px] leading-relaxed mb-10 max-w-md mx-auto">
-              5 minutes. Free. No email. You&apos;ll have your primary calling — and the relief of finally knowing where to put your energy.
+              5 minutes. Free. No email. You&apos;ll see what you lean toward — and have a real starting point to take to your community.
             </p>
             <button
               onClick={() => setQuizStarted(true)}
               className="inline-flex items-center justify-center gap-2 bg-sunrise text-ink font-heading font-bold text-base px-9 py-4 rounded-full shadow-[0_8px_28px_rgba(245,200,66,0.42)] hover:bg-[#f0be2e] hover:-translate-y-0.5 transition-all duration-300"
             >
-              Discover My Calling →
+              See What I Lean Toward →
             </button>
           </Reveal>
         </div>

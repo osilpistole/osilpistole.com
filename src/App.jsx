@@ -31,6 +31,7 @@ import AskOsilPage from './pages/AskOsilPage'
 import PrivacyPage from './pages/PrivacyPage'
 import CallingPage from './pages/CallingPage'
 import CallingQuiz from './components/CallingQuiz'
+import FreePage from './pages/FreePage'
 
 function SiteLayout() {
   return (
@@ -63,6 +64,7 @@ function SiteLayout() {
           <Route path="/ask-osil" element={<AskOsilPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/calling" element={<CallingPage />} />
+          <Route path="/free" element={<FreePage />} />
         </Routes>
       </main>
       <Footer />
