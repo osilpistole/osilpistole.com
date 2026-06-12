@@ -5,5 +5,13 @@ dist
 .vercel
 .superpowers/
 
+# Secrets — NEVER commit
+.env
+.env.local
+.env.*.local
+
+# macOS Finder duplicates (files like "index 2.html")
+* 2.*
+
 # External design reference clone — not part of this project
 awesome-design-md/

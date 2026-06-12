@@ -61,7 +61,7 @@ export default function ProgramsPage() {
 
               return (
                 <RevealSection key={program.slug} delay={i * 0.08}>
-                  <div className={`group relative rounded-3xl overflow-hidden border ${accent.border} bg-white shadow-[0_2px_24px_rgba(44,44,42,0.07)] transition-all duration-300 hover:shadow-[0_8px_40px_rgba(44,44,42,0.13)] hover:-translate-y-1 flex flex-col`}>
+                  <div className={`group relative rounded-3xl overflow-hidden border ${accent.border} bg-white shadow-[0_2px_24px_rgba(44,44,42,0.07)] transition-all duration-300 hover:shadow-[0_8px_40px_rgba(44,44,42,0.13)] hover:-translate-y-1 flex flex-col h-[480px]`}>
 
                     {/* Photo */}
                     <div className="relative overflow-hidden h-56 shrink-0">
@@ -71,17 +71,10 @@ export default function ProgramsPage() {
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent" />
-
-                      {/* Label badge */}
-                      <div className="absolute top-4 left-4">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${accent.badge}`}>
-                          {program.label}
-                        </span>
-                      </div>
                     </div>
 
                     {/* Content */}
-                    <div className="flex flex-col flex-1 p-6 min-h-[200px]">
+                    <div className="flex flex-col flex-1 p-6">
                       <div className={`w-8 h-0.5 rounded-full ${accent.dot} mb-4`} />
                       <h2 className="font-heading text-xl font-bold text-ink leading-snug mb-1">{program.shortTitle}</h2>
 

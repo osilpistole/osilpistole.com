@@ -66,11 +66,14 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 /* Floating ambient music — starts muted (browser-allowed) then unmutes
-   on the first user interaction so it feels like autoplay. */
+   on the first user interaction so it feels like autoplay. Safari is
+   stricter than Chrome about iframe autoplay timing, so we retry the
+   play command until the iframe is actually ready. */
 function AmbientMusic({ accent = 'sunrise' }) {
   const [unmuted, setUnmuted] = useState(false)
   const iframeRef = useRef(null)
   const unmutedRef = useRef(false)
+  const readyRef = useRef(false)
 
   function send(func, args = []) {
     iframeRef.current?.contentWindow?.postMessage(
@@ -79,13 +82,21 @@ function AmbientMusic({ accent = 'sunrise' }) {
     )
   }
 
-  // Try muted autoplay on mount. Most browsers allow this without a gesture.
+  // Safari sometimes ignores the autoplay= URL param until the iframe is
+  // fully ready. Retry playVideo a few times after mount.
   useEffect(() => {
-    const t = setTimeout(() => send('playVideo'), 800)
-    return () => clearTimeout(t)
+    const delays = [400, 900, 1600, 2400, 3600, 5000]
+    const timers = delays.map(d => setTimeout(() => send('playVideo'), d))
+    return () => timers.forEach(clearTimeout)
   }, [])
 
-  // Unmute on the first user gesture.
+  // Mark iframe ready on its load event and try again then.
+  function onIframeLoad() {
+    readyRef.current = true
+    send('playVideo')
+  }
+
+  // Unmute on the first user gesture (any kind — covers all browsers).
   useEffect(() => {
     function start() {
       if (unmutedRef.current) return
@@ -96,7 +107,7 @@ function AmbientMusic({ accent = 'sunrise' }) {
       setUnmuted(true)
       cleanup()
     }
-    const events = ['click', 'touchstart', 'scroll', 'keydown']
+    const events = ['pointerdown', 'click', 'touchstart', 'scroll', 'keydown']
     function cleanup() {
       events.forEach(ev => window.removeEventListener(ev, start))
     }
@@ -128,6 +139,7 @@ function AmbientMusic({ accent = 'sunrise' }) {
         title="Ambient music"
         tabIndex={-1}
         aria-hidden="true"
+        onLoad={onIframeLoad}
         src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1&loop=1&playlist=${MUSIC_VIDEO_ID}`}
         allow="autoplay; encrypted-media"
         style={{
@@ -139,7 +151,7 @@ function AmbientMusic({ accent = 'sunrise' }) {
         type="button"
         onClick={toggle}
         className="fixed left-6 z-40 group"
-        style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 1.5rem))' }}
+        style={{ bottom: 'max(1.5rem, calc(env(safe-area-inset-bottom, 1.5rem) + 0px))' }}
         aria-label={unmuted ? 'Pause music' : 'Play ambient music'}
       >
         <span className="flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/92 backdrop-blur-md border border-ink/12 shadow-[0_8px_28px_rgba(44,44,42,0.10)] hover:bg-white transition-all">
@@ -260,7 +272,6 @@ export default function AwakenAndAlignPage() {
       <BuyModal />
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500;1,600&display=swap');
         .aa-display { font-family: 'Cormorant Garamond', Georgia, serif; }
         @keyframes aa-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes aa-float {
@@ -334,8 +345,10 @@ export default function AwakenAndAlignPage() {
             Instant access · Private member portal · Lifetime
           </p>
 
-          {/* Three-option callout — series / journal / bundle */}
-          <div className="aa-u5 mt-10 flex flex-wrap items-center justify-center gap-2.5 text-[11px]">
+          {/* Three-option callout — series / journal / bundle. Hidden on
+              mobile so the hero stays focused on the two main CTAs; pricing
+              section below covers all three options in detail. */}
+          <div className="aa-u5 mt-10 hidden sm:flex flex-wrap items-center justify-center gap-2.5 text-[11px]">
             <a href="#pricing" onClick={(e) => scrollToId('pricing', e)} className="px-4 py-1.5 rounded-full bg-white/12 backdrop-blur-sm border border-white/22 text-white/80 hover:bg-white/20 hover:border-white/40 transition-all">
               Series · <span className="font-semibold text-sunrise">$47</span>
             </a>
@@ -468,7 +481,7 @@ export default function AwakenAndAlignPage() {
             <h2 className="aa-display text-[clamp(38px,5.5vw,68px)] font-light italic text-white leading-[1.08]">
               Ten sessions. One journey.
             </h2>
-            <p className="text-white/32 text-sm mt-4 max-w-xs mx-auto leading-relaxed">
+            <p className="text-white/60 text-sm mt-4 max-w-xs mx-auto leading-relaxed">
               From stuck to stepping forward — in 10 guided meditations.
             </p>
           </Reveal>
@@ -488,8 +501,8 @@ export default function AwakenAndAlignPage() {
                   </div>
 
                   <div className="relative flex-1 min-w-0">
-                    <p className="font-heading text-[13px] font-semibold text-white/75 mb-1">{s.title}</p>
-                    <p className="text-[11px] text-white/32 leading-relaxed">{s.desc}</p>
+                    <p className="font-heading text-[13px] font-semibold text-white/90 mb-1">{s.title}</p>
+                    <p className="text-[12px] text-white/60 leading-relaxed">{s.desc}</p>
                   </div>
                 </div>
               </Reveal>

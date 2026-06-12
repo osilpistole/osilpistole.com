@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-const GREETING = "Hey — I'm Osil's AI clone. I sound like her, I think like her, and I know her work. What's on your mind?"
+const GREETING = "Hi — I'm Osil's AI clone, here to help you. I'm an AI assistant. Ask me anything — about her meditations and journals, working with her one-on-one, or what's going on for you. Have you taken one of the free quizzes yet?"
 
 const SUNRISE = '#F5C842'
 const MORNING = '#B8A4D8'
@@ -8,12 +9,29 @@ const INK = '#1A1A1A'
 
 function renderMarkdownLite(text) {
   // Tiny formatter: **bold**, *italic*, [text](url), and \n\n paragraph breaks.
+  // IMPORTANT: substitute links FIRST on the raw text, then escape only the
+  // surrounding prose. Escaping first then matching URLs would re-encode `&`
+  // inside hrefs (e.g. `&amp;` → `&amp;amp;`) and break the link.
   const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  const safe = escape(text)
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#5b4a16;text-decoration:underline;text-underline-offset:3px">$1</a>')
-    .replace(/\bhttps?:\/\/\S+\b/g, (m) =>
-      `<a href="${m}" target="_blank" rel="noopener noreferrer" style="color:#5b4a16;text-decoration:underline;text-underline-offset:3px">${m}</a>`)
+  const linkStyle = 'color:#5b4a16;text-decoration:underline;text-underline-offset:3px'
+  const parts = []
+  let i = 0
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)|\bhttps?:\/\/[^\s<>"']+/g
+  let m
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > i) parts.push(escape(text.slice(i, m.index)))
+    if (m[1] && m[2]) {
+      // Markdown link [label](url)
+      parts.push(`<a href="${escape(m[2])}" target="_blank" rel="noopener noreferrer" style="${linkStyle}">${escape(m[1])}</a>`)
+    } else {
+      // Bare URL
+      const u = m[0]
+      parts.push(`<a href="${escape(u)}" target="_blank" rel="noopener noreferrer" style="${linkStyle}">${escape(u)}</a>`)
+    }
+    i = m.index + m[0].length
+  }
+  if (i < text.length) parts.push(escape(text.slice(i)))
+  const safe = parts.join('')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
   return safe.split(/\n\n+/).map(p => `<p style="margin:0 0 0.7em 0;line-height:1.55">${p.replace(/\n/g, '<br/>')}</p>`).join('')
@@ -76,6 +94,7 @@ export default function AskOsilChat({ fill = false, height = 'min(72vh, 640px)' 
   const [error, setError] = useState(null)
   const scrollRef = useRef(null)
   const inputRef = useRef(null)
+  const location = useLocation()
 
   // Auto-scroll to the latest message
   useEffect(() => {
@@ -102,6 +121,9 @@ export default function AskOsilChat({ fill = false, height = 'min(72vh, 640px)' 
         body: JSON.stringify({
           // Anthropic accepts the same message format we use here
           messages: next.map(m => ({ role: m.role, content: m.content })),
+          // Tell the AI which page the visitor is on so it can answer
+          // page-specific product questions naturally.
+          page: location?.pathname || '/',
         }),
       })
 
@@ -153,13 +175,16 @@ export default function AskOsilChat({ fill = false, height = 'min(72vh, 640px)' 
         @keyframes aoc-dot  { 0%,80%,100%{opacity:0.3;transform:translateY(0)} 40%{opacity:1;transform:translateY(-3px)} }
         .aoc-input::placeholder { color: rgba(26,26,26,0.36) }
         .aoc-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(245,200,66,0.45) }
+        .aoc-scroll { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
       `}</style>
 
       {/* Messages */}
       <div
         ref={scrollRef}
+        className="aoc-scroll"
         style={{
           flex: 1,
+          minHeight: 0,
           overflowY: 'auto',
           padding: '1.5rem 1.25rem',
           display: 'flex',
@@ -203,7 +228,6 @@ export default function AskOsilChat({ fill = false, height = 'min(72vh, 640px)' 
           onKeyDown={onKey}
           placeholder="Ask me anything…"
           rows={1}
-          autoFocus
           style={{
             flex: 1,
             resize: 'none',
@@ -244,6 +268,28 @@ export default function AskOsilChat({ fill = false, height = 'min(72vh, 640px)' 
           </svg>
         </button>
       </form>
+
+      {/* Tiny disclosure — kept small so it doesn't compete with the chat itself */}
+      <div style={{
+        padding: '0.45rem 1rem 0.7rem',
+        background: 'white',
+        borderTop: '1px solid rgba(26,26,26,0.04)',
+        fontSize: 10,
+        lineHeight: 1.45,
+        color: 'rgba(26,26,26,0.42)',
+        textAlign: 'center',
+        fontFamily: 'Inter, system-ui, sans-serif',
+      }}>
+        Osil&apos;s AI clone is an AI assistant. Don&apos;t share anything you wouldn&apos;t put in an email.{' '}
+        <a
+          href="/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'rgba(26,26,26,0.6)', textDecoration: 'underline', textUnderlineOffset: 2 }}
+        >
+          Privacy →
+        </a>
+      </div>
     </div>
   )
 }

@@ -28,6 +28,9 @@ import QuizLandingPage from './pages/QuizLandingPage'
 import QuizChat from './components/QuizChat'
 import WhoIHelpPage from './pages/WhoIHelpPage'
 import AskOsilPage from './pages/AskOsilPage'
+import PrivacyPage from './pages/PrivacyPage'
+import CallingPage from './pages/CallingPage'
+import CallingQuiz from './components/CallingQuiz'
 
 function SiteLayout() {
   return (
@@ -58,6 +61,8 @@ function SiteLayout() {
           <Route path="/quiz" element={<QuizLandingPage />} />
           <Route path="/who-i-help" element={<WhoIHelpPage />} />
           <Route path="/ask-osil" element={<AskOsilPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/calling" element={<CallingPage />} />
         </Routes>
       </main>
       <Footer />
@@ -73,6 +78,7 @@ function App() {
     <Routes>
       {/* Full-screen — no site header/footer */}
       <Route path="/quiz/start" element={<QuizChat />} />
+      <Route path="/calling/start" element={<CallingQuiz />} />
       {/* All other pages with site layout */}
       <Route path="/*" element={<SiteLayout />} />
     </Routes>

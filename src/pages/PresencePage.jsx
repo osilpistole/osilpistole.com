@@ -89,7 +89,9 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
 }
 
 /* Floating ambient music — starts muted (browser-allowed) then unmutes
-   on the first user interaction so it feels like autoplay. */
+   on the first user interaction so it feels like autoplay. Safari is
+   stricter about iframe autoplay timing, so we retry the play command
+   until the iframe is actually ready. */
 function AmbientMusic() {
   const [unmuted, setUnmuted] = useState(false)
   const unmutedRef = useRef(false)
@@ -103,9 +105,14 @@ function AmbientMusic() {
   }
 
   useEffect(() => {
-    const t = setTimeout(() => send('playVideo'), 800)
-    return () => clearTimeout(t)
+    const delays = [400, 900, 1600, 2400, 3600, 5000]
+    const timers = delays.map(d => setTimeout(() => send('playVideo'), d))
+    return () => timers.forEach(clearTimeout)
   }, [])
+
+  function onIframeLoad() {
+    send('playVideo')
+  }
 
   useEffect(() => {
     function start() {
@@ -117,7 +124,7 @@ function AmbientMusic() {
       setUnmuted(true)
       cleanup()
     }
-    const events = ['click', 'touchstart', 'scroll', 'keydown']
+    const events = ['pointerdown', 'click', 'touchstart', 'scroll', 'keydown']
     function cleanup() {
       events.forEach(ev => window.removeEventListener(ev, start))
     }
@@ -146,6 +153,7 @@ function AmbientMusic() {
         title="Ambient music"
         tabIndex={-1}
         aria-hidden="true"
+        onLoad={onIframeLoad}
         src={`https://www.youtube.com/embed/${MUSIC_VIDEO_ID}?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0&controls=0&playsinline=1&loop=1&playlist=${MUSIC_VIDEO_ID}`}
         allow="autoplay; encrypted-media"
         style={{
@@ -298,7 +306,6 @@ export default function PresencePage() {
     <div className="bg-parchment text-ink font-body overflow-x-hidden">
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500;1,600&display=swap');
         .aa-display { font-family: 'Cormorant Garamond', Georgia, serif; }
         @keyframes pr-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pr-glow { 0%, 100% { opacity: 0.38; } 50% { opacity: 0.62; } }
@@ -330,7 +337,7 @@ export default function PresencePage() {
             A 30-Day Lectio Divina Journal
           </p>
 
-          <h1 className="pr-u2 aa-display text-[clamp(72px,12vw,148px)] font-light leading-[0.94] tracking-tight text-white mb-10" style={{ textShadow: '0 2px 36px rgba(0,0,0,0.4)' }}>
+          <h1 className="pr-u2 aa-display text-[clamp(72px,12vw,148px)] font-light italic leading-[0.94] tracking-tight text-white mb-10" style={{ textShadow: '0 2px 36px rgba(0,0,0,0.4)' }}>
             Presence
           </h1>
 
@@ -363,7 +370,7 @@ export default function PresencePage() {
         <div className="max-w-5xl mx-auto relative">
           <Reveal className="text-center mb-14 max-w-2xl mx-auto">
             <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-5">From Presence</p>
-            <h2 className="aa-display text-[clamp(28px,4.4vw,46px)] font-light leading-[1.15] mb-6 whitespace-nowrap">
+            <h2 className="aa-display text-[clamp(28px,4.4vw,46px)] font-light leading-[1.15] mb-6">
               Everything you&apos;re reaching for<br/>comes from being here.
             </h2>
             <p className="text-ink/55 text-[15px] leading-relaxed">

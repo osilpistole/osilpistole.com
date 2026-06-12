@@ -8,28 +8,29 @@ const INK = '#1A1A1A'
 export default function AskOsilBubble() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
-
-  // Don't render on the dedicated chat page (it already has the chat inline).
-  if (location.pathname === '/ask-osil') return null
+  const hideOnPage = location.pathname === '/ask-osil'
 
   // Lock body scroll when expanded on mobile, but only there
   useEffect(() => {
-    if (!open) return
+    if (hideOnPage || !open) return
     // Only lock on small screens — desktop the card sits over content without taking it over
     if (window.matchMedia('(max-width: 640px)').matches) {
       const prev = document.body.style.overflow
       document.body.style.overflow = 'hidden'
       return () => { document.body.style.overflow = prev }
     }
-  }, [open])
+  }, [open, hideOnPage])
 
   // Esc to close
   useEffect(() => {
-    if (!open) return
+    if (hideOnPage || !open) return
     function onKey(e) { if (e.key === 'Escape') setOpen(false) }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open])
+  }, [open, hideOnPage])
+
+  // Don't render on the dedicated chat page (it already has the chat inline).
+  if (hideOnPage) return null
 
   return (
     <>
@@ -72,8 +73,7 @@ export default function AskOsilBubble() {
       {/* Expanded chat card. */}
       {open && (
         <div
-          role="dialog"
-          aria-modal="false"
+          role="complementary"
           aria-labelledby="aob-title"
           style={{
             position: 'fixed',
@@ -82,7 +82,8 @@ export default function AskOsilBubble() {
             left: 'auto',
             zIndex: 60,
             width: 'min(420px, calc(100vw - 2rem))',
-            maxHeight: 'min(78vh, 720px)',
+            height: 'min(86vh, 720px)',
+            minHeight: 'min(480px, calc(100vh - 2rem))',
             background: '#FAFAFA',
             borderRadius: 22,
             overflow: 'hidden',

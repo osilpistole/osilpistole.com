@@ -1,5 +1,13 @@
 export const freeResources = [
   {
+    slug: 'calling',
+    title: 'The Calling Quiz',
+    tagline: 'Get a clear one-line mission statement — who you serve, what you do, what changes for them — in three different voices, so you can pick the one that sounds like you.',
+    icon: '🧭',
+    link: '/calling',
+    cta: 'Start the Quiz',
+  },
+  {
     slug: 'enneagram',
     title: 'Enneagram for Business Quiz',
     tagline: 'Discover your Enneagram type and wing — and what each one means for the business, ministry, or mentorship you are wired to build.',

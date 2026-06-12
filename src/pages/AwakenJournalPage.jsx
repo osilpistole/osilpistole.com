@@ -102,7 +102,6 @@ export default function AwakenJournalPage() {
       <BuyModal />
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,300;1,400;1,500;1,600&display=swap');
         .aa-display { font-family: 'Cormorant Garamond', Georgia, serif; }
         @keyframes aa-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         .aa-u1 { opacity: 0; animation: aa-up 0.95s ease 0.25s forwards; }
