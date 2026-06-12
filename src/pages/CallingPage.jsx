@@ -167,7 +167,7 @@ export default function CallingPage() {
               className="leading-[1.05] mb-8 text-[clamp(40px,6vw,72px)] font-light italic"
               style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
             >
-              Ready to name<br/><span className="text-sunrise">what you&apos;re for?</span>
+              Ready to<br/><span className="text-sunrise">put it into words?</span>
             </h2>
             <p className="text-white/60 text-[15px] leading-relaxed mb-10 max-w-md mx-auto">
               About 10 minutes. Completely free. Your mission delivered on screen and emailed to you.
