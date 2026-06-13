@@ -32,6 +32,8 @@ import PrivacyPage from './pages/PrivacyPage'
 import CallingPage from './pages/CallingPage'
 import CallingQuiz from './components/CallingQuiz'
 import FreePage from './pages/FreePage'
+import ContentPlanPage from './pages/ContentPlanPage'
+import ContentPlanQuiz from './components/ContentPlanQuiz'
 
 function SiteLayout() {
   return (
@@ -65,6 +67,7 @@ function SiteLayout() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/calling" element={<CallingPage />} />
           <Route path="/free" element={<FreePage />} />
+          <Route path="/30-days-done" element={<ContentPlanPage />} />
         </Routes>
       </main>
       <Footer />
@@ -81,6 +84,7 @@ function App() {
       {/* Full-screen — no site header/footer */}
       <Route path="/quiz/start" element={<QuizChat />} />
       <Route path="/calling/start" element={<CallingQuiz />} />
+      <Route path="/30-days-done/quiz" element={<ContentPlanQuiz />} />
       {/* All other pages with site layout */}
       <Route path="/*" element={<SiteLayout />} />
     </Routes>
