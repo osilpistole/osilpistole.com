@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import RevealSection from '../components/RevealSection'
 
-const HERO_IMG = 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=2400&q=88'
+const HERO_IMG = 'https://images.unsplash.com/photo-1554080353-a576cf803bda?w=2400&q=88'
 
 export default function ContentPlanPage() {
   return (
@@ -10,8 +10,8 @@ export default function ContentPlanPage() {
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section className="relative min-h-[88svh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url("${HERO_IMG}")` }} aria-hidden="true" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(20,19,17,0.40) 0%, rgba(20,19,17,0.60) 60%, rgba(20,19,17,0.78) 100%)' }} />
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(55% 40% at 50% 45%, rgba(245,200,66,0.16) 0%, transparent 70%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(20,19,17,0.62) 0%, rgba(20,19,17,0.40) 50%, rgba(20,19,17,0.30) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(40% 30% at 50% 45%, rgba(245,200,66,0.20) 0%, transparent 70%)' }} />
 
         <div className="relative z-10 max-w-3xl mx-auto text-center px-6 py-32">
           <p className="font-heading text-[10px] font-bold uppercase tracking-[0.38em] text-white/75 mb-7">
