@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import MetaPixelPageView from './components/MetaPixelPageView'
 import BackToTop from './components/BackToTop'
 import EmailSlideIn from './components/EmailSlideIn'
 import AskOsilBubble from './components/AskOsilBubble.jsx'
@@ -80,14 +81,17 @@ function SiteLayout() {
 
 function App() {
   return (
-    <Routes>
-      {/* Full-screen — no site header/footer */}
-      <Route path="/quiz/start" element={<QuizChat />} />
-      <Route path="/calling/start" element={<CallingQuiz />} />
-      <Route path="/30-days-done/quiz" element={<ContentPlanQuiz />} />
-      {/* All other pages with site layout */}
-      <Route path="/*" element={<SiteLayout />} />
-    </Routes>
+    <>
+      <MetaPixelPageView />
+      <Routes>
+        {/* Full-screen — no site header/footer */}
+        <Route path="/quiz/start" element={<QuizChat />} />
+        <Route path="/calling/start" element={<CallingQuiz />} />
+        <Route path="/30-days-done/quiz" element={<ContentPlanQuiz />} />
+        {/* All other pages with site layout */}
+        <Route path="/*" element={<SiteLayout />} />
+      </Routes>
+    </>
   )
 }
 
