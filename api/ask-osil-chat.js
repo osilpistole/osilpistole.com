@@ -38,6 +38,7 @@ WHAT OSIL OFFERS (current)
 - **Presence — 30-Day Lectio Divina Journal** — $27 digital. Daily scripture passages with audio + the five Lectio Divina steps (Lectio, Meditatio, Oratio, Contemplatio, Actio). For people who want a real daily rhythm with God — morning, evening, or both. Lifetime access. URL: https://osilpistole.com/presence
 - **Strategy Session** — One focused 1:1 paid call with Osil for a specific decision (launch, pivot, content direction, hire, website rebuild, tech tool choice). Pricing depends on scope; don't quote live.
 - **Consultation** — Project-based 1:1 work. Areas: business/ministry strategy, social media (Instagram/TikTok/LinkedIn/YouTube), web design (React, Next.js, modern builds), app building (member portals, payment integration), AI agent implementation, prophetic + practical alignment for faith-led leaders. Pricing scoped per project.
+- **Website + Product Build** — Done-with-AI website builds for faith-led coaches, consultants, ministers, and creators. Three tiers: Starter $1,500 (5-page brochure site, 3–5 business days), Pro $2,500 (8-page launch-ready site + product/checkout setup, 7–10 business days, MOST POPULAR), Custom $4,000+ (full ecosystem with automations + AI agents, 2–3 weeks). Two-pay options available. Optional monthly maintenance retainer ($150 or $300/mo) after launch. Built on whatever platform they're on — Wix, Squarespace, Kajabi, WordPress, Shopify, or fresh GitHub+Vercel. Only 2 slots a month. URL: https://osilpistole.com/build
 - **Mentorship — GROUP program, waitlist only**. Currently closed. Ongoing cohort with Osil — not 1:1. Open the waitlist for anyone asking about ongoing mentorship.
 
 DISCONTINUED — Created to Prophesy and the 30-Day Instagram Growth Challenge are no longer offered (no waitlist). If asked, redirect to consultation or strategy session.
@@ -61,7 +62,7 @@ Only when their situation maps clearly to one offer. Mention naturally. Never pu
 WHEN TO CAPTURE EMAIL
 After they've shown real interest. Offer it — never demand: "Want me to send you the details?" or "Want me to make sure Osil follows up?" Only after they agree, ask for their email and (optionally) their first name. Then call the respond tool with the lead object filled in.
 
-Valid product_interest values: "awaken-align", "presence", "strategy-session", "consultation", "mentorship-waitlist"
+Valid product_interest values: "awaken-align", "presence", "strategy-session", "consultation", "mentorship-waitlist", "website-build"
 
 WHEN TO STOP AND ROUTE TO OSIL DIRECTLY
 - Deep theology / doctrinal debates
@@ -111,8 +112,16 @@ A free 10-minute AI conversation that helps the visitor put their niche and miss
 
   '/calling/start': `CURRENT PAGE: The Calling Quiz — actively taking the quiz. Don't interrupt the flow. If they ask a question, answer briefly and route them back to finishing the conversation with the quiz AI.`,
 
+  '/build': `CURRENT PAGE: Website + Product Build sales page.
+The visitor is looking at the new build offer — Starter $1,500, Pro $2,500 (most popular), Custom $4,000+. Two-pay options available. Ships in 3 days to 3 weeks depending on tier. Two slots a month.
+If they ask "is this for me?" — it's for faith-led coaches, consultants, ministers, creators with an offer that's working but a site that doesn't reflect it. Works on Wix, Squarespace, Kajabi, WordPress, Shopify, or a fresh GitHub+Vercel build.
+If they ask "what should I pick?" — most people want Pro ($2,500). It includes the sales page + product/checkout + email tool wiring. Starter is brochure-only. Custom is for full-ecosystem launches with automations and AI agents.
+If they ask about edits — 1/2/3 rounds depending on tier, plus unlimited small fixes (typos, color swaps).
+If they're ready to book — point to the Calendly widget at the bottom of the page (or the link osilpistole.com/build#book). Discovery call is free, 20 minutes.
+If they mention budget hesitation — mention the 2-pay option ($1,250 today + $1,250 in 30 days for Pro).`,
+
   '/work-with-me': `CURRENT PAGE: Work With Me overview.
-The visitor is browsing ways to work with Osil directly. Options: Speaking, Consulting (project-based), Mentoring (currently waitlist), Coaching (Strategy Sessions). Help them figure out which one fits. Don't quote pricing — it's scope-dependent.`,
+The visitor is browsing ways to work with Osil directly. Options: Website + Product Build (NEW — starts at $1,500, 2 slots/month), Speaking, Consulting (project-based), Mentoring (currently waitlist), Coaching (Strategy Sessions). Help them figure out which one fits. If they mention their website, send them to /build. Don't quote pricing for the open-scope offers — it's scope-dependent.`,
 
   '/speaking':   `CURRENT PAGE: Speaking — Osil's speaking page. The visitor is looking to book her for an event. Help them describe the event so Osil can quote.`,
   '/consulting': `CURRENT PAGE: Consulting — project-based 1:1 work (web, app, AI agents, business strategy). The visitor is considering hiring Osil. Help them describe the project; pricing is scoped per project.`,
@@ -152,7 +161,7 @@ const RESPONSE_TOOL = {
           first_name: { type: 'string', description: "First name if given, otherwise omit" },
           product_interest: {
             type: 'string',
-            enum: ['awaken-align', 'presence', 'strategy-session', 'consultation', 'mentorship-waitlist'],
+            enum: ['awaken-align', 'presence', 'strategy-session', 'consultation', 'mentorship-waitlist', 'website-build'],
             description: 'Which Osil offer they want details about',
           },
           conversation_summary: {

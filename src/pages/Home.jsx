@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import ButtonPrimary from '../components/ButtonPrimary'
 import RevealSection from '../components/RevealSection'
 import { freeResources } from '../data/programs'
+import NewOfferBanner from '../components/NewOfferBanner'
 
 /* ─── Typewriter hook ─── */
 function useTypewriter(words, typingSpeed = 80, pauseTime = 1800, deletingSpeed = 45) {
@@ -650,6 +651,7 @@ export default function Home() {
       <Hero />
       <Marquee />
       <Intro />
+      <NewOfferBanner />
       <HowIHelp />
       <WhoIHelp />
       <Transformation />

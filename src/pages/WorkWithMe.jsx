@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import ButtonPrimary from '../components/ButtonPrimary'
 import RevealSection from '../components/RevealSection'
 import PageCTA from '../components/PageCTA'
+import NewOfferBanner from '../components/NewOfferBanner'
 
 const services = [
   {
@@ -85,6 +86,8 @@ export default function WorkWithMe() {
           </div>
         </div>
       </section>
+
+      <NewOfferBanner />
 
       {/* Services — horizontal stacked rows */}
       <section className="py-16 md:py-24 px-6 lg:px-14 bg-white">
