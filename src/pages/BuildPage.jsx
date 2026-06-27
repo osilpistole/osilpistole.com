@@ -119,6 +119,21 @@ const handleAnchorClick = (id) => (e) => {
 }
 
 export default function BuildPage() {
+  // Always start at top of /build, even if the URL has a leftover #hash
+  // from a previous session (some browsers cache it after a click +
+  // refresh). We strip the hash and override the global ScrollToTop's
+  // hash-aware scroll by scrolling to 0 repeatedly across the next
+  // ~250ms — enough to beat its 80ms smooth-scroll timer.
+  useEffect(() => {
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    }
+    const ts = [0, 100, 200, 300].map(ms =>
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), ms),
+    )
+    return () => ts.forEach(clearTimeout)
+  }, [])
+
   // Lazy-load the Calendly widget script once when the page mounts.
   useEffect(() => {
     if (document.querySelector('script[src*="calendly.com/assets/external/widget.js"]')) return
