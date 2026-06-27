@@ -44,7 +44,7 @@ export default function NewOfferBanner() {
                   Website + Product Builds — done with AI, in your voice.
                 </h3>
                 <p className="text-ink/70 text-[15px] leading-relaxed max-w-2xl">
-                  Faith-led coaches, consultants, and ministers — your site should sound like your work. Three tiers from $1,500. Ships in 3 days to 3 weeks. Built on your platform or a fresh one.
+                  Coaches, consultants, ministries, small businesses, and creators — your site should sound like your work. Four tiers from $1,500. Ships in 3 days to 3 weeks. Built on your platform or a fresh one.
                 </p>
               </div>
 

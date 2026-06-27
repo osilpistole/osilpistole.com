@@ -138,7 +138,7 @@ export default function BuildPage() {
               Your website should sound like your work — clear, calm, and undeniably yours.
             </h1>
             <p className="mt-8 text-ink/65 text-lg leading-relaxed max-w-2xl">
-              You already have what you need. The offer’s strong, the voice is real — the site just doesn’t carry the weight yet. I build sites that do. <strong className="text-ink">Strategy-led, AI-accelerated, faith-rooted.</strong>
+              You already have what you need. The offer’s strong, the voice is real — the site just doesn’t carry the weight yet. I build sites that do. <strong className="text-ink">Strategy-led, AI-accelerated, voice-true.</strong>
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <a
@@ -167,7 +167,7 @@ export default function BuildPage() {
           <RevealSection>
             <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">Who this is for</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
-              Faith-led coaches, consultants, and mentors with something real to say — and a site that doesn’t say it yet.
+              Coaches, consultants, ministries, small businesses, and creators with something real to say — and a site that doesn’t say it yet.
             </h2>
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-5 mt-10 text-ink/70 leading-relaxed">
               <p>You have an offer that’s already working — the site just doesn’t reflect it.</p>
@@ -271,6 +271,68 @@ export default function BuildPage() {
               </RevealSection>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* BUSINESS TIER — separate section for B2B / corporate buyers */}
+      <section className="px-6 lg:px-14 py-20 bg-parchment">
+        <div className="max-w-5xl mx-auto">
+          <RevealSection>
+            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">For Businesses + Corporations</p>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
+              Bigger sites. Bigger scope. Same care.
+            </h2>
+            <p className="text-ink/60 text-lg mt-4 max-w-2xl">
+              For B2B teams, professional service firms, and small-to-mid businesses ready for a marketing site that converts — not just informs.
+            </p>
+          </RevealSection>
+
+          <RevealSection delay={0.08}>
+            <div className="mt-12 rounded-3xl border-2 border-ink/15 bg-white p-7 md:p-10">
+              <div className="grid md:grid-cols-[1fr_auto] gap-6 md:gap-12 items-start mb-8">
+                <div>
+                  <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-2">Business</p>
+                  <p className="font-heading text-4xl font-bold text-ink mb-1">$5,000+</p>
+                  <p className="text-ink/55 text-xs mb-2 leading-relaxed">Scoped per project · custom payment plans available</p>
+                  <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-ink bg-parchment border border-ink/12 rounded-full px-2.5 py-1 mt-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.4} viewBox="0 0 24 24" aria-hidden>
+                      <circle cx="12" cy="12" r="9" />
+                      <path strokeLinecap="round" d="M12 7v5l3 2" />
+                    </svg>
+                    Ships in 2–3 weeks
+                  </p>
+                </div>
+                <a
+                  href="#book"
+                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-ink text-white text-sm font-bold hover:bg-ink/85 transition-all duration-200 shadow-lg"
+                >
+                  Book a discovery call
+                </a>
+              </div>
+
+              <p className="text-ink/70 leading-relaxed mb-6">
+                A B2B marketing site that takes prospects from cold to qualified — case studies, lead-gen forms, demo request flows, the whole funnel. Built to scale with your sales team.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-x-10 gap-y-3 text-sm text-ink/75">
+                {[
+                  'Everything in Pro',
+                  '10–20 pages including case studies + service pages',
+                  'B2B lead-gen forms (demo request, gated downloads)',
+                  'CRM / marketing automation integration (HubSpot, Salesforce, more)',
+                  'Brand-aligned design at corporate scale',
+                  'Analytics + conversion tracking wired in',
+                  '3 rounds of edits + unlimited small fixes',
+                  '30-day post-launch support',
+                ].map(b => (
+                  <div key={b} className="flex items-start gap-2.5">
+                    <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-growth flex-shrink-0" />
+                    <span>{b}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </RevealSection>
         </div>
       </section>
 
