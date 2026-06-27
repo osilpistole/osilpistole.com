@@ -10,12 +10,14 @@ const tiers = [
     name: 'Starter',
     price: '$1,500',
     paymentNote: 'or 2-pay · $750 today + $750 in 30 days',
+    timeline: '3–5 business days',
     blurb: 'A clean 5-page brochure site. For when you have an offer and just need it presented well.',
     bullets: [
       'Up to 5 pages (Home, About, Offer, Contact + one)',
       'Brand voice copy on every page',
       'Mobile-ready, fast loading',
       'Works on your existing platform',
+      '1 round of edits + unlimited small fixes',
     ],
     cta: 'Start here',
     accent: 'border-ink/15 bg-parchment',
@@ -25,6 +27,7 @@ const tiers = [
     name: 'Pro',
     price: '$2,500',
     paymentNote: 'or 2-pay · $1,250 today + $1,250 in 30 days',
+    timeline: '7–10 business days',
     blurb: 'A full launch-ready site with a working sales funnel. Most people want this one.',
     bullets: [
       'Up to 8 pages including a real sales page',
@@ -32,6 +35,7 @@ const tiers = [
       'Kit (or your email tool) wired in',
       'Brand voice copy across the funnel',
       'Mobile-perfect, conversion-aware design',
+      '2 rounds of edits + unlimited small fixes',
     ],
     cta: 'Book a discovery call',
     accent: 'border-sunrise bg-sunrise/12',
@@ -41,6 +45,7 @@ const tiers = [
     name: 'Custom',
     price: '$4,000+',
     paymentNote: 'Custom payment plans available',
+    timeline: '2–3 weeks',
     blurb: 'For coaches launching a full ecosystem — multi-page funnel, automations, AI agents, the works.',
     bullets: [
       'Everything in Pro',
@@ -48,6 +53,7 @@ const tiers = [
       'Email automation + AI copy agents',
       'Custom integrations (Kit, ThriveCart, Calendly, more)',
       'Tailored to your launch plan',
+      '3 rounds of edits + unlimited small fixes',
     ],
     cta: 'Let’s talk',
     accent: 'border-ink/15 bg-parchment',
@@ -73,7 +79,7 @@ const retainers = [
 const process = [
   { num: '01', title: 'Discovery call', desc: 'Free 20 minutes. We make sure this is the right fit. I take 2 builds a month — if it’s yes, you pick a slot.' },
   { num: '02', title: 'Scope + deposit', desc: 'You get a one-page build plan. 50% deposit locks your slot. Clear scope means no surprise scope-creep.' },
-  { num: '03', title: 'Build (10–14 days)', desc: 'I build alongside AI, but everything you see is approved by me. You get progress check-ins, not radio silence.' },
+  { num: '03', title: 'Build (3 days to 3 weeks)', desc: 'Most sites ship in under 10 business days. I build alongside AI, but everything you see is approved by me. You get daily check-ins, not radio silence.' },
   { num: '04', title: 'Launch + 30-day support', desc: 'We ship it live. Then 30 days of free support to fix anything that surfaces. After that, the retainer kicks in if you want it.' },
 ]
 
@@ -88,7 +94,7 @@ const faqs = [
   },
   {
     q: 'How long does the build take?',
-    a: 'Starter: ~7 days. Pro: 10–14 days. Custom: 3–4 weeks. Once your deposit is in, you’re on the calendar. I deliver on the date I promise.',
+    a: 'Starter: 3–5 business days. Pro: 7–10 business days. Custom: 2–3 weeks. Most agencies quote 4–12 weeks for the same work. I move faster because I build alongside AI and scope tight from day one — not because I cut corners. Once your deposit is in, you’re on my calendar with a launch date that doesn’t move.',
   },
   {
     q: 'What’s included in maintenance?',
@@ -186,7 +192,7 @@ export default function BuildPage() {
 
           <div className="grid md:grid-cols-3 gap-5 mt-12">
             {tiers.map((tier, i) => (
-              <RevealSection key={tier.name} delay={i * 80}>
+              <RevealSection key={tier.name} delay={i * 0.08}>
                 <div className={`relative h-full rounded-3xl border-2 ${tier.accent} p-7`}>
                   {tier.badge && (
                     <span className="absolute -top-3 left-7 inline-flex items-center bg-ink text-white text-[10px] font-bold uppercase tracking-[0.18em] px-3 py-1 rounded-full">
@@ -196,7 +202,16 @@ export default function BuildPage() {
                   <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-2">{tier.name}</p>
                   <p className="font-heading text-3xl font-bold text-ink mb-1">{tier.price}</p>
                   {tier.paymentNote && (
-                    <p className="text-ink/55 text-xs mb-3 leading-relaxed">{tier.paymentNote}</p>
+                    <p className="text-ink/55 text-xs mb-2 leading-relaxed">{tier.paymentNote}</p>
+                  )}
+                  {tier.timeline && (
+                    <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-ink bg-white border border-ink/12 rounded-full px-2.5 py-1 mb-4">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.4} viewBox="0 0 24 24" aria-hidden>
+                        <circle cx="12" cy="12" r="9" />
+                        <path strokeLinecap="round" d="M12 7v5l3 2" />
+                      </svg>
+                      Ships in {tier.timeline}
+                    </p>
                   )}
                   <p className="text-ink/70 leading-relaxed mb-5 text-sm">{tier.blurb}</p>
                   <ul className="space-y-2.5 text-sm text-ink/75 mb-6">
@@ -237,7 +252,7 @@ export default function BuildPage() {
 
           <div className="grid md:grid-cols-2 gap-5 mt-10">
             {retainers.map((r, i) => (
-              <RevealSection key={r.name} delay={i * 80}>
+              <RevealSection key={r.name} delay={i * 0.08}>
                 <div className="rounded-3xl border-2 border-ink/15 bg-parchment p-7">
                   <div className="flex items-baseline justify-between mb-3">
                     <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em]">{r.name}</p>
@@ -297,7 +312,7 @@ export default function BuildPage() {
 
           <div className="grid md:grid-cols-2 gap-5 mt-12">
             {process.map((step, i) => (
-              <RevealSection key={step.num} delay={i * 60}>
+              <RevealSection key={step.num} delay={i * 0.06}>
                 <div className="rounded-3xl bg-white border border-ink/10 p-7">
                   <p className="font-heading text-4xl font-black text-sunrise mb-2">{step.num}</p>
                   <p className="font-heading text-xl font-bold text-ink mb-2">{step.title}</p>
@@ -339,7 +354,7 @@ export default function BuildPage() {
 
           <div className="space-y-4">
             {faqs.map((f, i) => (
-              <RevealSection key={f.q} delay={i * 40}>
+              <RevealSection key={f.q} delay={i * 0.04}>
                 <details className="group rounded-2xl border border-ink/10 bg-parchment p-5">
                   <summary className="font-heading font-bold text-ink cursor-pointer list-none flex items-center justify-between gap-3">
                     <span>{f.q}</span>
