@@ -1,11 +1,15 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import RevealSection from '../components/RevealSection'
+
+const CALENDLY_URL = 'https://calendly.com/osilpistolecoaching/discovery-call-website-build'
 
 // Tiered build offerings — Pro is the recommended hero offer
 const tiers = [
   {
     name: 'Starter',
     price: '$1,500',
+    paymentNote: 'or 2-pay · $750 today + $750 in 30 days',
     blurb: 'A clean 5-page brochure site. For when you have an offer and just need it presented well.',
     bullets: [
       'Up to 5 pages (Home, About, Offer, Contact + one)',
@@ -20,6 +24,7 @@ const tiers = [
   {
     name: 'Pro',
     price: '$2,500',
+    paymentNote: 'or 2-pay · $1,250 today + $1,250 in 30 days',
     blurb: 'A full launch-ready site with a working sales funnel. Most people want this one.',
     bullets: [
       'Up to 8 pages including a real sales page',
@@ -35,6 +40,7 @@ const tiers = [
   {
     name: 'Custom',
     price: '$4,000+',
+    paymentNote: 'Custom payment plans available',
     blurb: 'For coaches launching a full ecosystem — multi-page funnel, automations, AI agents, the works.',
     bullets: [
       'Everything in Pro',
@@ -99,6 +105,20 @@ const faqs = [
 ]
 
 export default function BuildPage() {
+  // Lazy-load the Calendly widget script once when the page mounts.
+  useEffect(() => {
+    if (document.querySelector('script[src*="calendly.com/assets/external/widget.js"]')) return
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://assets.calendly.com/assets/external/widget.css'
+    document.head.appendChild(link)
+
+    const script = document.createElement('script')
+    script.src = 'https://assets.calendly.com/assets/external/widget.js'
+    script.async = true
+    document.body.appendChild(script)
+  }, [])
+
   return (
     <>
       {/* HERO — parchment + sunrise accent */}
@@ -174,7 +194,10 @@ export default function BuildPage() {
                     </span>
                   )}
                   <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-2">{tier.name}</p>
-                  <p className="font-heading text-3xl font-bold text-ink mb-3">{tier.price}</p>
+                  <p className="font-heading text-3xl font-bold text-ink mb-1">{tier.price}</p>
+                  {tier.paymentNote && (
+                    <p className="text-ink/55 text-xs mb-3 leading-relaxed">{tier.paymentNote}</p>
+                  )}
                   <p className="text-ink/70 leading-relaxed mb-5 text-sm">{tier.blurb}</p>
                   <ul className="space-y-2.5 text-sm text-ink/75 mb-6">
                     {tier.bullets.map(b => (
@@ -330,23 +353,35 @@ export default function BuildPage() {
         </div>
       </section>
 
-      {/* BOOK CTA */}
+      {/* BOOK CTA — inline Calendly widget */}
       <section id="book" className="px-6 lg:px-14 py-24 bg-ink text-parchment">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
           <RevealSection>
-            <p className="text-parchment/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-4">Book the call</p>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight">
-              Two slots a month. Let’s see if one of them is yours.
-            </h2>
-            <p className="text-parchment/70 text-lg leading-relaxed mt-6 max-w-2xl mx-auto">
-              Twenty minutes. No pitch. We figure out together whether I’m the right build partner — or whether someone else would serve you better.
-            </p>
+            <div className="text-center mb-10">
+              <p className="text-parchment/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-4">Book the call</p>
+              <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight">
+                Two slots a month. Let’s see if one of them is yours.
+              </h2>
+              <p className="text-parchment/70 text-lg leading-relaxed mt-6 max-w-2xl mx-auto">
+                Twenty minutes. No pitch. We figure out together whether I’m the right build partner — or whether someone else would serve you better.
+              </p>
+            </div>
+
+            {/* Calendly inline widget */}
+            <div
+              className="calendly-inline-widget rounded-3xl overflow-hidden bg-parchment"
+              data-url={CALENDLY_URL}
+              style={{ minWidth: '320px', height: '700px' }}
+            />
+
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="mailto:osilpistole@gmail.com?subject=Discovery%20Call%20%2D%20Website%20Build&body=Hi%20Osil%2C%0A%0AI%27d%20like%20to%20book%20a%20discovery%20call%20about%20a%20website%20build.%0A%0AHere%27s%20what%20I%27m%20working%20on%3A%0A%0A%0AMy%20current%20website%20%2F%20platform%3A%0A%0A%0AThanks!%0A"
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-sunrise text-ink text-sm font-bold hover:bg-[#f0be2e] transition-all duration-200 shadow-lg"
               >
-                Email Osil to book →
+                Open Calendly in a new tab →
               </a>
               <Link
                 to="/work-with-me"
@@ -355,9 +390,6 @@ export default function BuildPage() {
                 See all services
               </Link>
             </div>
-            <p className="text-parchment/45 text-xs mt-8 max-w-md mx-auto leading-relaxed">
-              I’ll respond within 24 hours to book your call. (Calendar link coming soon — for now, fastest path is the email above.)
-            </p>
           </RevealSection>
         </div>
       </section>
