@@ -41,7 +41,7 @@ export default function NewOfferBanner() {
                 </div>
 
                 <h3 className="font-heading text-2xl md:text-3xl font-bold text-ink tracking-tight leading-[1.15] mb-3">
-                  Website + Product Builds — done with AI, in your voice.
+                  Website + Product Builds — built to sound like your work.
                 </h3>
                 <p className="text-ink/70 text-[15px] leading-relaxed max-w-2xl">
                   Coaches, consultants, ministries, small businesses, and creators — your site should sound like your work. Four tiers from $1,500. Ships in 3 days to 3 weeks. Built on your platform or a fresh one.

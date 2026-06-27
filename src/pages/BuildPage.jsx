@@ -79,7 +79,7 @@ const retainers = [
 const process = [
   { num: '01', title: 'Discovery call', desc: 'Free 20 minutes. We make sure this is the right fit. I take 2 builds a month — if it’s yes, you pick a slot.' },
   { num: '02', title: 'Scope + deposit', desc: 'You get a one-page build plan. 50% deposit locks your slot. Clear scope means no surprise scope-creep.' },
-  { num: '03', title: 'Build (3 days to 3 weeks)', desc: 'Most sites ship in under 10 business days. I build alongside AI, but everything you see is approved by me. You get daily check-ins, not radio silence.' },
+  { num: '03', title: 'Build (3 days to 3 weeks)', desc: 'Most sites ship in under 10 business days. Tight scope, daily check-ins, every detail approved by me before it lands. No radio silence.' },
   { num: '04', title: 'Launch + 30-day support', desc: 'We ship it live. Then 30 days of free support to fix anything that surfaces. After that, the retainer kicks in if you want it.' },
 ]
 
@@ -94,7 +94,7 @@ const faqs = [
   },
   {
     q: 'How long does the build take?',
-    a: 'Starter: 3–5 business days. Pro: 7–10 business days. Custom: 2–3 weeks. Most agencies quote 4–12 weeks for the same work. I move faster because I build alongside AI and scope tight from day one — not because I cut corners. Once your deposit is in, you’re on my calendar with a launch date that doesn’t move.',
+    a: 'Starter: 3–5 business days. Pro: 7–10 business days. Custom: 2–3 weeks. Most agencies quote 4–12 weeks for the same work. I move faster because I scope tight from day one and use a sharp build process — not because I cut corners. Once your deposit is in, you’re on my calendar with a launch date that doesn’t move.',
   },
   {
     q: 'What’s included in maintenance?',
@@ -161,7 +161,7 @@ export default function BuildPage() {
               Your website should sound like your work — clear, calm, and undeniably yours.
             </h1>
             <p className="mt-8 text-ink/65 text-lg leading-relaxed max-w-2xl">
-              You already have what you need. The offer’s strong, the voice is real — the site just doesn’t carry the weight yet. I build sites that do. <strong className="text-ink">Strategy-led, AI-accelerated, voice-true.</strong>
+              You already have what you need. The offer’s strong, the voice is real — the site just doesn’t carry the weight yet. I build sites that do. <strong className="text-ink">Strategy-led. Voice-true. Built to last.</strong>
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <a
@@ -180,7 +180,7 @@ export default function BuildPage() {
               </a>
             </div>
             <p className="mt-6 text-ink/45 text-xs">
-              You’re reading proof. This site you’re on right now? Built by me, with AI, in under a week.
+              You’re reading proof. This site you’re on right now? Built by me. In under a week.
             </p>
           </RevealSection>
         </div>
@@ -369,12 +369,12 @@ export default function BuildPage() {
           <RevealSection>
             <p className="text-parchment/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">Why this works</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight max-w-3xl">
-              Built with AI. Built by a strategist. Built so it lasts.
+              Strategic. Fast. Built so it lasts.
             </h2>
             <div className="grid md:grid-cols-3 gap-8 mt-12">
               <div>
                 <p className="font-heading text-2xl font-bold text-sunrise mb-2">Faster</p>
-                <p className="text-parchment/70 text-sm leading-relaxed">I build alongside AI — so what takes most agencies 40 hours takes me 10. You get launched in days, not months.</p>
+                <p className="text-parchment/70 text-sm leading-relaxed">Tight scope from day one. Daily check-ins. Modern tools and a sharp process — so months of agency work compress into days. Not because I cut corners. Because I work tight.</p>
               </div>
               <div>
                 <p className="font-heading text-2xl font-bold text-sunrise mb-2">In your voice</p>
