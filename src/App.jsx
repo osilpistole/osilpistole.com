@@ -4,7 +4,6 @@ import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import MetaPixelPageView from './components/MetaPixelPageView'
 import BackToTop from './components/BackToTop'
-import EmailSlideIn from './components/EmailSlideIn'
 import AskOsilBubble from './components/AskOsilBubble.jsx'
 import Home from './pages/Home'
 import WorkWithMe from './pages/WorkWithMe'
@@ -75,7 +74,6 @@ function SiteLayout() {
       </main>
       <Footer />
       <BackToTop />
-      <EmailSlideIn />
       <AskOsilBubble />
     </div>
   )

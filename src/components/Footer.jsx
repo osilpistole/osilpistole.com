@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const navLinks = [
@@ -8,12 +9,82 @@ const navLinks = [
   { label: 'Contact', to: '/contact' },
 ]
 
+function FooterSubscribe() {
+  const [firstName, setFirstName] = useState('')
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
+
+  async function onSubmit(e) {
+    e.preventDefault()
+    if (status === 'sending') return
+    setStatus('sending')
+    try {
+      const res = await fetch('https://app.kit.com/forms/4edb810d28/subscriptions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ email_address: email, first_name: firstName }),
+      })
+      if (res.ok) {
+        setStatus('success')
+        setFirstName('')
+        setEmail('')
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-widest text-white/30 mb-4">My Sunday Note</p>
+      <p className="text-white/55 text-sm leading-relaxed mb-4">
+        One short letter on a Sunday. One small step for the week ahead. Nothing pushy — leave anytime.
+      </p>
+      {status === 'success' ? (
+        <p className="text-sunrise text-sm font-semibold">You&rsquo;re in. Check your inbox.</p>
+      ) : (
+        <form onSubmit={onSubmit} className="space-y-2">
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First name"
+            className="w-full bg-white/5 border border-white/10 focus:border-sunrise/60 focus:outline-none text-white placeholder-white/30 text-sm rounded-md px-3 py-2 transition-colors"
+            disabled={status === 'sending'}
+          />
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="w-full bg-white/5 border border-white/10 focus:border-sunrise/60 focus:outline-none text-white placeholder-white/30 text-sm rounded-md px-3 py-2 transition-colors"
+            disabled={status === 'sending'}
+          />
+          <button
+            type="submit"
+            disabled={status === 'sending' || !email}
+            className="w-full bg-sunrise hover:bg-[#f0be2e] disabled:opacity-60 disabled:cursor-not-allowed text-ink font-bold text-sm rounded-md py-2 transition-colors"
+          >
+            {status === 'sending' ? 'Sending…' : 'Subscribe'}
+          </button>
+          {status === 'error' && (
+            <p className="text-red-300 text-xs">Something hiccupped. Try again in a moment.</p>
+          )}
+        </form>
+      )}
+    </div>
+  )
+}
+
 export default function Footer() {
   return (
     <footer className="relative bg-ink text-white py-16 px-6 lg:px-10">
       <div className="absolute top-0 left-0 right-0 h-1 color-stripe" />
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-12">
           <div>
             <p className="font-heading text-2xl font-semibold mb-2">Osil Pistole</p>
             <p className="text-white/50 text-sm">Speaker, Consultant, Mentor</p>
@@ -55,6 +126,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
+          <FooterSubscribe />
         </div>
         <div className="mt-12 pt-8 border-t border-white/10 text-center">
           <p className="text-white/30 text-sm">&copy; {new Date().getFullYear()} Osil Pistole. All rights reserved.</p>
