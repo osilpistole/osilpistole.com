@@ -35,6 +35,7 @@ import CallingQuiz from './components/CallingQuiz'
 import FreePage from './pages/FreePage'
 import ContentPlanPage from './pages/ContentPlanPage'
 import ContentPlanQuiz from './components/ContentPlanQuiz'
+import BuildPage from './pages/BuildPage'
 
 function SiteLayout() {
   return (
@@ -69,6 +70,7 @@ function SiteLayout() {
           <Route path="/calling" element={<CallingPage />} />
           <Route path="/free" element={<FreePage />} />
           <Route path="/30-days-done" element={<ContentPlanPage />} />
+          <Route path="/build" element={<BuildPage />} />
         </Routes>
       </main>
       <Footer />
