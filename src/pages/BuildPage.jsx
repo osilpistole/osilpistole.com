@@ -202,8 +202,8 @@ export default function BuildPage() {
 
           <div className="grid md:grid-cols-3 gap-5 mt-12">
             {tiers.map((tier, i) => (
-              <RevealSection key={tier.name} delay={i * 0.08}>
-                <div className={`relative h-full rounded-3xl border-2 ${tier.accent} p-7`}>
+              <RevealSection key={tier.name} delay={i * 0.08} className="h-full">
+                <div className={`relative h-full rounded-3xl border-2 ${tier.accent} p-7 flex flex-col`}>
                   {tier.badge && (
                     <span className="absolute -top-3 left-7 inline-flex items-center bg-ink text-white text-[10px] font-bold uppercase tracking-[0.18em] px-3 py-1 rounded-full">
                       {tier.badge}
@@ -235,7 +235,7 @@ export default function BuildPage() {
                   <a
                     href="#book"
                     onClick={handleAnchorClick('book')}
-                    className={`block text-center text-sm font-bold rounded-full py-3 transition-colors ${
+                    className={`block text-center text-sm font-bold rounded-full py-3 transition-colors mt-auto ${
                       tier.badge
                         ? 'bg-ink text-white hover:bg-ink/85'
                         : 'border-2 border-ink/25 text-ink hover:border-ink/50 hover:bg-ink/5'
@@ -263,8 +263,8 @@ export default function BuildPage() {
 
           <div className="grid md:grid-cols-2 gap-5 mt-10">
             {retainers.map((r, i) => (
-              <RevealSection key={r.name} delay={i * 0.08}>
-                <div className="rounded-3xl border-2 border-ink/15 bg-parchment p-7">
+              <RevealSection key={r.name} delay={i * 0.08} className="h-full">
+                <div className="rounded-3xl border-2 border-ink/15 bg-parchment p-7 h-full flex flex-col">
                   <div className="flex items-baseline justify-between mb-3">
                     <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em]">{r.name}</p>
                     <p className="font-heading text-2xl font-bold text-ink">{r.price}</p>
@@ -386,8 +386,8 @@ export default function BuildPage() {
 
           <div className="grid md:grid-cols-2 gap-5 mt-12">
             {process.map((step, i) => (
-              <RevealSection key={step.num} delay={i * 0.06}>
-                <div className="rounded-3xl bg-white border border-ink/10 p-7">
+              <RevealSection key={step.num} delay={i * 0.06} className="h-full">
+                <div className="rounded-3xl bg-white border border-ink/10 p-7 h-full flex flex-col">
                   <p className="font-heading text-4xl font-black text-sunrise mb-2">{step.num}</p>
                   <p className="font-heading text-xl font-bold text-ink mb-2">{step.title}</p>
                   <p className="text-ink/65 text-sm leading-relaxed">{step.desc}</p>
