@@ -110,6 +110,14 @@ const faqs = [
   },
 ]
 
+// Smooth-scroll to an in-page section WITHOUT updating the URL hash.
+// Prevents the page from auto-scrolling to the Calendly widget on refresh.
+const handleAnchorClick = (id) => (e) => {
+  e.preventDefault()
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 export default function BuildPage() {
   // Lazy-load the Calendly widget script once when the page mounts.
   useEffect(() => {
@@ -143,12 +151,14 @@ export default function BuildPage() {
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <a
                 href="#book"
+                onClick={handleAnchorClick('book')}
                 className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-ink text-white text-sm font-bold hover:bg-ink/85 transition-all duration-200 shadow-lg"
               >
                 Book a 20-min discovery call
               </a>
               <a
                 href="#tiers"
+                onClick={handleAnchorClick('tiers')}
                 className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border-2 border-ink/25 text-ink text-sm font-semibold hover:border-ink/50 hover:bg-ink/5 transition-all duration-200"
               >
                 See what’s included
@@ -224,6 +234,7 @@ export default function BuildPage() {
                   </ul>
                   <a
                     href="#book"
+                    onClick={handleAnchorClick('book')}
                     className={`block text-center text-sm font-bold rounded-full py-3 transition-colors ${
                       tier.badge
                         ? 'bg-ink text-white hover:bg-ink/85'
@@ -304,6 +315,7 @@ export default function BuildPage() {
                 </div>
                 <a
                   href="#book"
+                  onClick={handleAnchorClick('book')}
                   className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-ink text-white text-sm font-bold hover:bg-ink/85 transition-all duration-200 shadow-lg"
                 >
                   Book a discovery call
