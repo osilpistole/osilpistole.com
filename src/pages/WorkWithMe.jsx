@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import ButtonPrimary from '../components/ButtonPrimary'
 import RevealSection from '../components/RevealSection'
 import PageCTA from '../components/PageCTA'
-import NewOfferBanner from '../components/NewOfferBanner'
 
 const services = [
   {
@@ -25,6 +24,12 @@ const services = [
     num: '04', title: 'Coaching & Training', accent: 'bg-ink', to: '/coaching',
     desc: 'Group coaching, team training, and one-on-one coaching for leaders, ministries, businesses, and organizations ready for real movement.',
     tags: ['One-on-One', 'Group Coaching', 'Team Training', 'Organizations'],
+  },
+  {
+    num: '05', title: 'Website + Product Build', accent: 'bg-sunrise', to: '/build',
+    desc: 'Strategic, fast website builds for coaches, consultants, ministries, small businesses, and creators. Four tiers from $1,500 — ships in 3 days to 3 weeks. Two slots a month.',
+    tags: ['Starter $1,500', 'Pro $2,500', 'Custom $4,000+', 'Business $5,000+'],
+    isNew: true,
   },
 ]
 
@@ -87,8 +92,6 @@ export default function WorkWithMe() {
         </div>
       </section>
 
-      <NewOfferBanner />
-
       {/* Services — horizontal stacked rows */}
       <section className="py-16 md:py-24 px-6 lg:px-14 bg-white">
         <div className="max-w-7xl mx-auto divide-y divide-ink/8">
@@ -112,6 +115,12 @@ export default function WorkWithMe() {
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-morning/20 text-ink/50 text-[10px] font-bold uppercase tracking-widest shrink-0">
                         <span className="w-1 h-1 rounded-full bg-morning animate-pulse" />
                         Coming Soon
+                      </span>
+                    )}
+                    {s.isNew && (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-ink text-white text-[10px] font-bold uppercase tracking-widest shrink-0">
+                        <span className="w-1 h-1 rounded-full bg-sunrise animate-pulse" />
+                        New Offer
                       </span>
                     )}
                   </div>

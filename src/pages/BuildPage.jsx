@@ -9,7 +9,7 @@ const tiers = [
   {
     name: 'Starter',
     price: '$1,500',
-    paymentNote: 'or 2-pay · $750 today + $750 in 30 days',
+    paymentNote: 'or 2-pay · $750 today + $750 on launch day',
     timeline: '3–5 business days',
     blurb: 'A clean 5-page brochure site. For when you have an offer and just need it presented well.',
     bullets: [
@@ -26,7 +26,7 @@ const tiers = [
   {
     name: 'Pro',
     price: '$2,500',
-    paymentNote: 'or 2-pay · $1,250 today + $1,250 in 30 days',
+    paymentNote: 'or 2-pay · $1,250 today + $1,250 on launch day',
     timeline: '7–10 business days',
     blurb: 'A full launch-ready site with a working sales funnel. Most people want this one.',
     bullets: [
@@ -107,6 +107,10 @@ const faqs = [
   {
     q: 'What if we’re not a fit?',
     a: 'No pressure. The discovery call is exactly for that. If I’m not the right person, I’ll tell you and point you somewhere better. Honest answer over fast yes.',
+  },
+  {
+    q: 'What if something\'s broken or off after launch?',
+    a: '7-day post-launch fix guarantee. If anything is broken or doesn\'t match what we scoped, I fix it free in the first week — no questions. After that, the 30-day support window covers ongoing small adjustments. Refunds are only available before work begins.',
   },
 ]
 
@@ -210,7 +214,7 @@ export default function BuildPage() {
           <RevealSection>
             <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">The build</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
-              Three tiers. Same care on every one.
+              Three core tiers — plus a Business build for B2B teams.
             </h2>
             <p className="text-ink/60 text-lg mt-4 max-w-2xl">Pick the one that matches where you are. You can always upgrade later — nothing has to be re-done.</p>
           </RevealSection>
@@ -265,43 +269,8 @@ export default function BuildPage() {
         </div>
       </section>
 
-      {/* MAINTENANCE */}
-      <section className="px-6 lg:px-14 py-20 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">After launch</p>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
-              Optional maintenance, so your site keeps working while you keep working.
-            </h2>
-            <p className="text-ink/60 text-lg mt-4 max-w-2xl">Skip it if you’d rather handle updates yourself. Both retainers are pause-or-cancel anytime.</p>
-          </RevealSection>
-
-          <div className="grid md:grid-cols-2 gap-5 mt-10">
-            {retainers.map((r, i) => (
-              <RevealSection key={r.name} delay={i * 0.08} className="h-full">
-                <div className="rounded-3xl border-2 border-ink/15 bg-parchment p-7 h-full flex flex-col">
-                  <div className="flex items-baseline justify-between mb-3">
-                    <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em]">{r.name}</p>
-                    <p className="font-heading text-2xl font-bold text-ink">{r.price}</p>
-                  </div>
-                  <p className="text-ink/70 leading-relaxed mb-5 text-sm">{r.blurb}</p>
-                  <ul className="space-y-2.5 text-sm text-ink/75">
-                    {r.bullets.map(b => (
-                      <li key={b} className="flex items-start gap-2.5">
-                        <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-growth flex-shrink-0" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </RevealSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* BUSINESS TIER — separate section for B2B / corporate buyers */}
-      <section className="px-6 lg:px-14 py-20 bg-parchment">
+      <section className="px-6 lg:px-14 py-20 bg-white">
         <div className="max-w-5xl mx-auto">
           <RevealSection>
             <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">For Businesses + Corporations</p>
@@ -360,6 +329,41 @@ export default function BuildPage() {
               </div>
             </div>
           </RevealSection>
+        </div>
+      </section>
+
+      {/* MAINTENANCE */}
+      <section className="px-6 lg:px-14 py-20 bg-parchment">
+        <div className="max-w-5xl mx-auto">
+          <RevealSection>
+            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">After launch</p>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
+              Optional maintenance, so your site keeps working while you keep working.
+            </h2>
+            <p className="text-ink/60 text-lg mt-4 max-w-2xl">Skip it if you’d rather handle updates yourself. Both retainers are pause-or-cancel anytime.</p>
+          </RevealSection>
+
+          <div className="grid md:grid-cols-2 gap-5 mt-10">
+            {retainers.map((r, i) => (
+              <RevealSection key={r.name} delay={i * 0.08} className="h-full">
+                <div className="rounded-3xl border-2 border-ink/15 bg-white p-7 h-full flex flex-col">
+                  <div className="flex items-baseline justify-between mb-3">
+                    <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em]">{r.name}</p>
+                    <p className="font-heading text-2xl font-bold text-ink">{r.price}</p>
+                  </div>
+                  <p className="text-ink/70 leading-relaxed mb-5 text-sm">{r.blurb}</p>
+                  <ul className="space-y-2.5 text-sm text-ink/75">
+                    {r.bullets.map(b => (
+                      <li key={b} className="flex items-start gap-2.5">
+                        <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-growth flex-shrink-0" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </RevealSection>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -476,6 +480,8 @@ export default function BuildPage() {
               className="calendly-inline-widget rounded-3xl overflow-hidden bg-parchment"
               data-url={CALENDLY_URL}
               style={{ minWidth: '320px', height: '700px' }}
+              role="region"
+              aria-label="Book a discovery call — Calendly scheduling widget"
             />
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">

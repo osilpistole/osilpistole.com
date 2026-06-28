@@ -58,7 +58,8 @@ const services = [
     slug: 'website-planning-and-development',
     accent: 'bg-growth',
     accentText: 'text-growth',
-    desc: 'A great website starts with strategy, not design. Osil helps you think through your site architecturally — what pages do you need, what should each one accomplish, how should visitors move through it, and what action should they take. Wireframing, content planning, and design direction so your site is not just beautiful but effective and aligned with your goals. Need the actual build too? Osil now offers full website builds — see osilpistole.com/build.',
+    desc: 'A great website starts with strategy, not design. Osil helps you think through your site architecturally — what pages do you need, what should each one accomplish, how should visitors move through it, and what action should they take. Wireframing, content planning, and design direction so your site is not just beautiful but effective and aligned with your goals.',
+    relatedLink: { label: 'Need the actual build too? See the Website + Product Build offer →', to: '/build' },
   },
   {
     num: '08',
@@ -155,6 +156,14 @@ export default function ConsultingServicesPage() {
                     {s.title}
                   </h2>
                   <p className="text-ink/55 text-[15px] leading-relaxed">{s.desc}</p>
+                  {s.relatedLink && (
+                    <Link
+                      to={s.relatedLink.to}
+                      className={`mt-5 inline-flex items-center gap-1.5 text-sm font-semibold ${s.accentText} hover:underline`}
+                    >
+                      {s.relatedLink.label}
+                    </Link>
+                  )}
                 </div>
               </RevealSection>
             ))}

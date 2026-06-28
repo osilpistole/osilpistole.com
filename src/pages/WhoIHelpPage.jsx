@@ -47,8 +47,8 @@ const audiences = [
       },
       {
         name: 'Website Design & Build',
-        desc: 'A website that actually converts. Osil\'s team designs and builds clean, strategic sites that reflect your brand and move people to action.',
-        link: '/consulting',
+        desc: 'A website that actually converts. Strategic, in your voice, built fast. Four tiers from $1,500.',
+        link: '/build',
       },
       {
         name: 'Social Media Strategy',
@@ -117,8 +117,8 @@ const audiences = [
       },
       {
         name: 'Website & Digital Presence',
-        desc: 'Your website should do work. Osil\'s team builds founder sites that communicate clearly, convert visitors, and reflect where you\'re going.',
-        link: '/consulting',
+        desc: 'Your website should do work. Founder sites that communicate clearly, convert visitors, and reflect where you\'re going. Built fast, in your voice.',
+        link: '/build',
       },
       {
         name: 'Prophetic Strategy Session',
@@ -213,7 +213,7 @@ const audiences = [
       {
         name: 'Church Website & Digital',
         desc: 'A church website that actually serves your congregation and reaches new people. Clear, accessible, and built to last.',
-        link: '/consulting',
+        link: '/build',
       },
     ],
     accent: 'bg-sunrise',
