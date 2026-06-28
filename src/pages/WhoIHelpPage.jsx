@@ -92,7 +92,7 @@ const audiences = [
       },
       {
         name: 'Ministry Consulting',
-        desc: 'Strategic consulting for your ministry structure, communication, website, and outreach — so your mission reaches the people it\'s meant for.',
+        desc: 'Strategic consulting for your ministry structure, communication, and outreach — so your mission reaches the people it\'s meant for.',
         link: '/consulting',
       },
     ],

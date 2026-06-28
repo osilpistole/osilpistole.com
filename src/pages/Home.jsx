@@ -205,7 +205,7 @@ const helpCards = [
   },
   {
     num: '02', title: 'Consulting', accent: 'bg-growth', textAccent: 'text-white',
-    text: 'Business consulting and strategic implementation from start to finish — branding, marketing, web, advertising, and growth strategy.',
+    text: 'Business consulting and strategic implementation from start to finish — branding, marketing, advertising, and growth strategy.',
     link: '/consulting',
   },
   {

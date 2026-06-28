@@ -54,11 +54,11 @@ const services = [
   },
   {
     num: '07',
-    title: 'Website Planning and Development',
+    title: 'Website Strategy and Planning',
     slug: 'website-planning-and-development',
     accent: 'bg-growth',
     accentText: 'text-growth',
-    desc: 'A great website starts with strategy, not design. Osil helps you think through your site architecturally — what pages do you need, what should each one accomplish, how should visitors move through it, and what action should they take. From wireframing and content planning to design direction and development oversight, she ensures your website is not just beautiful but effective and aligned with your goals.',
+    desc: 'A great website starts with strategy, not design. Osil helps you think through your site architecturally — what pages do you need, what should each one accomplish, how should visitors move through it, and what action should they take. Wireframing, content planning, and design direction so your site is not just beautiful but effective and aligned with your goals. Need the actual build too? Osil now offers full website builds — see osilpistole.com/build.',
   },
   {
     num: '08',

@@ -10,7 +10,7 @@ const services = [
   { label: 'Brand development',                    slug: 'brand-development' },
   { label: 'Messaging and positioning',            slug: 'messaging-and-positioning' },
   { label: 'Marketing and advertising strategy',   slug: 'marketing-and-advertising-strategy' },
-  { label: 'Website planning and development',     slug: 'website-planning-and-development' },
+  { label: 'Website strategy and planning',        slug: 'website-planning-and-development' },
   { label: 'App development strategy',             slug: 'app-development-strategy' },
   { label: 'Social media management and growth',   slug: 'social-media-management-and-growth' },
   { label: 'Launch planning',                      slug: 'launch-planning' },

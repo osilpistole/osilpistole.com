@@ -12,7 +12,7 @@ const services = [
   },
   {
     num: '02', title: 'Consulting', accent: 'bg-growth', to: '/consulting',
-    desc: 'Business consulting and strategic implementation from start to finish — branding, marketing, web, advertising, and growth strategy.',
+    desc: 'Business consulting and strategic implementation from start to finish — branding, marketing, advertising, and growth strategy.',
     tags: ['Brand Development', 'Strategy', 'Marketing', 'Launch Planning', 'Growth'],
   },
   {
@@ -58,10 +58,10 @@ export default function WorkWithMe() {
               <div className="max-w-2xl">
                 <p className="text-growth text-[11px] font-bold uppercase tracking-[0.25em] mb-6">Work With Osil</p>
                 <h1 className="font-heading text-4xl md:text-5xl font-bold text-ink leading-[1.05] tracking-tight">
-                  Four ways to work together.
+                  Ways to work together.
                 </h1>
                 <p className="mt-8 text-ink/55 text-lg leading-relaxed max-w-xl">
-                  Whether you need a speaker, consultant, mentor, or coach — this is where vision becomes strategy, and strategy becomes action.
+                  Speaker, consultant, mentor, coach — or build partner. This is where vision becomes strategy, and strategy becomes action.
                 </p>
               </div>
             </RevealSection>
