@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import RevealSection from '../components/RevealSection'
 
@@ -122,6 +122,45 @@ const handleAnchorClick = (id) => (e) => {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
+// Sticky mobile "Book a call" bar — shows after the visitor scrolls past
+// the hero, hides when they reach the booking section so it doesn't
+// double up with the inline Calendly widget.
+function MobileBookCta() {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    function onScroll() {
+      const past = window.scrollY > 600
+      const book = document.getElementById('book')
+      const nearBook = book && book.getBoundingClientRect().top < window.innerHeight + 100
+      setShow(past && !nearBook)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <div
+      className={`md:hidden fixed bottom-0 left-0 right-0 z-40 bg-ink/95 backdrop-blur-md px-4 py-3 border-t border-white/10 shadow-2xl transition-transform duration-300 ${
+        show ? 'translate-y-0' : 'translate-y-full'
+      }`}
+      aria-hidden={!show}
+    >
+      <a
+        href="#book"
+        onClick={handleAnchorClick('book')}
+        className="flex items-center justify-center gap-2 w-full bg-sunrise text-ink font-bold text-sm py-3 rounded-full shadow-lg"
+      >
+        Book a 20-min discovery call
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  )
+}
+
 export default function BuildPage() {
   // Always start at top of /build, even if the URL has a leftover #hash
   // from a previous session (some browsers cache it after a click +
@@ -160,7 +199,7 @@ export default function BuildPage() {
 
         <div className="relative max-w-7xl mx-auto">
           <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.25em] mb-6">Website + Product Builds · Two slots a month</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.25em] mb-6">Website + Product Builds · Two slots a month</p>
             <h1 className="font-heading text-4xl md:text-6xl font-bold text-ink leading-[1.05] tracking-tight max-w-4xl">
               Your website should sound like your work — clear, calm, and undeniably yours.
             </h1>
@@ -194,7 +233,7 @@ export default function BuildPage() {
       <section className="px-6 lg:px-14 py-20 bg-white">
         <div className="max-w-5xl mx-auto">
           <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">Who this is for</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">Who this is for</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
               Coaches, consultants, ministries, small businesses, and creators with something real to say — and a site that doesn’t say it yet.
             </h2>
@@ -205,6 +244,22 @@ export default function BuildPage() {
               <p>You want speed and quality — not one or the other.</p>
             </div>
           </RevealSection>
+
+          {/* WHO THIS ISN'T FOR */}
+          <RevealSection delay={0.1}>
+            <div className="mt-16 pt-12 border-t border-ink/8">
+              <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">And who this isn’t for</p>
+              <h3 className="font-heading text-2xl md:text-3xl font-bold text-ink tracking-tight max-w-3xl mb-8">
+                Honest answers over fast yeses. Here’s when we’re not a fit.
+              </h3>
+              <div className="grid md:grid-cols-2 gap-x-12 gap-y-5 text-ink/70 leading-relaxed">
+                <p>You don’t have an offer yet — you’re looking for a website to figure out what you do. (Start with Consulting or a Strategy Session first.)</p>
+                <p>You want endless rounds of edits and no scope. The whole point is tight, fast, on-time. If we can’t agree on scope, we can’t work together.</p>
+                <p>You need a full e-commerce store with hundreds of SKUs, inventory management, or a marketplace. That’s a different build, with a different team.</p>
+                <p>You want it for $500. The work is real and so is the price. If budget’s tight right now, save it and come back later — I’d rather see you ready than stretched.</p>
+              </div>
+            </div>
+          </RevealSection>
         </div>
       </section>
 
@@ -212,7 +267,7 @@ export default function BuildPage() {
       <section id="tiers" className="px-6 lg:px-14 py-20 bg-parchment">
         <div className="max-w-7xl mx-auto">
           <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">The build</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">The build</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
               Three core tiers — plus a Business build for B2B teams.
             </h2>
@@ -228,7 +283,7 @@ export default function BuildPage() {
                       {tier.badge}
                     </span>
                   )}
-                  <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-2">{tier.name}</p>
+                  <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-2">{tier.name}</p>
                   <p className="font-heading text-3xl font-bold text-ink mb-1">{tier.price}</p>
                   {tier.paymentNote && (
                     <p className="text-ink/55 text-xs mb-2 leading-relaxed">{tier.paymentNote}</p>
@@ -273,7 +328,7 @@ export default function BuildPage() {
       <section className="px-6 lg:px-14 py-20 bg-white">
         <div className="max-w-5xl mx-auto">
           <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">For Businesses + Corporations</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">For Businesses + Corporations</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
               Bigger sites. Bigger scope. Same care.
             </h2>
@@ -286,7 +341,7 @@ export default function BuildPage() {
             <div className="mt-12 rounded-3xl border-2 border-ink/15 bg-white p-7 md:p-10">
               <div className="grid md:grid-cols-[1fr_auto] gap-6 md:gap-12 items-start mb-8">
                 <div>
-                  <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-2">Business</p>
+                  <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-2">Business</p>
                   <p className="font-heading text-4xl font-bold text-ink mb-1">$5,000+</p>
                   <p className="text-ink/55 text-xs mb-2 leading-relaxed">Scoped per project · custom payment plans available</p>
                   <p className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-ink bg-parchment border border-ink/12 rounded-full px-2.5 py-1 mt-1">
@@ -336,7 +391,7 @@ export default function BuildPage() {
       <section className="px-6 lg:px-14 py-20 bg-parchment">
         <div className="max-w-5xl mx-auto">
           <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">After launch</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">After launch</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
               Optional maintenance, so your site keeps working while you keep working.
             </h2>
@@ -348,7 +403,7 @@ export default function BuildPage() {
               <RevealSection key={r.name} delay={i * 0.08} className="h-full">
                 <div className="rounded-3xl border-2 border-ink/15 bg-white p-7 h-full flex flex-col">
                   <div className="flex items-baseline justify-between mb-3">
-                    <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em]">{r.name}</p>
+                    <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em]">{r.name}</p>
                     <p className="font-heading text-2xl font-bold text-ink">{r.price}</p>
                   </div>
                   <p className="text-ink/70 leading-relaxed mb-5 text-sm">{r.blurb}</p>
@@ -371,7 +426,7 @@ export default function BuildPage() {
       <section className="px-6 lg:px-14 py-20 bg-ink text-parchment">
         <div className="max-w-5xl mx-auto">
           <RevealSection>
-            <p className="text-parchment/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">Why this works</p>
+            <p className="text-parchment/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">Why this works</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight max-w-3xl">
               Strategic. Fast. Built so it lasts.
             </h2>
@@ -397,7 +452,7 @@ export default function BuildPage() {
       <section className="px-6 lg:px-14 py-20 bg-parchment">
         <div className="max-w-5xl mx-auto">
           <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">The process</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">The process</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight max-w-3xl">
               Four steps. No mystery. No drag.
             </h2>
@@ -421,7 +476,7 @@ export default function BuildPage() {
       <section className="px-6 lg:px-14 py-20 bg-sunrise">
         <div className="max-w-4xl mx-auto text-center">
           <RevealSection>
-            <p className="text-ink/55 text-[11px] font-bold uppercase tracking-[0.22em] mb-4">Proof</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-4">Proof</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight">
               You’re standing in the showroom.
             </h2>
@@ -439,7 +494,7 @@ export default function BuildPage() {
       <section className="px-6 lg:px-14 py-20 bg-white">
         <div className="max-w-3xl mx-auto">
           <RevealSection>
-            <p className="text-ink/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">Honest questions</p>
+            <p className="text-ink/65 text-xs font-bold uppercase tracking-[0.22em] mb-3">Honest questions</p>
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink tracking-tight mb-12">
               Anything else you’re wondering.
             </h2>
@@ -466,7 +521,7 @@ export default function BuildPage() {
         <div className="max-w-4xl mx-auto">
           <RevealSection>
             <div className="text-center mb-10">
-              <p className="text-parchment/50 text-[11px] font-bold uppercase tracking-[0.22em] mb-4">Book the call</p>
+              <p className="text-parchment/65 text-xs font-bold uppercase tracking-[0.22em] mb-4">Book the call</p>
               <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight">
                 Two slots a month. Let’s see if one of them is yours.
               </h2>
@@ -503,6 +558,8 @@ export default function BuildPage() {
           </RevealSection>
         </div>
       </section>
+
+      <MobileBookCta />
     </>
   )
 }

@@ -43,7 +43,7 @@ function Hero() {
   const typed = useTypewriter(heroWords)
 
   return (
-    <section className="relative overflow-hidden bg-parchment">
+    <section className="relative overflow-hidden bg-parchment pb-10 md:pb-14">
       <div className="absolute top-0 left-0 right-0 h-1 color-stripe z-20" />
 
       {/* ── Mobile: photo stacked on top — pt clears the fixed nav ── */}
