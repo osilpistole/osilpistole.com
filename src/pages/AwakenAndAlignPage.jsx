@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { useEffect } from 'react'
 import BuyModal, { openBuyModal, preloadCheckoutOrigin } from '../components/BuyModal.jsx'
 import { trackViewContent, trackAddToCart, trackInitiateCheckout } from '../lib/metaPixel'
 
