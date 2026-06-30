@@ -1,5 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import BuyModal, { openBuyModal, preloadCheckoutOrigin } from '../components/BuyModal.jsx'
+import { trackViewContent, trackAddToCart, trackInitiateCheckout } from '../lib/metaPixel'
+
+// Map ThriveCart URL → product metadata for Pixel events.
+const PIXEL_PRODUCT_BY_URL = {
+  'https://osilpistole.thrivecart.com/awaken-and-align-meditation-series/':  { name: 'Awaken & Align Meditation Series', id: 'awaken-align-series', value: 47 },
+  'https://osilpistole.thrivecart.com/awaken-and-align-meditation-journal/': { name: 'Awaken & Align Journal',           id: 'awaken-align-journal', value: 27 },
+  'https://osilpistole.thrivecart.com/awaken-and-align-bundle/':             { name: 'Awaken & Align Bundle',            id: 'awaken-align-bundle',  value: 67 },
+}
 
 const TC_SERIES_URL  = 'https://osilpistole.thrivecart.com/awaken-and-align-meditation-series/'
 const TC_JOURNAL_URL = 'https://osilpistole.thrivecart.com/awaken-and-align-meditation-journal/'
@@ -252,7 +261,15 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
   return (
     <a
       href={href}
-      onClick={(e) => { e.preventDefault(); openBuyModal(href) }}
+      onClick={(e) => {
+        e.preventDefault()
+        const p = PIXEL_PRODUCT_BY_URL[href]
+        if (p) {
+          trackAddToCart(p)
+          trackInitiateCheckout(p)
+        }
+        openBuyModal(href)
+      }}
       onMouseEnter={() => preloadCheckoutOrigin(href)}
       onFocus={() => preloadCheckoutOrigin(href)}
       className={`${base} ${variants[variant]} ${className}`}
@@ -265,6 +282,16 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
 const GRAIN = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")"
 
 export default function AwakenAndAlignPage() {
+  // ViewContent on mount — builds the "viewed Awaken & Align" retargeting audience.
+  useEffect(() => {
+    trackViewContent({
+      name: 'Awaken & Align Meditation Series',
+      id: 'awaken-align-series',
+      category: 'Product',
+      value: 47,
+    })
+  }, [])
+
   return (
     <div className="bg-parchment text-ink font-body overflow-x-hidden">
 

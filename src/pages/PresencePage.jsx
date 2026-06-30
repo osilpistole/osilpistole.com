@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import BuyModal, { openBuyModal, preloadCheckoutOrigin } from '../components/BuyModal.jsx'
+import { trackViewContent, trackAddToCart, trackInitiateCheckout } from '../lib/metaPixel'
 
 const TC_URL = 'https://osilpistole.thrivecart.com/presence/'
 const PORTAL_URL = 'https://members.osilpistole.com/login'
@@ -78,7 +79,13 @@ function BuyButton({ href, children, variant = 'gold', className = '' }) {
   return (
     <a
       href={href}
-      onClick={(e) => { e.preventDefault(); openBuyModal(href) }}
+      onClick={(e) => {
+        e.preventDefault()
+        // Fire Meta Pixel intent events on the actual purchase click.
+        trackAddToCart({ name: 'Presence — 30-Day Lectio Divina Journal', id: 'presence', value: 27 })
+        trackInitiateCheckout({ name: 'Presence — 30-Day Lectio Divina Journal', value: 27 })
+        openBuyModal(href)
+      }}
       onMouseEnter={() => preloadCheckoutOrigin(href)}
       onFocus={() => preloadCheckoutOrigin(href)}
       className={`${base} ${variants[variant]} ${className}`}
@@ -302,6 +309,17 @@ function VersePreview() {
 }
 
 export default function PresencePage() {
+  // Fire ViewContent once when the page mounts so Meta can build a
+  // "viewed Presence" custom audience for retargeting later.
+  useEffect(() => {
+    trackViewContent({
+      name: 'Presence — 30-Day Lectio Divina Journal',
+      id: 'presence',
+      category: 'Product',
+      value: 27,
+    })
+  }, [])
+
   return (
     <div className="bg-parchment text-ink font-body overflow-x-hidden">
 

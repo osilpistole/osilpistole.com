@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import RevealSection from '../components/RevealSection'
+import { trackViewContent, trackLead } from '../lib/metaPixel'
 
 const CALENDLY_URL = 'https://calendly.com/osilpistolecoaching/discovery-call-website-build'
 
@@ -116,8 +117,13 @@ const faqs = [
 
 // Smooth-scroll to an in-page section WITHOUT updating the URL hash.
 // Prevents the page from auto-scrolling to the Calendly widget on refresh.
+// Also fires a Meta Lead event when the destination is the booking
+// section — clicking "Book a discovery call" is a real intent signal.
 const handleAnchorClick = (id) => (e) => {
   e.preventDefault()
+  if (id === 'book') {
+    trackLead({ name: 'Build — Discovery Call Click', category: 'Build' })
+  }
   const el = document.getElementById(id)
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
@@ -175,6 +181,17 @@ export default function BuildPage() {
       setTimeout(() => window.scrollTo({ top: 0, behavior: 'auto' }), ms),
     )
     return () => ts.forEach(clearTimeout)
+  }, [])
+
+  // Fire ViewContent once on mount so Meta can build a "viewed /build"
+  // retargeting audience.
+  useEffect(() => {
+    trackViewContent({
+      name: 'Website + Product Build',
+      id: 'build',
+      category: 'Service',
+      value: 2500, // anchor on the Pro tier
+    })
   }, [])
 
   // Lazy-load the Calendly widget script once when the page mounts.
