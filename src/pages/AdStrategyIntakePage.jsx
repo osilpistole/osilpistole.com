@@ -349,7 +349,7 @@ export default function AdStrategyIntakePage() {
                     <Field label="What are people really buying?" required hint="Not the deliverable — the outcome. Freedom. Confidence. Time back. Pride. Rest.">
                       <textarea rows={3} value={form.what_theyre_really_buying} onChange={e => update('what_theyre_really_buying', e.target.value)} className={inputCls + ' resize-none'} />
                     </Field>
-                    <Field label="Could someone become a customer WITHOUT talking to you?" hint='If "no" — that\'s important. Tells us the ad has to book a call, not sell direct.'>
+                    <Field label="Could someone become a customer WITHOUT talking to you?" hint={`If "no" — that's important. Tells us the ad has to book a call, not sell direct.`}>
                       <div className="space-y-2">
                         {['Yes — full self-serve buy is possible', 'Sometimes — smaller offers, yes; big ones no', 'No — they need to talk to me first'].map(v => (
                           <label key={v} className={radioCls(form.customer_without_talking === v)}>
