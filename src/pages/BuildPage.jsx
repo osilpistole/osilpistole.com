@@ -47,7 +47,7 @@ const tiers = [
     price: '$4,000+',
     paymentNote: 'Custom payment plans available',
     timeline: '2–3 weeks',
-    blurb: 'For coaches launching a full ecosystem — multi-page funnel, automations, AI agents, the works.',
+    blurb: 'For launching a full ecosystem — multi-page funnel, automations, AI agents, the works.',
     bullets: [
       'Everything in Pro',
       'Custom landing pages + funnels',
@@ -72,7 +72,7 @@ const retainers = [
   {
     name: 'Plus',
     price: '$300/mo',
-    blurb: 'For coaches actively launching, iterating, and growing.',
+    blurb: 'For businesses actively launching, iterating, and growing.',
     bullets: ['Everything in Lite', 'One new page or section monthly', 'Quarterly brand-voice copy review', 'Priority email + DM access'],
   },
 ]
