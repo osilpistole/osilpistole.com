@@ -158,6 +158,9 @@ function buildOsilEmailHtml(form, submittedAt) {
   <h2>The Practical</h2>
   ${row('Monthly ad budget', form.monthly_budget)}
   ${row('Success looks like', form.success_metric)}
+  ${row('Has a website', form.has_website)}
+  ${form.has_website === 'Yes' ? row('Website platform', form.website_platform === 'Other' ? `Other — ${form.website_platform_other}` : form.website_platform) : ''}
+  ${row('Meta Pixel installed', form.has_pixel === 'yes' ? 'Yes' : form.has_pixel === 'no' ? 'No' : form.has_pixel === 'not_sure' ? 'Not sure' : '')}
   ${row('Assets they have', form.assets_have)}
   ${row('Marketing assets available', form.marketing_assets)}
   ${form.anything_else ? row('Anything else', form.anything_else) : ''}

@@ -51,10 +51,22 @@ const initialForm = {
   // Section 5 — Practical
   monthly_budget: '',
   success_metric: '',
+  has_website: '',
+  website_platform: '',
+  website_platform_other: '',
+  has_pixel: '',
   assets_have: [],
   marketing_assets: [],
   anything_else: '',
 }
+
+const WEBSITE_PLATFORMS = ['WordPress', 'Wix', 'Squarespace', 'Shopify', 'Kajabi', 'GoDaddy', 'Custom build (GitHub/Vercel)', 'Other']
+
+const PIXEL_OPTIONS = [
+  { value: 'yes',      label: 'Yes' },
+  { value: 'no',       label: 'No' },
+  { value: 'not_sure', label: "Not sure" },
+]
 
 const GOALS = [
   'Get more phone calls',
@@ -368,6 +380,52 @@ export default function AdStrategyIntakePage() {
                     <Field label="What would make this campaign a success?" required hint="Number of leads? Calls? Appointments? Sales? Revenue?">
                       <textarea rows={3} value={form.success_metric} onChange={e => update('success_metric', e.target.value)} placeholder="e.g. 20 discovery calls booked in 30 days, or 5 paying clients." className={inputCls + ' resize-none'} />
                     </Field>
+
+                    <div className="pt-2 border-t border-ink/8">
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-ink/55 mb-4 mt-4">Website &amp; tracking</p>
+
+                      <div className="space-y-6">
+                        <Field label="Do you have a website?">
+                          <div className="flex gap-2">
+                            {['Yes', 'No'].map(v => (
+                              <label key={v} className={radioCls(form.has_website === v) + ' flex-1 justify-center'}>
+                                <input type="radio" name="has_website" value={v} checked={form.has_website === v} onChange={() => update('has_website', v)} className="sr-only" />
+                                <span>{v}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </Field>
+
+                        {form.has_website === 'Yes' && (
+                          <>
+                            <Field label="What platform is it built on?">
+                              <div className="grid md:grid-cols-2 gap-2">
+                                {WEBSITE_PLATFORMS.map(p => (
+                                  <label key={p} className={radioCls(form.website_platform === p)}>
+                                    <input type="radio" name="website_platform" value={p} checked={form.website_platform === p} onChange={() => update('website_platform', p)} className="sr-only" />
+                                    <span>{p}</span>
+                                  </label>
+                                ))}
+                              </div>
+                              {form.website_platform === 'Other' && (
+                                <input value={form.website_platform_other} onChange={e => update('website_platform_other', e.target.value)} placeholder="Which platform?" className={inputCls + ' mt-3'} />
+                              )}
+                            </Field>
+                          </>
+                        )}
+
+                        <Field label="Do you already have a Meta Pixel installed on your website?" hint="The Pixel is a small snippet of code that tracks visitors + conversions. If you don't know, that's fine — it's a common thing to be unsure about.">
+                          <div className="grid md:grid-cols-3 gap-2">
+                            {PIXEL_OPTIONS.map(o => (
+                              <label key={o.value} className={radioCls(form.has_pixel === o.value) + ' justify-center'}>
+                                <input type="radio" name="has_pixel" value={o.value} checked={form.has_pixel === o.value} onChange={() => update('has_pixel', o.value)} className="sr-only" />
+                                <span>{o.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </Field>
+                      </div>
+                    </div>
 
                     <Field label="What do you already have?" hint="Check what applies.">
                       <div className="grid md:grid-cols-2 gap-2">
