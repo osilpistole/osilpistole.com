@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import RevealSection from '../components/RevealSection'
 
-const CALENDLY_URL = 'https://calendly.com/osilpistolecoaching/discovery-call-website-build'
-
 // Section definitions — 5 sections that feel like a strategic conversation.
 const SECTIONS = [
   { key: 'business',   title: 'Who you are',                eyebrow: 'The business' },
@@ -448,18 +446,18 @@ export default function AdStrategyIntakePage() {
                 <h2 className="font-heading text-3xl md:text-4xl font-bold text-ink mb-5 tracking-tight">
                   Got it. Thank you.
                 </h2>
-                <p className="text-ink/65 text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-                  I'll read every answer carefully and reply within 24 hours with a first take on your funnel + a slot for us to talk.
+                <p className="text-ink/65 text-lg leading-relaxed mb-6 max-w-xl mx-auto">
+                  I'll read every answer carefully and reply personally within 24 hours. Watch your inbox for a note from <strong>osil@osilpistole.com</strong> — check spam if you don't see it.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <a
-                    href={CALENDLY_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-ink text-white text-sm font-bold hover:bg-ink/85 transition-all shadow-lg"
-                  >
-                    Book the call now →
-                  </a>
+
+                <div className="max-w-xl mx-auto bg-white border border-ink/10 rounded-2xl p-5 mb-8 text-left">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-sunrise mb-2">One more thing</p>
+                  <p className="text-sm text-ink/75 leading-relaxed">
+                    If you have <strong>graphics, logo files, brand assets, photos, or videos</strong> you want me to work with — email them to <a href="mailto:osil@osilpistole.com?subject=Ad%20Strategy%20Assets" className="text-ink font-semibold underline decoration-sunrise decoration-2 underline-offset-2">osil@osilpistole.com</a> with your business name in the subject. Any file size, any format.
+                  </p>
+                </div>
+
+                <div className="flex justify-center">
                   <Link
                     to="/"
                     className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border-2 border-ink/25 text-ink text-sm font-semibold hover:border-ink/50 hover:bg-ink/5"

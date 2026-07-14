@@ -185,9 +185,11 @@ function buildSubmitterConfirmationHtml(form) {
 
   <p>I got your Ad Strategy intake. Thank you for the honest answers — the depth ones especially. That's the part that decides whether a campaign works.</p>
 
-  <p>I'll read every answer carefully and reply within 24 hours with a first take on your funnel and a slot for us to talk.</p>
+  <p>I'll read every answer carefully and reply personally within 24 hours from this same address.</p>
 
-  <p>If you'd rather grab a call time now, the calendar is <a href="https://calendly.com/osilpistolecoaching/discovery-call-website-build">here</a>.</p>
+  <p><strong>One quick ask:</strong> if you have any graphics, logo files, brand assets, photos, or videos you want me to work with — <strong>reply to this email</strong> with them attached. Any size, any format. It saves us a back-and-forth once we're on a call.</p>
+
+  <p>If nothing lands in your inbox by tomorrow, check spam — and either way, feel free to reply to this note directly.</p>
 
   <p class="sig">— Osil</p>
 </body>
