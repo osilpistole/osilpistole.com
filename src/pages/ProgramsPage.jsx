@@ -7,8 +7,11 @@ import { programs, freeResources, accentMap } from '../data/programs'
 // falls through to /programs/:slug.
 const LANDING_PAGE = {
   'awaken-and-align': '/awaken-and-align',
+  'awaken-journal':   '/awaken-journal',
   'bundle':           '/awaken-and-align', // bundle is sold prominently from the series page
   'presence':         '/presence',
+  'ad-strategy':      '/ad-strategy',
+  'build':            '/build',
 }
 
 export default function ProgramsPage() {
