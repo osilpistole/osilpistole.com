@@ -88,7 +88,7 @@ export default function ProgramsPage() {
                         <span className="text-ink/40 text-xs font-medium">{program.priceNote}</span>
                       </div>
 
-                      <p className="text-ink/70 text-sm leading-relaxed flex-1 mb-6">{program.tagline}</p>
+                      <p className="text-ink/70 text-sm leading-relaxed flex-1 mb-6 line-clamp-4">{program.tagline}</p>
 
                       <Link
                         to={LANDING_PAGE[program.slug] ?? `/programs/${program.slug}`}
