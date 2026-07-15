@@ -10,6 +10,7 @@ const LANDING_PAGE = {
   'awaken-journal':   '/awaken-journal',
   'bundle':           '/awaken-and-align', // bundle is sold prominently from the series page
   'presence':         '/presence',
+  '30-days-done':     '/30-days-done',
   'ad-strategy':      '/ad-strategy',
   'build':            '/build',
 }
