@@ -207,8 +207,8 @@ export const programs = [
     shortTitle: 'FB Ad Package',
     tagline: 'Full Meta ad campaign setup — strategy, targeting, copy, creative, and monitoring — for coaches, consultants, and small businesses ready to spend intentionally.',
     description: 'You know your business. You just don\'t know how to talk to strangers on Facebook and Instagram in a way that actually gets them to raise a hand. That\'s what this package is for.\n\nWe start with a 30-minute strategy session to map your customer journey — what you\'re really selling, who it\'s really for, and what has to happen after someone clicks. Then I build the whole campaign: audience targeting, campaign objective and optimization setup, ad copy written in your voice, one custom ad graphic sized for Facebook Feed, Instagram Feed, and Story, and one professionally edited promotional video. Once it\'s live, I monitor and optimize.\n\nYou stay the owner of your ad account, your Pixel, and your creative. You can remove my access at any time. What doesn\'t come with the package: ad spend (paid directly to Meta), website or landing page creation (see the Website Build if you need one), or additional graphics/videos beyond what\'s listed.\n\nStart by filling out the strategy intake — it takes 12 minutes and it\'s not a form, it\'s a conversation.',
-    price: '$250',
-    priceNote: 'Introductory rate · Reg. $600+',
+    price: '$600',
+    priceNote: 'Full campaign launch package',
     image: 'https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=800&auto=format&fit=crop&q=80',
     includes: [
       '30-minute strategy session',
