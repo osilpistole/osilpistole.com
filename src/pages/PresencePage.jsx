@@ -43,6 +43,46 @@ const INCLUDED = [
   'Immediate access through your member portal',
 ]
 
+// Real testimonials only. When Osil gathers them, add objects here:
+// { quote: 'Real quote from a real reader.', name: 'First L.', context: 'Optional short context' }
+// The testimonials section only renders when this array has entries.
+const TESTIMONIALS = []
+
+const FAQ = [
+  {
+    q: 'Is Presence a printed or digital journal?',
+    a: 'Digital. It lives inside your member portal. Every entry can be downloaded as a beautifully formatted PDF if you want a physical copy — but the practice itself happens in the portal, on any device.',
+  },
+  {
+    q: 'How long does each day take?',
+    a: 'Ten to twenty minutes if you want to move quickly. Longer if you want to sit with it. Presence is designed to fit into a real morning or evening — not another obligation.',
+  },
+  {
+    q: 'Do I need experience with Lectio Divina?',
+    a: 'No. Each day walks you through the five steps clearly — read, reflect, pray, rest, live it out. You\'ll learn the practice as you go.',
+  },
+  {
+    q: 'Can I use it on my phone?',
+    a: 'Yes. The member portal is mobile-friendly. Many readers use Presence right from their phone in the morning.',
+  },
+  {
+    q: 'Do I have to complete 30 consecutive days?',
+    a: 'No. Life happens. You can return to any day at any pace. Some readers finish in 30 days. Others take 60 or 90. It\'s your rhythm — not a deadline.',
+  },
+  {
+    q: 'What happens right after I purchase?',
+    a: 'You\'ll get an email with your access details within minutes. Log in, open Day 1, and begin whenever you\'re ready — morning, evening, or the next quiet moment.',
+  },
+  {
+    q: 'Can I return to completed days?',
+    a: 'Yes. Every day stays open. Your responses save automatically, and you can revisit or re-journal any day as many times as you want.',
+  },
+  {
+    q: 'What is the refund policy?',
+    a: 'Because Presence is a digital product with immediate access, all sales are final. If something goes wrong on the technical side, email osil@osilpistole.com and I\'ll make it right.',
+  },
+]
+
 function useReveal(threshold = 0.1) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
@@ -320,6 +360,46 @@ export default function PresencePage() {
     })
   }, [])
 
+  // Update page-level metadata (title + OG tags) client-side so
+  // direct visits and shares of /presence use Presence copy — not the
+  // homepage default. Restored to homepage defaults on unmount.
+  useEffect(() => {
+    const originalTitle = document.title
+    const PRES_TITLE = 'Presence — 30-Day Guided Lectio Divina Journal | Osil Pistole'
+    const PRES_DESC = 'Slow down with Scripture through 30 days of guided reading, reflection, prayer, stillness, and action. A digital Lectio Divina journal with lifetime access for $27.'
+    const PRES_IMG = 'https://osilpistole.com/images/presence-dashboard.jpg'
+    const PRES_URL = 'https://osilpistole.com/presence'
+
+    document.title = PRES_TITLE
+
+    // Update or create meta tags in the head.
+    const setMeta = (attr, key, value) => {
+      let el = document.head.querySelector(`meta[${attr}="${key}"]`)
+      if (!el) {
+        el = document.createElement('meta')
+        el.setAttribute(attr, key)
+        document.head.appendChild(el)
+      }
+      el.setAttribute('content', value)
+    }
+
+    setMeta('name', 'description', PRES_DESC)
+    setMeta('property', 'og:type', 'website')
+    setMeta('property', 'og:title', PRES_TITLE)
+    setMeta('property', 'og:description', PRES_DESC)
+    setMeta('property', 'og:url', PRES_URL)
+    setMeta('property', 'og:image', PRES_IMG)
+    setMeta('property', 'og:site_name', 'Osil Pistole')
+    setMeta('name', 'twitter:card', 'summary_large_image')
+    setMeta('name', 'twitter:title', PRES_TITLE)
+    setMeta('name', 'twitter:description', PRES_DESC)
+    setMeta('name', 'twitter:image', PRES_IMG)
+
+    return () => {
+      document.title = originalTitle
+    }
+  }, [])
+
   return (
     <div className="bg-parchment text-ink font-body overflow-x-hidden">
 
@@ -352,7 +432,7 @@ export default function PresencePage() {
 
         <div className="relative z-10 max-w-3xl mx-auto text-center px-6 py-32">
           <p className="pr-u1 font-heading text-[10px] font-bold uppercase tracking-[0.38em] text-white/72 mb-7">
-            A 30-Day Lectio Divina Journal
+            A 30-Day Guided Digital Lectio Divina Journal
           </p>
 
           <h1 className="pr-u2 aa-display text-[clamp(72px,12vw,148px)] font-light italic leading-[0.94] tracking-tight text-white mb-10" style={{ textShadow: '0 2px 36px rgba(0,0,0,0.4)' }}>
@@ -360,17 +440,21 @@ export default function PresencePage() {
           </h1>
 
           <p className="pr-u3 aa-display italic text-white/85 text-xl md:text-2xl leading-[1.4] max-w-xl mx-auto mb-4" style={{ textShadow: '0 1px 14px rgba(0,0,0,0.45)' }}>
-            Being present with God is the key to everything.
+            Slow down. Sit with Scripture. Make space to hear.
           </p>
 
-          <p className="pr-u4 text-white/72 text-[14px] md:text-base leading-relaxed max-w-md mx-auto mb-12" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.45)' }}>
-            Wisdom, clarity, peace, joy — they all come from one place. Thirty days of meeting Him there, morning or evening — or both.
+          <p className="pr-u4 text-white/72 text-[14px] md:text-base leading-relaxed max-w-md mx-auto mb-6" style={{ textShadow: '0 1px 10px rgba(0,0,0,0.45)' }}>
+            Presence guides you through 30 days of Scripture, prayer, reflection, and stillness — helping you build a daily rhythm of being present with God. Use it in the morning, at the end of your day, or both.
+          </p>
+
+          <p className="pr-u4 text-white/65 text-[12px] tracking-[0.14em] uppercase mb-11" style={{ textShadow: '0 1px 8px rgba(0,0,0,0.45)' }}>
+            $27 once &middot; Lifetime access &middot; Begin immediately
           </p>
 
           <div className="pr-u5 flex flex-col sm:flex-row items-center justify-center gap-3">
             <BuyButton href={TC_URL} variant="gold">Start the 30 Days — $27</BuyButton>
             <a href="#preview" onClick={(e) => scrollToId('preview', e)} className="inline-flex items-center justify-center gap-2 font-heading font-semibold tracking-wide rounded-full px-8 py-3.5 text-sm border-2 border-white/30 text-white/90 hover:border-white/55 hover:bg-white/10 backdrop-blur-sm transition-all">
-              Read or listen to Day 1
+              Preview Day 1
             </a>
           </div>
         </div>
@@ -434,11 +518,41 @@ export default function PresencePage() {
           </Reveal>
 
           <Reveal delay={0.25} className="text-center mt-12">
-            <p className="text-ink/55 text-[13px] italic mb-5">
-              That&apos;s one day. There are twenty-nine more.
+            <p className="aa-display italic text-ink/70 text-[clamp(17px,2vw,20px)] leading-[1.55] max-w-xl mx-auto mb-6">
+              That&apos;s the beginning of a new rhythm — read, reflect, pray, rest, and carry one thing into your day. Presence guides you through that rhythm for 30 days, until slowing down with Scripture feels natural.
             </p>
             <BuyButton href={TC_URL} variant="gold">Get Presence — $27</BuyButton>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ── THIS MAY BE FOR YOU ─────────────────────────────────────── */}
+      <section className="px-6 lg:px-16 py-24 md:py-28 bg-parchment">
+        <div className="max-w-4xl mx-auto">
+          <Reveal className="text-center mb-14">
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-5">This may be for you if</p>
+            <h2 className="aa-display text-[clamp(28px,4.4vw,46px)] font-light leading-[1.15] mb-6">
+              Any of these feel familiar.
+            </h2>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 gap-x-10 gap-y-5">
+            {[
+              'Scripture reading has started to feel rushed.',
+              'You want a quieter, more intentional daily rhythm.',
+              'You want guidance without another demanding Bible study.',
+              'You want to journal but don’t always know where to begin.',
+              'You’re looking for a practice you can continue after the 30 days end.',
+              'Mornings or evenings would feel steadier with a page you already trust.',
+            ].map((line, i) => (
+              <Reveal key={i} delay={i * 0.06}>
+                <div className="flex items-start gap-4">
+                  <span className="mt-2 inline-block w-2 h-2 rounded-full bg-morning shrink-0" aria-hidden="true" />
+                  <p className="text-ink/75 text-[16px] leading-relaxed">{line}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -557,6 +671,62 @@ export default function PresencePage() {
               ))}
             </ul>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ────────────────────────────────────────────── */}
+      {TESTIMONIALS.length > 0 && (
+        <section className="px-6 lg:px-16 py-24 md:py-28 bg-white">
+          <div className="max-w-5xl mx-auto">
+            <Reveal className="text-center mb-14">
+              <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-5">Readers of Presence</p>
+              <h2 className="aa-display text-[clamp(28px,4.4vw,46px)] font-light leading-[1.15] mb-4">
+                What people are saying.
+              </h2>
+            </Reveal>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {TESTIMONIALS.map((t, i) => (
+                <Reveal key={i} delay={i * 0.08}>
+                  <figure className="h-full bg-parchment border border-ink/8 rounded-2xl p-7 flex flex-col">
+                    <blockquote className="aa-display italic text-ink/80 text-[17px] leading-[1.55] mb-6 flex-1">
+                      &ldquo;{t.quote}&rdquo;
+                    </blockquote>
+                    <figcaption>
+                      <p className="text-ink font-semibold text-sm">{t.name}</p>
+                      {t.context && <p className="text-ink/50 text-[12px] mt-0.5">{t.context}</p>}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── FAQ ─────────────────────────────────────────────────────── */}
+      <section className="px-6 lg:px-16 py-24 md:py-28 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <Reveal className="text-center mb-12">
+            <p className="font-heading text-[9px] font-bold uppercase tracking-[0.32em] text-morning mb-5">Honest Questions</p>
+            <h2 className="aa-display text-[clamp(28px,4.4vw,46px)] font-light leading-[1.15]">
+              Everything you might wonder.
+            </h2>
+          </Reveal>
+
+          <div className="space-y-3">
+            {FAQ.map((item, i) => (
+              <Reveal key={i} delay={i * 0.04}>
+                <details className="group bg-parchment border border-ink/8 rounded-2xl p-5 md:p-6">
+                  <summary className="font-heading font-semibold text-ink cursor-pointer list-none flex items-center justify-between gap-4">
+                    <span className="text-[15px] md:text-[16px]">{item.q}</span>
+                    <span className="text-morning text-2xl leading-none transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </summary>
+                  <p className="text-ink/70 text-[15px] leading-relaxed mt-4">{item.a}</p>
+                </details>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

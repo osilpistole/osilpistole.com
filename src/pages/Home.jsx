@@ -462,7 +462,7 @@ function ProductsSection() {
           {/* Presence — featured card */}
           <RevealSection className="lg:col-span-3">
             <Link
-              to="/programs/presence"
+              to="/presence"
               className="group relative block h-72 lg:h-full min-h-[320px] rounded-3xl overflow-hidden bg-cover bg-center"
               style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80)' }}
             >
@@ -581,7 +581,7 @@ function PresencePopup() {
           </p>
           <div className="flex items-center gap-3">
             <Link
-              to="/programs/presence"
+              to="/presence"
               onClick={dismiss}
               className="flex-1 inline-flex items-center justify-center gap-1.5 bg-sunrise hover:bg-[#f0be2e] text-ink text-xs font-bold px-4 py-2.5 rounded-xl transition-all duration-200"
             >
